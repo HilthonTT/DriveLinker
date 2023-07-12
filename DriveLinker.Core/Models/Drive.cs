@@ -27,4 +27,11 @@ public partial class Drive : ObservableObject
 
     [ObservableProperty]
     private string _iv;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DriveButtonColorAsColor))]
+    private string _buttonColor = "#FF0000";
+
+    [Ignore]
+    public Color DriveButtonColorAsColor => Color.FromArgb(ButtonColor);
 }
