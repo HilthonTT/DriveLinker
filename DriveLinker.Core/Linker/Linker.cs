@@ -8,11 +8,12 @@ public class Linker : ILinker
 {
     public async Task ConnectDriveAsync(Drive drive)
     {
-        string arguments = $"use {drive.Letter}: \"\\\\{drive.IpAddress}\\{drive.DriveName}\" {drive.Password} /user:{drive.UserName} /persistent:no";
+        string arguments = GetArguments(drive);
+        string fileName = GetFileName();
 
         var startInfo = new ProcessStartInfo()
         {
-            FileName = "net",
+            FileName = fileName,
             Arguments = arguments,
             CreateNoWindow = true,
             RedirectStandardError = true,
@@ -53,5 +54,55 @@ public class Linker : ILinker
             await Shell.Current
                 .DisplaySnackbar(message);
         }
+    }
+
+    private static string GetArguments(Drive drive)
+    {
+        if (IsWindows())
+        {
+            return $"use {drive.Letter}: " +
+                $"\"\\\\{drive.IpAddress}\\{drive.DriveName}\" " +
+                $"{drive.Password} " +
+                $"/user:{drive.UserName} " +
+                $"/persistent:no";
+        }
+        else if (IsMacOS())
+        {
+            return $"mount_smbfs //{drive.UserName}:" +
+                $"{drive.Password}" +
+                $"@{drive.IpAddress}" +
+                $"/{drive.DriveName}" +
+                $" /Volumes/{drive.Letter}";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    private static string GetFileName()
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            return "net";
+        }
+        else if (IsMacOS())
+        {
+            return "mount";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    private static bool IsWindows()
+    {
+        return OperatingSystem.IsWindows();
+    }
+
+    private static bool IsMacOS()
+    {
+        return OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst();
     }
 }
