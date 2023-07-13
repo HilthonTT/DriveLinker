@@ -11,12 +11,13 @@ public partial class MainViewModel : BaseViewModel
     {
         _driveService = driveService;
         _dummyService = dummyService;
-        GetDrivesAsync();
     }
 
     [ObservableProperty] private ObservableCollection<Drive> _drives = new();
 
-    private async Task GetDrivesAsync()
+
+    [RelayCommand]
+    private async Task LoadDrivesAsync()
     {
         var drives = await _driveService.GetAllDrivesAsync();
 
@@ -37,13 +38,6 @@ public partial class MainViewModel : BaseViewModel
         };
 
         await Shell.Current.GoToAsync(nameof(DrivePage), Animate, parameters);
-    }
-
-
-    [RelayCommand]
-    private async Task LoadAllDrivesPageAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(DrivesPage), Animate);
     }
 
     [RelayCommand]

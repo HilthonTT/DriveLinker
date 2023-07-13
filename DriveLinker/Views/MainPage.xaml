@@ -9,22 +9,21 @@
              Title="MainPage"
              x:Name="mainPage">
 
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadDrivesCommand}"/>
+    </ContentPage.Behaviors>
 
     <ScrollView>
         <VerticalStackLayout Spacing="30" Padding="0,20">
-            <Grid ColumnDefinitions="*,*,*"
+            <Grid ColumnDefinitions="*,*"
                   RowDefinitions="*, *, *"
                   Padding="20,0">
                 <Button Grid.Row="0"
                     Grid.Column="0"
-                    Text="Open Drives" 
-                    Command="{Binding LoadAllDrivesPageCommand}"/>
-                <Button Grid.Row="0"
-                    Grid.Column="1"
                     Text="Create A Drive"
                     Command="{Binding LoadCreatePageCommand}"/>
                 <Button Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Text="Settings"
                     Command="{Binding LoadSettingsPageCommand}"/>
             </Grid>
