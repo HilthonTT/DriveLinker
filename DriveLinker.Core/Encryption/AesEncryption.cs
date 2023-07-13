@@ -68,13 +68,13 @@ public class AesEncryption : IAesEncryption
 
     public string GetKey()
     {
-        string convertedArray = Encoding.UTF8.GetString(_aes.Key);
+        string convertedArray = Convert.ToBase64String(_aes.Key);
         return convertedArray;
     }
 
     public string GetIV()
     {
-        string convertedArray = Encoding.UTF8.GetString(_aes.IV);
+        string convertedArray = Convert.ToBase64String(_aes.IV);
         return convertedArray;
     }
 }

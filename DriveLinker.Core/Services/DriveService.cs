@@ -1,4 +1,5 @@
 ﻿using DriveLinker.Core.Encryption.Interfaces;
+using DriveLinker.Core.Helpers;
 using DriveLinker.Core.Models;
 using DriveLinker.Core.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -40,7 +41,11 @@ public class DriveService : IDriveService
         var output = _cache.Get<List<Drive>>(CacheName);
         if (output is null)
         {
-            output = await _db.Table<Drive>().ToListAsync();
+            var drives = await _db.Table<Drive>().ToListAsync();
+            var decryptedDrives = await drives.SelectAsync(DecryptDrive);
+
+            output = decryptedDrives.ToList();
+
             _cache.Set(CacheName, output);
         }
 
@@ -52,7 +57,9 @@ public class DriveService : IDriveService
         var output = _cache.Get<Drive>(id);
         if (output is null)
         {
-            output = await _db.FindAsync<Drive>(id);
+            var drive = await _db.FindAsync<Drive>(id);
+            output = await DecryptDrive(drive);
+
             _cache.Set(id, output);
         }
 
@@ -63,7 +70,7 @@ public class DriveService : IDriveService
     {
         _cache.Remove(CacheName);
 
-        drive = MapEncryptionData(drive);
+        drive = await EncryptDrive(drive);
         return await _db.InsertAsync(drive);
     }
 
@@ -79,10 +86,26 @@ public class DriveService : IDriveService
         return await _db.DeleteAsync(drive);
     }
 
-    private Drive MapEncryptionData(Drive drive)
+    private async Task<Drive> EncryptDrive(Drive drive)
     {
         drive.Key = _encryption.GetKey();
         drive.Iv = _encryption.GetIV();
+
+        drive.Password = await _encryption.EncryptAsync(drive.Password);
+        drive.IpAddress = await _encryption.EncryptAsync(drive.IpAddress);
+        drive.UserName = await _encryption.EncryptAsync(drive.UserName);
+
+        return drive;
+    }
+
+    private async Task<Drive> DecryptDrive(Drive drive)
+    {
+        string key = drive.Key;
+        string iv = drive.Iv;
+
+        drive.Password = await _encryption.DecryptAsync(drive.Password, key, iv);
+        drive.IpAddress = await _encryption.DecryptAsync(drive.IpAddress, key, iv);
+        drive.UserName = await _encryption.DecryptAsync(drive.UserName, key, iv);
 
         return drive;
     }
