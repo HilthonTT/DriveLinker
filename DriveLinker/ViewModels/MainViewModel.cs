@@ -2,9 +2,46 @@
 public partial class MainViewModel : BaseViewModel
 {
     private const bool Animate = true;
+    private readonly IDriveService _driveService;
+    private readonly IDummyService _dummyService;
+
+    public MainViewModel(
+        IDriveService driveService,
+        IDummyService dummyService)
+    {
+        _driveService = driveService;
+        _dummyService = dummyService;
+        GetDrivesAsync();
+    }
+
+    [ObservableProperty] private ObservableCollection<Drive> _drives = new();
+
+    private async Task GetDrivesAsync()
+    {
+        var drives = await _driveService.GetAllDrivesAsync();
+
+        if (drives?.Count <= 0)
+        {
+            drives = _dummyService.GetDummyDrives();
+        }
+
+        Drives = new(drives);
+    }
 
     [RelayCommand]
-    private async Task LoadDrivePageAsync()
+    private async Task LoadDrivePageAsync(Drive drive)
+    {
+        var parameters = new Dictionary<string, object>
+        {
+            { nameof(Drive), drive },
+        };
+
+        await Shell.Current.GoToAsync(nameof(DrivePage), Animate, parameters);
+    }
+
+
+    [RelayCommand]
+    private async Task LoadAllDrivesPageAsync()
     {
         await Shell.Current.GoToAsync(nameof(DrivesPage), Animate);
     }

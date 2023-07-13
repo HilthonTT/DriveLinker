@@ -3,35 +3,79 @@
              xmlns:models="clr-namespace:DriveLinker.Core.Models;assembly=DriveLinker.Core"
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:templates="clr-namespace:DriveLinker.Views.Templates"
              x:DataType="viewModels:MainViewModel"
              x:Class="DriveLinker.MainPage"
              Title="MainPage"
              x:Name="mainPage">
 
 
-    <Grid ColumnDefinitions="*, *, *"
-          ColumnSpacing="10"
-          RowDefinitions="*,*,*"
-          RowSpacing="10"
-          Padding="5"
-          Margin="10">
+    <ScrollView>
+        <VerticalStackLayout Spacing="30" Padding="0,20">
+            <Grid ColumnDefinitions="*,*,*"
+                  RowDefinitions="*, *, *"
+                  Padding="20,0">
+                <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Open Drives" 
+                    Command="{Binding LoadAllDrivesPageCommand}"/>
+                <Button Grid.Row="0"
+                    Grid.Column="1"
+                    Text="Create A Drive"
+                    Command="{Binding LoadCreatePageCommand}"/>
+                <Button Grid.Row="0"
+                    Grid.Column="2"
+                    Text="Settings"
+                    Command="{Binding LoadSettingsPageCommand}"/>
+            </Grid>
+            <VerticalStackLayout Grid.Row="1"
+                                 Grid.Column="0">
+                <VerticalStackLayout Spacing="6"
+                                     Padding="20,0,0,0" 
+                                     HeightRequest="340">
+                    <Label Text="Recently added drives" 
+                           FontAttributes="Bold"
+                           TextTransform="Uppercase"
+                           FontSize="18" />
+                    <CollectionView x:Name="RecentlyAdded"
+                                    ItemsSource="{Binding Drives}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding LoadDrivePageCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference RecentlyAdded}}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal"
+                                               ItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <templates:DriveTemplate />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
 
-        <Button Grid.Row="0"
-                Grid.Column="0"
-                Text="Open Drives" 
-                Command="{Binding LoadDrivePageCommand}"/>
-
-        <Button Grid.Row="0"
-                Grid.Column="1"
-                Text="Create A Drive"
-                Command="{Binding LoadCreatePageCommand}"/>
-
-        <Button Grid.Row="0"
-                Grid.Column="2"
-                Text="Settings"
-                Command="{Binding LoadSettingsPageCommand}"/>
-
-    </Grid>
-    
-
+                <VerticalStackLayout Spacing="6" Padding="20,0">
+                    <Label Text="Drive Listing" 
+                           FontAttributes="Bold"
+                           TextTransform="Uppercase"
+                           FontSize="18"/>
+                    <CollectionView x:Name="DriveListings"
+                                    ItemsSource="{Binding Drives}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding LoadDrivePageCommand}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference DriveListings}}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                                               ItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <templates:DriveListingTemplate />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
