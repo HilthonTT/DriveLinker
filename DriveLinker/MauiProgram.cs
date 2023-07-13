@@ -23,13 +23,11 @@ public static class MauiProgram
 		builder.Services.AddMemoryCache();
 
 		builder.Services.AddTransient<MainViewModel>();
-		builder.Services.AddTransient<DrivesViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
 		builder.Services.AddTransient<CreateViewModel>();
 		builder.Services.AddTransient<DriveViewModel>();
 
 		builder.Services.AddTransient<MainPage>();
-		builder.Services.AddTransient<DrivesPage>();
 		builder.Services.AddTransient<SettingsPage>();
 		builder.Services.AddTransient<CreatePage>();
 		builder.Services.AddTransient<DrivePage>();
@@ -42,7 +40,6 @@ public static class MauiProgram
 		builder.Services.AddTransient<ILinker, Linker>();
 
 		Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-		Routing.RegisterRoute(nameof(DrivesPage), typeof(DrivesPage));
 		Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
 		Routing.RegisterRoute(nameof(CreatePage), typeof(CreatePage));
 		Routing.RegisterRoute(nameof(DrivePage), typeof(DrivePage));
