@@ -19,15 +19,6 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty] private ObservableCollection<Drive> _drives = new();
 
-    private async Task LinkDriveAsync(Drive drive)
-    {
-        bool isConnected = _linker.IsDriveConnected(drive);
-
-        if (isConnected is false)
-        {
-            await _linker.ConnectDriveAsync(drive);
-        }
-    }
 
     private void ChecksDriveConnection(Drive drive)
     {
@@ -61,7 +52,23 @@ public partial class MainViewModel : BaseViewModel
 
         foreach (var drive in nonConnectedDrives)
         {
-            await LinkDriveAsync(drive);
+            await _linker.ConnectDriveAsync(drive);
+        }
+    }
+
+    [RelayCommand]
+    private async Task UnlinkAllDrivesAsync()
+    {
+        if (Drives?.Count <= 0) 
+        { 
+            return; 
+        }
+
+        var connectedDrives = Drives.Where(d => d.Connected).ToList();
+
+        foreach (var drive in connectedDrives)
+        {
+            await _linker.DisconnectDriveAsync(drive);
         }
     }
 

@@ -11,22 +11,31 @@ public class Linker : ILinker
 
     public async Task ConnectDriveAsync(Drive drive)
     {
-        string arguments = GetArguments(drive);
+        drive.Connected = true;
+        drive.ButtonColor = Green;
+
+        string arguments = GetConnectArguments(drive);
         string fileName = GetFileName();
 
-        var startInfo = new ProcessStartInfo()
-        {
-            FileName = fileName,
-            Arguments = arguments,
-            CreateNoWindow = true,
-            RedirectStandardError = true,
-        };
-
-        var process = new Process { StartInfo = startInfo, };
+        var process = GetProcess(fileName, arguments);
         process.Start();
 
         await process.WaitForExitAsync();
+        await GetErrorAsync(process, drive);
+    }
 
+    public async Task DisconnectDriveAsync(Drive drive)
+    {
+        drive.Connected = false;
+        drive.ButtonColor = Red;
+
+        string arguments = GetDeleteArguments(drive);
+        string fileName = GetFileName();
+
+        var process = GetProcess(fileName, arguments);
+        process.Start();
+
+        await process.WaitForExitAsync();
         await GetErrorAsync(process, drive);
     }
 
@@ -70,7 +79,22 @@ public class Linker : ILinker
         }
     }
 
-    private static string GetArguments(Drive drive)
+    
+
+    private static Process GetProcess(string fileName, string arguments)
+    {
+        var startInfo = new ProcessStartInfo()
+        {
+            FileName = fileName,
+            Arguments = arguments,
+            CreateNoWindow = true,
+            RedirectStandardError = true,
+        };
+
+        return new Process { StartInfo = startInfo };
+    }
+
+    private static string GetConnectArguments(Drive drive)
     {
         if (IsWindows())
         {
@@ -87,6 +111,22 @@ public class Linker : ILinker
                 $"@{drive.IpAddress}" +
                 $"/{drive.DriveName}" +
                 $" /Volumes/{drive.Letter}";
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    private static string GetDeleteArguments(Drive drive)
+    {
+        if (IsWindows())
+        {
+            return $"use {drive.Letter}: /del";
+        }
+        else if (IsMacOS())
+        {
+            return $"umount {drive.Letter}";
         }
         else
         {

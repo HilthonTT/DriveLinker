@@ -58,6 +58,12 @@
                            FontAttributes="Bold"
                            TextTransform="Uppercase"
                            FontSize="18"/>
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="Link Drives"
+                                Command="{Binding LinkAllDrivesCommand}"/>
+                        <Button Text="Unlink Drives"
+                                Command="{Binding UnlinkAllDrivesCommand}"/>
+                    </HorizontalStackLayout>
                     <CollectionView x:Name="DriveListings"
                                     ItemsSource="{Binding Drives}"
                                     SelectionMode="Single"
