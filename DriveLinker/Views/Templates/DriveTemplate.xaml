@@ -16,7 +16,8 @@
                                WidthRequest="95"
                                HeightRequest="95"
                                HorizontalOptions="Center"
-                               BorderColor="White">
+                               BorderColor="White"
+                               BackgroundColor="#121212">
                             <Label Text="{Binding Letter}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"

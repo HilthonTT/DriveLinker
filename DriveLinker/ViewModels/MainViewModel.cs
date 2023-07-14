@@ -26,6 +26,9 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty] 
     private ObservableCollection<Drive> _drives = new();
 
+    [ObservableProperty]
+    private Drive _selectedDrive = new();
+
     private void ChecksDriveConnection(Drive drive)
     {
         _linker.IsDriveConnected(drive);
@@ -90,14 +93,16 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task LoadDrivePageAsync(Drive drive)
+    private async Task LoadDrivePageAsync()
     {
         var parameters = new Dictionary<string, object>
         {
-            { nameof(Drive), drive },
+            { "Drive", SelectedDrive },
         };
 
         await Shell.Current.GoToAsync(nameof(DrivePage), Animate, parameters);
+
+        SelectedDrive = null;
     }
 
     [RelayCommand]

@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
+             x:DataType="viewModels:DriveViewModel"
              x:Class="DriveLinker.Views.DrivePage"
-             Title="DrivePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Drive Page">
+    <ScrollView>
+        <VerticalStackLayout Spacing="5" Padding="0">
+            <Grid ColumnDefinitions="*,Auto,*"
+                  RowDefinitions="160,Auto">
+                <BoxView Color="WhiteSmoke"
+                         Grid.ColumnSpan="3"
+                         HeightRequest="160"
+                         HorizontalOptions="FillAndExpand"/>
+                <Frame Grid.RowSpan="2"
+                       Grid.Column="1"
+                       HeightRequest="160"
+                       CornerRadius="80"
+                       HorizontalOptions="Center"
+                       Padding="0"
+                       Margin="0,80,0,0"
+                       BackgroundColor="#121212">
+                    <FlexLayout HeightRequest="160"
+                                WidthRequest="160">
+                        <Label Text="{Binding Drive.Letter}"
+                               FontSize="75"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               Margin="29, 0, 0, 0"/>
+                    </FlexLayout>
+                </Frame>
+            </Grid>
+            <VerticalStackLayout Padding="10"
+                                 Spacing="10"
+                                 Margin="20">
+                <Frame Style="{StaticResource CardView}"
+                       Padding="10"
+                       HeightRequest="150">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="{Binding Drive.DriveName}"
+                               FontSize="20"
+                               TextColor="White"
+                               HorizontalOptions="Center"/>
+                        <Button Text="Delete Drive"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

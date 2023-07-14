@@ -9,10 +9,11 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         _driveService = driveService;
     }
 
-    [ObservableProperty] private Drive _driveItem;
-    
+    [ObservableProperty] 
+    private Drive _drive;
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        DriveItem = query[nameof(Drive)] as Drive;
+        Drive = query["Drive"] as Drive;
     }
 }

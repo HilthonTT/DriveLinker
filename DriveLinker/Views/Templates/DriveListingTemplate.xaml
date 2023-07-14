@@ -16,7 +16,8 @@
                 <Frame CornerRadius="80"
                        WidthRequest="85"
                        HeightRequest="85"
-                       BorderColor="White">
+                       BorderColor="White"
+                       BackgroundColor="#121212">
                     <Label Text="{Binding Letter}"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
