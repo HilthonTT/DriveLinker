@@ -13,14 +13,15 @@
                 <Grid>
                     <FlexLayout HorizontalOptions="Center">
                         <Frame CornerRadius="90"
-                               WidthRequest="80"
-                               HeightRequest="80"
+                               WidthRequest="95"
+                               HeightRequest="95"
                                HorizontalOptions="Center"
-                               BackgroundColor="DarkSlateGray">
+                               BorderColor="White">
                             <Label Text="{Binding Letter}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
-                                   FontSize="Large"/>
+                                   FontSize="Large"
+                                   TextColor="White"/>
                         </Frame>
                     </FlexLayout>
                 </Grid>
