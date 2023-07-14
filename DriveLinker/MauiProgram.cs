@@ -35,6 +35,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<IDriveService, DriveService>();
 		builder.Services.AddTransient<ISettingsService, SettingsService>();
 		builder.Services.AddTransient<IDummyService, DummyService>();
+		builder.Services.AddTransient<ILanguageService, LanguageService>();
 
 		builder.Services.AddTransient<IAesEncryption, AesEncryption>();
 		builder.Services.AddTransient<ILinker, Linker>();

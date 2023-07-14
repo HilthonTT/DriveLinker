@@ -1,12 +1,77 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DriveLinker.Views.SettingsPage"
-             Title="SettingsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Settings"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:DataType="viewModels:SettingsViewModel"
+             Title="Settings">
+
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadLanguagesCommand}"/>
+        <behaviors:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadSettingsCommand}"/>
+    </ContentPage.Behaviors>
+    
+    <ScrollView>
+        <Grid Padding="0,0,0,20">
+            <VerticalStackLayout Spacing="30" Padding="15">
+                <Label Text="Settings" 
+                   FontSize="30"
+                   TextTransform="Uppercase"
+                   HorizontalOptions="Center"></Label>
+                <Grid RowDefinitions="Auto"
+                      Padding="10,10,10,0">
+                    <VerticalStackLayout Padding="25,0" 
+                                         Spacing="15">
+                        <Border Padding="5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Padding="10" Spacing="5">
+                                <Grid ColumnDefinitions="Auto,*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto">
+
+                                    <Label Text="Automatically Link Drives On Launch"
+                                           HorizontalOptions="Start"
+                                           Grid.Column="0"
+                                           Grid.Row="0"
+                                           FontSize="18"/>
+                                    <Switch Grid.Column="2"
+                                            Grid.Row="0"
+                                            HorizontalOptions="End"
+                                            OnColor="Green" 
+                                            IsToggled="{Binding Settings.AutoLink}"/>
+
+                                    <Label Text="Automatically Minimize After linking"
+                                           HorizontalOptions="Start"
+                                           Grid.Column="0"
+                                           Grid.Row="1"
+                                           FontSize="18"/>
+                                    <Switch Grid.Column="2"
+                                            Grid.Row="1"
+                                            HorizontalOptions="End"
+                                            OnColor="Green" 
+                                            IsToggled="{Binding Settings.AutoMinimize}"/>
+
+                                    <Label Text="Language"
+                                           HorizontalOptions="Start"
+                                           Grid.Column="0"
+                                           Grid.Row="2"
+                                           FontSize="18"/>
+                                    <Picker Grid.Column="2"
+                                            Grid.Row="2"
+                                            WidthRequest="200"
+                                            SelectedItem="{Binding Settings.Language}"
+                                            ItemsSource="{Binding Languages}" />
+                                </Grid>
+                                <Button Text="Save"
+                                        Margin="0,30,0,0"
+                                        Command="{Binding SaveSettingsCommand}"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>
