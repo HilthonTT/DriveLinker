@@ -37,4 +37,7 @@ public partial class Drive : ObservableObject
 
     [Ignore]
     public Color DriveButtonColorAsColor => Color.FromArgb(ButtonColor);
+
+    [Ignore]
+    public bool Connected { get; set; }
 }

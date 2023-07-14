@@ -6,6 +6,9 @@ using System.Diagnostics;
 namespace DriveLinker.Core.Linker;
 public class Linker : ILinker
 {
+    private const string Green = "#00FF00";
+    private const string Red = "#FF0000";
+
     public async Task ConnectDriveAsync(Drive drive)
     {
         string arguments = GetArguments(drive);
@@ -31,6 +34,17 @@ public class Linker : ILinker
     {
         string directory = drive.Letter + ':';
         bool directoryExists = Directory.Exists(directory);
+
+        if (directoryExists)
+        {
+            drive.Connected = true;
+            drive.ButtonColor = Green;
+        }
+        else
+        {
+            drive.Connected = false;
+            drive.ButtonColor = Red;
+        }
 
         return directoryExists;
     }

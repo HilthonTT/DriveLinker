@@ -1,5 +1,6 @@
 ﻿using DriveLinker.Core.Encryption.Interfaces;
 using DriveLinker.Core.Helpers;
+using DriveLinker.Core.Linker.Interfaces;
 using DriveLinker.Core.Models;
 using DriveLinker.Core.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,7 +15,9 @@ public class DriveService : IDriveService
     private readonly IAesEncryption _encryption;
     private SQLiteAsyncConnection _db;
 
-    public DriveService(IMemoryCache cache, IAesEncryption encryption)
+    public DriveService(
+        IMemoryCache cache,
+        IAesEncryption encryption)
     {
         _cache = cache;
         _encryption = encryption;
