@@ -37,22 +37,29 @@
                            FontAttributes="Bold"
                            TextTransform="Uppercase"
                            FontSize="18" />
-                    <CollectionView x:Name="RecentlyAdded"
-                                    ItemsSource="{Binding Drives}"
-                                    SelectionMode="Single"
-                                    SelectedItem="{Binding SelectedDrive}"
-                                    SelectionChangedCommand="{Binding LoadDrivePageCommand}"
-                                    SelectionChangedCommandParameter="{Binding SelectedDrive}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal"
-                                               ItemSpacing="8"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <templates:DriveTemplate />
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    <Grid>
+                        <CollectionView x:Name="RecentlyAdded"
+                                        ItemsSource="{Binding Drives}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedDrive}"
+                                        SelectionChangedCommand="{Binding LoadDrivePageCommand}"
+                                        SelectionChangedCommandParameter="{Binding SelectedDrive}"
+                                        IsVisible="{Binding IsDrivesLoaded}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal"
+                                                   ItemSpacing="8" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <templates:DriveTemplate />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                    <ActivityIndicator IsRunning="{Binding IsLoading}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Margin="0,100,0,0"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="6" Padding="20,0">

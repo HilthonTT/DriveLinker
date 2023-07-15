@@ -9,7 +9,7 @@
         <VerticalStackLayout Spacing="5" Padding="0">
             <Grid ColumnDefinitions="*,Auto,*"
                   RowDefinitions="160,Auto">
-                <BoxView Color="WhiteSmoke"
+                <BoxView Color="White"
                          Grid.ColumnSpan="3"
                          HeightRequest="160"
                          HorizontalOptions="FillAndExpand"/>
@@ -36,14 +36,45 @@
                                  Spacing="10"
                                  Margin="20">
                 <Frame Style="{StaticResource CardView}"
-                       Padding="10"
-                       HeightRequest="150">
-                    <VerticalStackLayout Spacing="15">
-                        <Label Text="{Binding Drive.DriveName}"
-                               FontSize="20"
-                               TextColor="White"
-                               HorizontalOptions="Center"/>
-                        <Button Text="Delete Drive"/>
+                       Padding="10">
+                    <VerticalStackLayout Spacing="15" Padding="10">
+                        <FlexLayout Direction="Row"
+                                    JustifyContent="SpaceBetween">
+                            <Label HorizontalOptions="Start">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Drive.Letter}" 
+                                              FontSize="25"/>
+                                        <Span Text=": "
+                                              FontSize="25"/>
+                                        <Span Text="{Binding Drive.DriveName}"
+                                              FontSize="25"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Button Text="X"
+                                    Command="{Binding ClosePageCommand}"/>
+                        </FlexLayout>
+                        <FlexLayout>
+                            <Label HorizontalOptions="Start">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Date Added: "
+                                              FontSize="20"/>
+                                        <Span Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
+                                              FontSize="20"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </FlexLayout>
+                        <FlexLayout Direction="Row" 
+                                    JustifyContent="SpaceBetween">
+                            <Button Text="Update Drive"
+                                    Command="{Binding LoadUpdatePageCommand}"/>
+                            <BoxView WidthRequest="1" Color="Transparent" />
+                            <Button Text="Delete Drive" 
+                                    Command="{Binding DeleteRequestCommand}" />
+                        </FlexLayout>
                     </VerticalStackLayout>
                 </Frame>
             </VerticalStackLayout>

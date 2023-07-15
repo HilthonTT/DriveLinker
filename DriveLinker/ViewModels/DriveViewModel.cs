@@ -16,4 +16,32 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     {
         Drive = query["Drive"] as Drive;
     }
+
+    [RelayCommand]
+    private static async Task ClosePageAsync()
+    {
+        await Shell.Current.GoToAsync("..", true);
+    }
+
+    [RelayCommand]
+    private async Task DeleteRequestAsync()
+    {
+        bool isDelete = await Shell.Current.DisplayAlert( 
+            "Delete Drive?", 
+            "Deleting a drive is irreversible.", 
+            "Yes", 
+            "No");
+
+        if (isDelete)
+        {
+            await _driveService.DeleteDriveAsync(Drive);
+            await ClosePageAsync();
+        }
+    }
+
+    [RelayCommand]
+    private async Task LoadUpdatePageAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(UpdatePage), true);
+    }
 }

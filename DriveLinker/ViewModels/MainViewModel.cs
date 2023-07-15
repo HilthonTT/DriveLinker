@@ -19,6 +19,12 @@ public partial class MainViewModel : BaseViewModel
         _settingsService = settingsService;
         _linker = linker;
     }
+
+    [ObservableProperty]
+    private bool _isDrivesLoaded = false;
+
+    [ObservableProperty]
+    private bool _isLoading = true;
     
     [ObservableProperty]
     private bool _isNotAlreadyConnected = true;
@@ -39,6 +45,12 @@ public partial class MainViewModel : BaseViewModel
         await _linker.ConnectDriveAsync(drive);
     }
 
+    private void DrivesLoaded()
+    {
+        IsLoading = false;
+        IsDrivesLoaded = true;
+    }
+
     [RelayCommand]
     private async Task LoadDrivesAsync()
     {
@@ -52,6 +64,8 @@ public partial class MainViewModel : BaseViewModel
 
         Parallel.ForEach(drives, ChecksDriveConnection);
         Drives = new(drives);
+
+        DrivesLoaded();
 
         if (settings.AutoLink && IsNotAlreadyConnected)
         {
