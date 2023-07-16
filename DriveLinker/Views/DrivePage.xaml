@@ -62,7 +62,6 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton Style="{StaticResource EditButton}"
-                                         Source="edit.png"
                                          Command="{Binding UpdateLetterCommand}"/>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
@@ -80,7 +79,6 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton Style="{StaticResource EditButton}"
-                                         Source="edit.png"
                                          Command="{Binding UpdateDriveNameCommand}"/>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
@@ -97,8 +95,7 @@
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Source="edit.png"
+                            <ImageButton Style="{StaticResource EditButton}"t
                                          Command="{Binding UpdateIpAddressCommand}"/>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
@@ -116,7 +113,6 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton Style="{StaticResource EditButton}"
-                                         Source="edit.png"
                                          Command="{Binding UpdatePasswordCommand}"/>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
@@ -134,7 +130,6 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton Style="{StaticResource EditButton}"
-                                         Source="edit.png"
                                          Command="{Binding UpdateUserNameCommand}"/>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
