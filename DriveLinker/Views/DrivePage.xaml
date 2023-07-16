@@ -38,39 +38,121 @@
                 <Frame Style="{StaticResource CardView}"
                        Padding="10">
                     <VerticalStackLayout Spacing="15" Padding="10">
-                        <FlexLayout Direction="Row"
-                                    JustifyContent="SpaceBetween">
-                            <Label HorizontalOptions="Start">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding Drive.Letter}" 
-                                              FontSize="25"/>
-                                        <Span Text=": "
-                                              FontSize="25"/>
-                                        <Span Text="{Binding Drive.DriveName}"
-                                              FontSize="25"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label Text="Drive Info"
+                                   FontSize="28"
+                                   TextTransform="Uppercase"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Start"/>
                             <Button Text="X"
                                     Command="{Binding ClosePageCommand}"/>
                         </FlexLayout>
-                        <FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Letter: "
+                                              TextColor="LightGray"
+                                              FontSize="Title"/>
+                                        <Span Text="{Binding Drive.Letter}"
+                                              TextColor="White"
+                                              FontSize="Title"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Style="{StaticResource EditButton}"
+                                         Source="edit.png"
+                                         Command="{Binding UpdateLetterCommand}"/>
+                        </FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Drive Name: "
+                                              TextColor="LightGray"
+                                              FontSize="Title"/>
+                                        <Span Text="{Binding Drive.DriveName}"
+                                              TextColor="White"
+                                              FontSize="Title"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Style="{StaticResource EditButton}"
+                                         Source="edit.png"
+                                         Command="{Binding UpdateDriveNameCommand}"/>
+                        </FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="IP Address: "
+                                              TextColor="LightGray"
+                                              FontSize="Title"/>
+                                        <Span Text="*************"
+                                              TextColor="White"
+                                              FontSize="Title"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Style="{StaticResource EditButton}"
+                                         Source="edit.png"
+                                         Command="{Binding UpdateIpAddressCommand}"/>
+                        </FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Password: "
+                                              TextColor="LightGray"
+                                              FontSize="Title"/>
+                                        <Span Text="*************"
+                                              TextColor="White"
+                                              FontSize="Title"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Style="{StaticResource EditButton}"
+                                         Source="edit.png"
+                                         Command="{Binding UpdatePasswordCommand}"/>
+                        </FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Username: "
+                                              TextColor="LightGray"
+                                              FontSize="Title"/>
+                                        <Span Text="*************"
+                                              TextColor="White"
+                                              FontSize="Title"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Style="{StaticResource EditButton}"
+                                         Source="edit.png"
+                                         Command="{Binding UpdateUserNameCommand}"/>
+                        </FlexLayout>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
                             <Label HorizontalOptions="Start">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Date Added: "
-                                              FontSize="20"/>
+                                              FontSize="Title"
+                                              TextColor="LightGray"/>
                                         <Span Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
-                                              FontSize="20"/>
+                                              FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
                         </FlexLayout>
-                        <FlexLayout Direction="Row" 
-                                    JustifyContent="SpaceBetween">
-                            <Button Text="Update Drive"
-                                    Command="{Binding LoadUpdatePageCommand}"/>
+                        <BoxView Style="{StaticResource hr}"/>
+                        <FlexLayout Style="{StaticResource EditForm}">
                             <BoxView WidthRequest="1" Color="Transparent" />
                             <Button Text="Delete Drive" 
                                     Command="{Binding DeleteRequestCommand}" />
