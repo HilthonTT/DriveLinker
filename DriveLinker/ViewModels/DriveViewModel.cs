@@ -1,16 +1,21 @@
-﻿namespace DriveLinker.ViewModels;
+﻿using Microsoft.Extensions.Caching.Memory;
+
+namespace DriveLinker.ViewModels;
 
 public partial class DriveViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IDriveService _driveService;
     private readonly IAesEncryption _encryption;
+    private readonly IMemoryCache _cache;
 
     public DriveViewModel(
         IDriveService driveService,
-        IAesEncryption encryption)
+        IAesEncryption encryption,
+        IMemoryCache cache)
     {
         _driveService = driveService;
         _encryption = encryption;
+        _cache = cache;
     }
 
     [ObservableProperty] 
@@ -24,9 +29,17 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
 
     private async Task DecryptInformationAsync()
     {
-        Drive.Password = await _encryption.DecryptAsync(Drive.Password, Drive.Key, Drive.Iv);
-        Drive.UserName = await _encryption.DecryptAsync(Drive.UserName, Drive.Key, Drive.Iv);
-        Drive.IpAddress = await _encryption.DecryptAsync(Drive.IpAddress, Drive.Key, Drive.Iv);
+        string key = $"IsDecrypted-{Drive.Id}";
+        bool? isDecrypted = _cache.Get<bool>(key);
+        if (isDecrypted is null)
+        {
+            Drive.Password = await _encryption.DecryptAsync(Drive.Password, Drive.Key, Drive.Iv);
+            Drive.UserName = await _encryption.DecryptAsync(Drive.UserName, Drive.Key, Drive.Iv);
+            Drive.IpAddress = await _encryption.DecryptAsync(Drive.IpAddress, Drive.Key, Drive.Iv);
+
+            isDecrypted = true;
+            _cache.Set(key, isDecrypted);
+        }
     }
 
     private static async Task<string> PromptUserAsync(string title, string message)
