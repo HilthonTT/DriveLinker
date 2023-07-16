@@ -44,11 +44,7 @@ public class DriveService : IDriveService
         var output = _cache.Get<List<Drive>>(CacheName);
         if (output is null)
         {
-            var drives = await _db.Table<Drive>().ToListAsync();
-            var decryptedDrives = await drives.SelectAsync(DecryptDrive);
-
-            output = decryptedDrives.ToList();
-
+            output = await _db.Table<Drive>().ToListAsync();
             _cache.Set(CacheName, output);
         }
 
@@ -80,6 +76,8 @@ public class DriveService : IDriveService
     public async Task<int> UpdateDriveAsync(Drive drive)
     {
         _cache.Remove(CacheName);
+        drive = await EncryptDrive(drive);
+
         return await _db.UpdateAsync(drive);
     }
 
