@@ -1,4 +1,6 @@
-﻿namespace DriveLinker.ViewModels;
+﻿using DriveLinker.Helpers;
+
+namespace DriveLinker.ViewModels;
 public partial class MainViewModel : BaseViewModel
 {
     private const bool Animate = true;
@@ -7,17 +9,21 @@ public partial class MainViewModel : BaseViewModel
     private readonly IDummyService _dummyService;
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
+    private readonly IWindowsHelper _windowsHelper;
+    private readonly IWindow _window;
 
     public MainViewModel(
         IDriveService driveService,
         IDummyService dummyService,
         ISettingsService settingsService,
-        ILinker linker)
+        ILinker linker,
+        IWindowsHelper windowsHelper)
     {
         _driveService = driveService;
         _dummyService = dummyService;
         _settingsService = settingsService;
         _linker = linker;
+        _windowsHelper = windowsHelper;
     }
 
     [ObservableProperty]
@@ -49,6 +55,12 @@ public partial class MainViewModel : BaseViewModel
     {
         IsLoading = false;
         IsDrivesLoaded = true;
+    }
+
+    [RelayCommand]
+    private void MinimizeApp()
+    {
+        _windowsHelper.MinimizeWindow();
     }
 
     [RelayCommand]

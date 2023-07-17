@@ -1,4 +1,6 @@
-﻿namespace DriveLinker;
+﻿using DriveLinker.Helpers;
+
+namespace DriveLinker;
 
 public static class MauiProgram
 {
@@ -39,6 +41,7 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<IAesEncryption, AesEncryption>();
 		builder.Services.AddTransient<ILinker, Linker>();
+		builder.Services.AddTransient<IWindowsHelper,  WindowsHelper>();
 
 		Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
 		Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));

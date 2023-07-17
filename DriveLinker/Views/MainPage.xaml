@@ -27,6 +27,10 @@
                     Grid.Column="1"
                     Text="Settings"
                     Command="{Binding LoadSettingsPageCommand}"/>
+                <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Minimize"
+                    Command="{Binding MinimizeAppCommand}"/>
             </Grid>
             <VerticalStackLayout Grid.Row="1"
                                  Grid.Column="0">
