@@ -12,7 +12,7 @@ public partial class Settings : ObservableObject
     private bool _autoLink = true;
 
     [ObservableProperty]
-    private bool _autoMinimize = true;
+    private bool _autoMinimize = false;
 
     [ObservableProperty]
     private Language _language = Language.English;

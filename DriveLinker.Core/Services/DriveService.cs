@@ -45,7 +45,9 @@ public class DriveService : IDriveService
         if (output is null)
         {
             output = await _db.Table<Drive>().ToListAsync();
-            _cache.Set(CacheName, output);
+            var decryptedDrives = await output.SelectAsync(DecryptDrive);
+
+            _cache.Set(CacheName, decryptedDrives.ToList());
         }
 
         return output;

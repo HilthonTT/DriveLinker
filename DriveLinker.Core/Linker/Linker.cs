@@ -9,11 +9,9 @@ public class Linker : ILinker
     private const string Green = "#00FF00";
     private const string Red = "#FF0000";
 
+
     public async Task ConnectDriveAsync(Drive drive)
     {
-        drive.Connected = true;
-        drive.ButtonColor = Green;
-
         string arguments = GetConnectArguments(drive);
         string fileName = GetFileName();
 
@@ -21,6 +19,16 @@ public class Linker : ILinker
         process.Start();
 
         await process.WaitForExitAsync();
+
+        if (IsDriveConnected(drive))
+        {
+            drive.ButtonColor = Green;
+        }
+        else
+        {
+            drive.ButtonColor = Red;
+        }
+
         await GetErrorAsync(process, drive);
     }
 
@@ -78,8 +86,6 @@ public class Linker : ILinker
                 .DisplaySnackbar(message);
         }
     }
-
-    
 
     private static Process GetProcess(string fileName, string arguments)
     {
