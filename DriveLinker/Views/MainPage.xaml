@@ -4,6 +4,7 @@
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:templates="clr-namespace:DriveLinker.Views.Templates"
+             xmlns:helpers="clr-namespace:DriveLinker.Helpers"
              x:DataType="viewModels:MainViewModel"
              x:Class="DriveLinker.MainPage"
              Title="MainPage"
@@ -14,8 +15,29 @@
         <behaviors:EventToCommandBehavior EventName="Appearing" Command="{Binding AutoLinkDrivesCommand}"/>
     </ContentPage.Behaviors>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:PercentageConverter x:Key="PercentageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="30" Padding="0,20">
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Frame WidthRequest="200"
+                       HeightRequest="200"
+                       CornerRadius="90"
+                       BorderColor="White"
+                       BackgroundColor="White"
+                       Padding="25">
+                    <Image Source="hard_drive_icon.png"/>
+                </Frame>
+                <Label Text="Drive Linker" 
+                       HorizontalOptions="Center"
+                       TextTransform="Uppercase"
+                       FontSize="24"
+                       Margin="0,10,0,0"/>
+            </VerticalStackLayout>
             <Grid ColumnDefinitions="*,*"
                   RowDefinitions="*, *, *"
                   Padding="20,0">
@@ -27,11 +49,11 @@
                     Grid.Column="1"
                     Text="Settings"
                     Command="{Binding LoadSettingsPageCommand}"/>
-                <Button Grid.Row="2"
-                    Grid.Column="0"
-                    Text="Minimize"
-                    Command="{Binding MinimizeAppCommand}"/>
             </Grid>
+            <VerticalStackLayout Margin="40,0,40,0">
+                <Label Text="{Binding Progress, Converter={StaticResource PercentageConverter}}" FontSize="20"/>
+                <ProgressBar Progress="{Binding Progress}" />
+            </VerticalStackLayout>
             <VerticalStackLayout Grid.Row="1"
                                  Grid.Column="0">
                 <VerticalStackLayout Spacing="6"

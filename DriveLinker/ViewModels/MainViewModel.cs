@@ -35,6 +35,9 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isNotAlreadyConnected = true;
 
+    [ObservableProperty]
+    private double _progress = 0;
+
     [ObservableProperty] 
     private ObservableCollection<Drive> _drives = new();
 
@@ -55,6 +58,14 @@ public partial class MainViewModel : BaseViewModel
     {
         IsLoading = false;
         IsDrivesLoaded = true;
+    }
+
+    private void RecalculateProgress()
+    {
+        var connectedDrives = Drives.Where(d => d.Connected).ToList();
+
+        float connectedDrivesCount = connectedDrives.Count;
+        Progress = connectedDrivesCount / Drives.Count;
     }
 
     [RelayCommand]
@@ -99,6 +110,7 @@ public partial class MainViewModel : BaseViewModel
         foreach (var drive in nonConnectedDrives)
         {
             await _linker.ConnectDriveAsync(drive);
+            RecalculateProgress();
         }
     }
 
@@ -115,6 +127,7 @@ public partial class MainViewModel : BaseViewModel
         foreach (var drive in connectedDrives)
         {
             await _linker.DisconnectDriveAsync(drive);
+            RecalculateProgress();
         }
     }
 
