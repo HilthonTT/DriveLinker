@@ -3,6 +3,7 @@
 namespace DriveLinker.ViewModels;
 public partial class MainViewModel : BaseViewModel
 {
+    private CountdownTimer _timer;
     private const bool Animate = true;
     
     private readonly IDriveService _driveService;
@@ -24,6 +25,8 @@ public partial class MainViewModel : BaseViewModel
         _settingsService = settingsService;
         _linker = linker;
         _windowsHelper = windowsHelper;
+
+        SetUpTimer();
     }
 
     [ObservableProperty]
@@ -36,13 +39,48 @@ public partial class MainViewModel : BaseViewModel
     private bool _isNotAlreadyConnected = true;
 
     [ObservableProperty]
+    private bool _isCountdownVisible;
+
+    [ObservableProperty]
     private double _progress = 0;
+
+    [ObservableProperty]
+    private int _secondsRemaining;
 
     [ObservableProperty] 
     private ObservableCollection<Drive> _drives = new();
 
     [ObservableProperty]
     private Drive _selectedDrive = new();
+
+    private async Task SetUpTimer()
+    {
+        var settings = await _settingsService.GetSettingsAsync();
+
+        if (settings?.AutoMinimize is true)
+        {
+            IsCountdownVisible = true;
+
+            _timer = new(10);
+            _timer.Start();
+            _timer.CountdownTick += OnCountdownTick;
+            _timer.CountdownFinished += OnCountdownFinished;
+        }
+        else
+        {
+            IsCountdownVisible = false;
+        }
+    }
+
+    private void OnCountdownTick(object sender, int secondsRemaining)
+    {
+        SecondsRemaining = secondsRemaining;
+    }
+
+    private void OnCountdownFinished(object sender, EventArgs e)
+    {
+        _windowsHelper.MinimizeWindow();
+    }
 
     private void ChecksDriveConnection(Drive drive)
     {
@@ -87,7 +125,7 @@ public partial class MainViewModel : BaseViewModel
 
         Parallel.ForEach(drives, ChecksDriveConnection);
         Drives = new(drives);
-
+        RecalculateProgress();
         DrivesLoaded();
 
         if (settings.AutoLink && IsNotAlreadyConnected)
