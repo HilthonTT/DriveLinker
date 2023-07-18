@@ -63,33 +63,13 @@ public partial class MainViewModel : BaseViewModel
 
             _timer = new(10);
             _timer.Start();
-            _timer.CountdownTick += OnCountdownTick;
-            _timer.CountdownFinished += OnCountdownFinished;
+            _timer.CountdownTick += (e, s) => SecondsRemaining = s;
+            _timer.CountdownFinished += (s, e) => _windowsHelper.MinimizeWindow();
         }
         else
         {
             IsCountdownVisible = false;
         }
-    }
-
-    private void OnCountdownTick(object sender, int secondsRemaining)
-    {
-        SecondsRemaining = secondsRemaining;
-    }
-
-    private void OnCountdownFinished(object sender, EventArgs e)
-    {
-        _windowsHelper.MinimizeWindow();
-    }
-
-    private void ChecksDriveConnection(Drive drive)
-    {
-        _linker.IsDriveConnected(drive);
-    }
-
-    private async Task LinkDriveAsync(Drive drive)
-    {
-        await _linker.ConnectDriveAsync(drive);
     }
 
     private void DrivesLoaded()
@@ -123,7 +103,7 @@ public partial class MainViewModel : BaseViewModel
             drives = _dummyService.GetDummyDrives();
         }
 
-        Parallel.ForEach(drives, ChecksDriveConnection);
+        Parallel.ForEach(drives, (d) => _linker.IsDriveConnected(d));
         Drives = new(drives);
         RecalculateProgress();
         DrivesLoaded();
