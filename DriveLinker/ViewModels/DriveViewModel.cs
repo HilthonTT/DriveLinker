@@ -48,12 +48,6 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private static async Task ClosePageAsync()
-    {
-        await Shell.Current.GoToAsync("..", true);
-    }
-
-    [RelayCommand]
     private async Task DeleteRequestAsync()
     {
         bool isDelete = await Shell.Current.DisplayAlert( 

@@ -42,6 +42,48 @@
                 <Setter Property="Margin" Value="0,10"/>
             </Style>
 
+            <Style x:Key="Button" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="BorderColor" Value="White" />
+                <Setter Property="BorderWidth" Value="2" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="BackgroundColor" Value="#282828"/>
+            </Style>
+
+            <Style x:Key="CloseButton" TargetType="ImageButton">
+                <Setter Property="Source" Value="xmark_icon.png"/>
+                <Setter Property="WidthRequest" Value="25" />
+                <Setter Property="HeightRequest" Value="25" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="AppIconFrame" TargetType="Frame">
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="HeightRequest" Value="150"/>
+                <Setter Property="CornerRadius" Value="90"/>
+                <Setter Property="BorderColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="25"/>
+            </Style>
+
+            <Style x:Key="AppIconFrameSmall" TargetType="Frame">
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="HeightRequest" Value="100"/>
+                <Setter Property="CornerRadius" Value="90"/>
+                <Setter Property="BorderColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="15"/>
+            </Style>
+
+            <Style x:Key="AppIcon" TargetType="Image">
+                <Setter Property="Source" Value="hard_drive_icon.png"/>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -6,151 +6,199 @@
              x:Class="DriveLinker.Views.DrivePage"
              Title="Drive Page">
     <ScrollView>
-        <VerticalStackLayout Spacing="5" Padding="0">
-            <Grid ColumnDefinitions="*,Auto,*"
-                  RowDefinitions="160,Auto">
-                <BoxView Color="White"
-                         Grid.ColumnSpan="3"
-                         HeightRequest="160"
-                         HorizontalOptions="FillAndExpand"/>
-                <Frame Grid.RowSpan="2"
-                       Grid.Column="1"
-                       HeightRequest="160"
-                       CornerRadius="80"
-                       HorizontalOptions="Center"
-                       Padding="0"
-                       Margin="0,80,0,0"
-                       BackgroundColor="#121212">
-                    <FlexLayout HeightRequest="160"
-                                WidthRequest="160">
-                        <Label Text="{Binding Drive.Letter}"
-                               FontSize="75"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               TextColor="White"
-                               Margin="29, 0, 0, 0"/>
+        <VerticalStackLayout 
+            Spacing="5" 
+            Padding="0">
+            <Grid 
+                ColumnDefinitions="*,Auto,*"
+                RowDefinitions="160,Auto">
+                <BoxView 
+                    Color="White"
+                    Grid.ColumnSpan="3"
+                    HeightRequest="160"
+                    HorizontalOptions="FillAndExpand"/>
+                <Frame 
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    HeightRequest="160"
+                    CornerRadius="80"
+                    HorizontalOptions="Center"
+                    Padding="0"
+                    Margin="0,80,0,0"
+                    BackgroundColor="#121212">
+                    <FlexLayout 
+                        HeightRequest="160"
+                        WidthRequest="160">
+                        <Label 
+                            Text="{Binding Drive.Letter}"
+                            FontSize="75"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            TextColor="White"
+                            Margin="29, 0, 0, 0"/>
                     </FlexLayout>
                 </Frame>
             </Grid>
-            <VerticalStackLayout Padding="10"
-                                 Spacing="10"
-                                 Margin="20">
-                <Frame Style="{StaticResource CardView}"
-                       Padding="10">
-                    <VerticalStackLayout Spacing="15" Padding="10">
-                        <FlexLayout Style="{StaticResource EditForm}">
-                            <Label Text="Drive Info"
-                                   FontSize="28"
-                                   TextTransform="Uppercase"
-                                   FontAttributes="Bold"
-                                   HorizontalOptions="Start"/>
-                            <Button Text="X"
-                                    Command="{Binding ClosePageCommand}"/>
+            <VerticalStackLayout 
+                Padding="10"
+                Spacing="10"
+                Margin="20">
+                <Frame 
+                    Style="{StaticResource CardView}"
+                    Padding="10">
+                    <VerticalStackLayout 
+                        Spacing="15" 
+                        Padding="10">
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
+                            <Label 
+                                Text="Drive Info"
+                                FontSize="28"
+                                TextTransform="Uppercase"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Start"/>
+                            <ImageButton 
+                                Command="{Binding ClosePageCommand}"
+                                Style="{StaticResource CloseButton}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Letter: "
-                                              TextColor="LightGray"
-                                              FontSize="Title"/>
-                                        <Span Text="{Binding Drive.Letter}"
-                                              TextColor="White"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="Letter: "
+                                            TextColor="LightGray"
+                                            FontSize="Title"/>
+                                        <Span 
+                                            Text="{Binding Drive.Letter}"
+                                            TextColor="White"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Command="{Binding UpdateLetterCommand}"/>
+                            <ImageButton 
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding UpdateLetterCommand}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Drive Name: "
-                                              TextColor="LightGray"
-                                              FontSize="Title"/>
-                                        <Span Text="{Binding Drive.DriveName}"
-                                              TextColor="White"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="Drive Name: "
+                                            TextColor="LightGray"
+                                            FontSize="Title"/>
+                                        <Span 
+                                            Text="{Binding Drive.DriveName}"
+                                            TextColor="White"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Command="{Binding UpdateDriveNameCommand}"/>
+                            <ImageButton 
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding UpdateDriveNameCommand}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="IP Address: "
-                                              TextColor="LightGray"
-                                              FontSize="Title"/>
-                                        <Span Text="*************"
-                                              TextColor="White"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="IP Address: "
+                                            TextColor="LightGray"
+                                            FontSize="Title"/>
+                                        <Span 
+                                            Text="*************"
+                                            TextColor="White"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Command="{Binding UpdateIpAddressCommand}"/>
+                            <ImageButton 
+                                Style="{StaticResource EditButton}"       
+                                Command="{Binding UpdateIpAddressCommand}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Password: "
-                                              TextColor="LightGray"
-                                              FontSize="Title"/>
-                                        <Span Text="*************"
-                                              TextColor="White"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="Password: "
+                                            TextColor="LightGray"
+                                            FontSize="Title"/>
+                                        <Span 
+                                            Text="*************"
+                                            TextColor="White"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Command="{Binding UpdatePasswordCommand}"/>
+                            <ImageButton 
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding UpdatePasswordCommand}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Username: "
-                                              TextColor="LightGray"
-                                              FontSize="Title"/>
-                                        <Span Text="*************"
-                                              TextColor="White"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="Username: "
+                                            TextColor="LightGray"
+                                            FontSize="Title"/>
+                                        <Span 
+                                            Text="*************"
+                                            TextColor="White"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-                            <ImageButton Style="{StaticResource EditButton}"
-                                         Command="{Binding UpdateUserNameCommand}"/>
+                            <ImageButton 
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding UpdateUserNameCommand}"/>
                         </FlexLayout>
-                        <BoxView Style="{StaticResource hr}"/>
-                        <FlexLayout Style="{StaticResource EditForm}">
-                            <Label HorizontalOptions="Start">
+                        <BoxView 
+                            Style="{StaticResource hr}"/>
+                        <FlexLayout 
+                            Style="{StaticResource EditForm}">
+                            <Label 
+                                HorizontalOptions="Start">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Date Added: "
-                                              FontSize="Title"
-                                              TextColor="LightGray"/>
-                                        <Span Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
-                                              FontSize="Title"/>
+                                        <Span 
+                                            Text="Date Added: "
+                                            FontSize="Title"
+                                            TextColor="LightGray"/>
+                                        <Span 
+                                            Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
+                                            FontSize="Title"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
                         </FlexLayout>
                         <BoxView Style="{StaticResource hr}"/>
                         <FlexLayout Style="{StaticResource EditForm}">
-                            <BoxView WidthRequest="1" Color="Transparent" />
-                            <Button Text="Delete Drive" 
-                                    Command="{Binding DeleteRequestCommand}" />
+                            <BoxView 
+                                WidthRequest="1" 
+                                Color="Transparent" />
+                            <Button 
+                                Text="Delete Drive" 
+                                Command="{Binding DeleteRequestCommand}" 
+                                Style="{StaticResource Button}"/>
                         </FlexLayout>
                     </VerticalStackLayout>
                 </Frame>

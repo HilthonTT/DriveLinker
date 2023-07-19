@@ -58,14 +58,9 @@
             <VerticalStackLayout 
                 HorizontalOptions="Center">
                 <Frame 
-                    WidthRequest="200"
-                    HeightRequest="200"
-                    CornerRadius="90"
-                    BorderColor="White"
-                    BackgroundColor="White"
-                    Padding="25">
+                    Style="{StaticResource AppIconFrame}">
                     <Image 
-                        Source="hard_drive_icon.png"/>
+                        Style="{StaticResource AppIcon}"/>
                 </Frame>
                 <Label 
                     Text="Drive Linker" 
@@ -82,12 +77,14 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Text="Create A Drive"
-                    Command="{Binding LoadCreatePageCommand}"/>
+                    Command="{Binding LoadCreatePageCommand}"
+                    Style="{StaticResource Button}"/>
                 <Button 
                     Grid.Row="0"
                     Grid.Column="1"
                     Text="Settings"
-                    Command="{Binding LoadSettingsPageCommand}"/>
+                    Command="{Binding LoadSettingsPageCommand}"
+                    Style="{StaticResource Button}"/>
             </Grid>
             <VerticalStackLayout 
                 Margin="40,0,40,0">
@@ -147,10 +144,12 @@
                     <HorizontalStackLayout Spacing="8">
                         <Button 
                             Text="Link Drives"
-                            Command="{Binding LinkAllDrivesCommand}"/>
+                            Command="{Binding LinkAllDrivesCommand}"
+                            Style="{StaticResource Button}"/>
                         <Button 
                             Text="Unlink Drives"
-                            Command="{Binding UnlinkAllDrivesCommand}"/>
+                            Command="{Binding UnlinkAllDrivesCommand}"
+                            Style="{StaticResource Button}"/>
                     </HorizontalStackLayout>
                     <CollectionView 
                         x:Name="DriveListings"
