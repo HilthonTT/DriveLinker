@@ -11,7 +11,6 @@ public partial class MainViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
     private readonly IWindowsHelper _windowsHelper;
-    private readonly IWindow _window;
 
     public MainViewModel(
         IDriveService driveService,
@@ -53,6 +52,12 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private Drive _selectedDrive = new();
 
+    private void HandleCountdownFinished()
+    {
+        _windowsHelper.MinimizeWindow();
+        IsCountdownVisible = false;
+    }
+
     private async Task SetUpTimer()
     {
         var settings = await _settingsService.GetSettingsAsync();
@@ -64,7 +69,7 @@ public partial class MainViewModel : BaseViewModel
             _timer = new(10);
             _timer.Start();
             _timer.CountdownTick += (e, s) => SecondsRemaining = s;
-            _timer.CountdownFinished += (s, e) => _windowsHelper.MinimizeWindow();
+            _timer.CountdownFinished += (s, e) => HandleCountdownFinished();
         }
         else
         {

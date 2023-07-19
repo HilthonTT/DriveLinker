@@ -1,7 +1,4 @@
-﻿using DriveLinker.Core.Enums;
-using DriveLinker.Models;
-
-namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
@@ -30,7 +27,7 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private Language _selectedLanguage = Language.English;
 
-    private async Task ClosePageAsync()
+    private static async Task ClosePageAsync()
     {
         await Shell.Current.GoToAsync("..");
     }
@@ -51,7 +48,7 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveSettingsAsync()
     {
-        await _settingsService.UpdateSettingsAsync(Settings);
+        await _settingsService.SetSettingsAsync(Settings);
         await ClosePageAsync();
     }
 }

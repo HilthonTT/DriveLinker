@@ -46,6 +46,18 @@ public class SettingsService : ISettingsService
         return output;
     }
 
+    public async Task<int> SetSettingsAsync(Settings settings)
+    {
+        if (settings.Id is 0)
+        {
+            return await CreateSettingsAsync(settings);
+        }
+        else
+        {
+            return await UpdateSettingsAsync(settings);
+        }
+    }
+
     public async Task<int> CreateSettingsAsync(Settings settings)
     {
         return await _db.InsertAsync(settings);
