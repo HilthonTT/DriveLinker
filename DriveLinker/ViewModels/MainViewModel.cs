@@ -18,6 +18,7 @@ public partial class MainViewModel : BaseViewModel
         ISettingsService settingsService,
         ILinker linker,
         IWindowsHelper windowsHelper)
+        : base(settingsService, windowsHelper)
     {
         _driveService = driveService;
         _dummyService = dummyService;
@@ -25,7 +26,7 @@ public partial class MainViewModel : BaseViewModel
         _linker = linker;
         _windowsHelper = windowsHelper;
 
-        SetUpTimer();
+        SetUpTimerAsync();
     }
 
     [ObservableProperty]
@@ -38,44 +39,13 @@ public partial class MainViewModel : BaseViewModel
     private bool _isNotAlreadyConnected = true;
 
     [ObservableProperty]
-    private bool _isCountdownVisible;
-
-    [ObservableProperty]
     private double _progress = 0;
-
-    [ObservableProperty]
-    private int _secondsRemaining;
 
     [ObservableProperty] 
     private ObservableCollection<Drive> _drives = new();
 
     [ObservableProperty]
     private Drive _selectedDrive = new();
-
-    private void HandleCountdownFinished()
-    {
-        _windowsHelper.MinimizeWindow();
-        IsCountdownVisible = false;
-    }
-
-    private async Task SetUpTimer()
-    {
-        var settings = await _settingsService.GetSettingsAsync();
-
-        if (settings?.AutoMinimize is true)
-        {
-            IsCountdownVisible = true;
-
-            _timer = new(10);
-            _timer.Start();
-            _timer.CountdownTick += (e, s) => SecondsRemaining = s;
-            _timer.CountdownFinished += (s, e) => HandleCountdownFinished();
-        }
-        else
-        {
-            IsCountdownVisible = false;
-        }
-    }
 
     private void DrivesLoaded()
     {

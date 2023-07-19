@@ -1,5 +1,5 @@
-﻿using DriveLinker.Models;
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
+using DriveLinker.Helpers;
 
 namespace DriveLinker.ViewModels;
 public partial class CreateViewModel : BaseViewModel
@@ -7,7 +7,10 @@ public partial class CreateViewModel : BaseViewModel
     private readonly IDriveService _driveService;
 
     public CreateViewModel(
-        IDriveService driveService)
+        IDriveService driveService,
+        ISettingsService settingsService,
+        IWindowsHelper windowsHelper)
+        : base(settingsService, windowsHelper)
     {
         _driveService = driveService;
     }

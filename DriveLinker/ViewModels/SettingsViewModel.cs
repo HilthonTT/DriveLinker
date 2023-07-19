@@ -1,4 +1,6 @@
-﻿namespace DriveLinker.ViewModels;
+﻿using DriveLinker.Helpers;
+
+namespace DriveLinker.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
@@ -6,10 +8,14 @@ public partial class SettingsViewModel : BaseViewModel
 
     public SettingsViewModel(
         ISettingsService settingsService,
+        IWindowsHelper windowsHelper,
         ILanguageService languageService)
+        : base(settingsService, windowsHelper)
     {
         _settingsService = settingsService;
         _languageService = languageService;
+
+        SetUpTimerAsync();
     }
 
     [ObservableProperty]

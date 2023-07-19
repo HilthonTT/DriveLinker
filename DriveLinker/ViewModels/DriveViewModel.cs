@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using DriveLinker.Helpers;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace DriveLinker.ViewModels;
 
@@ -11,7 +12,10 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     public DriveViewModel(
         IDriveService driveService,
         IAesEncryption encryption,
-        IMemoryCache cache)
+        IMemoryCache cache, 
+        ISettingsService settingsService,
+        IWindowsHelper windowsHelper)
+        : base(settingsService, windowsHelper)
     {
         _driveService = driveService;
         _encryption = encryption;
