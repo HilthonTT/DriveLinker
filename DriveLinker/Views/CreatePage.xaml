@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
              x:Class="DriveLinker.Views.CreatePage"
              x:DataType="viewModels:CreateViewModel"
-             Title="CreatePage">
+             Title="Create A Drive">
 
     <ScrollView>
         <VerticalStackLayout 

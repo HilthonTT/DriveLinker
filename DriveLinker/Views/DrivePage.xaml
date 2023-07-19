@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
              x:DataType="viewModels:DriveViewModel"
              x:Class="DriveLinker.Views.DrivePage"
-             Title="Drive Page">
+             Title="{Binding Drive.Letter}">
     <ScrollView>
         <VerticalStackLayout 
             Spacing="5" 

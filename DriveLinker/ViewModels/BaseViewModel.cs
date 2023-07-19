@@ -3,7 +3,7 @@
 namespace DriveLinker.ViewModels;
 public partial class BaseViewModel : ObservableObject
 {
-    private CountdownTimer _timer;
+    private static CountdownTimer _timer;
     private readonly ISettingsService _settingsService;
     private readonly IWindowsHelper _windowsHelper;
 
