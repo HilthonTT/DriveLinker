@@ -33,7 +33,7 @@
             <VerticalStackLayout 
                 HorizontalOptions="End"             
                 Margin="0,0,5,0"
-                IsVisible="{Binding IsCountdownVisible}">
+                IsVisible="{Binding TimerTracker.IsCountdownVisible}">
                 <Border 
                     BackgroundColor="White"
                     HorizontalOptions="FillAndExpand"
@@ -46,7 +46,7 @@
                         Orientation="Horizontal"   
                         VerticalOptions="CenterAndExpand">
                         <Label 
-                            Text="{Binding SecondsRemaining, StringFormat='Countdown: {0}'}"
+                            Text="{Binding TimerTracker.SecondsRemaining, StringFormat='Countdown: {0}'}"
                             HorizontalOptions="CenterAndExpand" 
                             VerticalOptions="CenterAndExpand" 
                             FontSize="24"

@@ -1,12 +1,21 @@
 ﻿namespace DriveLinker.Models;
 
-public class CreateDriveModel
+public partial class CreateDriveModel : ObservableObject
 {
-    public string Letter { get; set; }
-    public string IpAddress { get; set; }
-    public string DriveName { get; set; }
-    public string Password { get; set; }
-    public string UserName { get; set; }
+    [ObservableProperty]
+    private string _letter;
+
+    [ObservableProperty]
+    private string _ipAddress;
+
+    [ObservableProperty]
+    private string _driveName;
+
+    [ObservableProperty]
+    private string _password;
+
+    [ObservableProperty]
+    private string _userName;
 
     public CreateDriveModel()
     {

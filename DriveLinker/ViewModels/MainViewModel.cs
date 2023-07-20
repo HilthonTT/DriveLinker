@@ -2,29 +2,25 @@
 
 namespace DriveLinker.ViewModels;
 public partial class MainViewModel : BaseViewModel
-{
-    private CountdownTimer _timer;
-    private const bool Animate = true;
-    
+{    
     private readonly IDriveService _driveService;
     private readonly IDummyService _dummyService;
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
-    private readonly IWindowsHelper _windowsHelper;
 
     public MainViewModel(
         IDriveService driveService,
         IDummyService dummyService,
         ISettingsService settingsService,
         ILinker linker,
-        IWindowsHelper windowsHelper)
-        : base(settingsService, windowsHelper)
+        IWindowsHelper windowsHelper,
+        TimerTracker timerTracker)
+        : base(settingsService, windowsHelper, timerTracker)
     {
         _driveService = driveService;
         _dummyService = dummyService;
         _settingsService = settingsService;
         _linker = linker;
-        _windowsHelper = windowsHelper;
 
         SetUpTimerAsync();
     }
@@ -59,12 +55,6 @@ public partial class MainViewModel : BaseViewModel
 
         float connectedDrivesCount = connectedDrives.Count;
         Progress = connectedDrivesCount / Drives.Count;
-    }
-
-    [RelayCommand]
-    private void MinimizeApp()
-    {
-        _windowsHelper.MinimizeWindow();
     }
 
     [RelayCommand]

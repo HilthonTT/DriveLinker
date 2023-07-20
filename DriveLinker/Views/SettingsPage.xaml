@@ -15,13 +15,13 @@
             EventName="Appearing" 
             Command="{Binding LoadSettingsCommand}"/>
     </ContentPage.Behaviors>
-    
+
     <ScrollView>
         <Grid 
             Padding="0,0,0,20">
             <VerticalStackLayout 
-                Spacing="30"
-                Padding="15">
+                    Spacing="30"
+                    Padding="15">
                 <VerticalStackLayout 
                     HorizontalOptions="Center">
                     <Grid 

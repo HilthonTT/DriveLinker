@@ -9,8 +9,9 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel(
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
-        ILanguageService languageService)
-        : base(settingsService, windowsHelper)
+        ILanguageService languageService,
+        TimerTracker timerTracker)
+        : base(settingsService, windowsHelper, timerTracker)
     {
         _settingsService = settingsService;
         _languageService = languageService;

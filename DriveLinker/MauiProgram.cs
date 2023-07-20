@@ -24,6 +24,8 @@ public static class MauiProgram
 
 		builder.Services.AddMemoryCache();
 
+		builder.Services.AddSingleton<TimerTracker>();
+
 		builder.Services.AddTransient<MainViewModel>();
 		builder.Services.AddTransient<SettingsViewModel>();
 		builder.Services.AddTransient<CreateViewModel>();

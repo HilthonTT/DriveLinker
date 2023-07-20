@@ -14,8 +14,9 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         IAesEncryption encryption,
         IMemoryCache cache, 
         ISettingsService settingsService,
-        IWindowsHelper windowsHelper)
-        : base(settingsService, windowsHelper)
+        IWindowsHelper windowsHelper,
+        TimerTracker timerTracker)
+        : base(settingsService, windowsHelper, timerTracker)
     {
         _driveService = driveService;
         _encryption = encryption;

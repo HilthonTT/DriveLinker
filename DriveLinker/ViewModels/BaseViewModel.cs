@@ -11,20 +11,19 @@ public partial class BaseViewModel : ObservableObject
 
     public BaseViewModel(
         ISettingsService settingsService,
-        IWindowsHelper windowsHelper)
+        IWindowsHelper windowsHelper,
+        TimerTracker timerTracker)
     {
         _settingsService = settingsService;
         _windowsHelper = windowsHelper;
+        TimerTracker = timerTracker;
     }
+
+    [ObservableProperty]
+    private TimerTracker _timerTracker;
 
     [ObservableProperty] 
     private bool _isBusy;
-
-    [ObservableProperty]
-    private bool _isCountdownVisible;
-
-    [ObservableProperty]
-    private int _secondsRemaining;
 
     [ObservableProperty]
     private Drive _selectedDrive = new();
@@ -63,7 +62,7 @@ public partial class BaseViewModel : ObservableObject
     private void HandleCountdownFinished()
     {
         _windowsHelper.MinimizeWindow();
-        IsCountdownVisible = false;
+        TimerTracker.IsCountdownVisible = false;
     }
 
     public async Task SetUpTimerAsync()
@@ -72,16 +71,16 @@ public partial class BaseViewModel : ObservableObject
 
         if (settings?.AutoMinimize is true)
         {
-            IsCountdownVisible = true;
+            TimerTracker.IsCountdownVisible = true;
 
             _timer = new(10);
             _timer.Start();
-            _timer.CountdownTick += (e, s) => SecondsRemaining = s;
+            _timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
             _timer.CountdownFinished += (s, e) => HandleCountdownFinished();
         }
         else
         {
-            IsCountdownVisible = false;
+            TimerTracker.IsCountdownVisible = false;
         }
     }
 }

@@ -9,8 +9,9 @@ public partial class CreateViewModel : BaseViewModel
     public CreateViewModel(
         IDriveService driveService,
         ISettingsService settingsService,
-        IWindowsHelper windowsHelper)
-        : base(settingsService, windowsHelper)
+        IWindowsHelper windowsHelper,
+        TimerTracker timerTracker)
+        : base(settingsService, windowsHelper, timerTracker)
     {
         _driveService = driveService;
     }
