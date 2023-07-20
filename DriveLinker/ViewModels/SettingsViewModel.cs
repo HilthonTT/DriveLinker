@@ -14,8 +14,6 @@ public partial class SettingsViewModel : BaseViewModel
     {
         _settingsService = settingsService;
         _languageService = languageService;
-
-        SetUpTimerAsync();
     }
 
     [ObservableProperty]

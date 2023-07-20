@@ -45,6 +45,9 @@ public partial class MainViewModel : BaseViewModel
     private ObservableCollection<Drive> _drives = new();
 
     [ObservableProperty]
+    private List<string> _searchResults;
+
+    [ObservableProperty]
     private Drive _selectedDrive = new();
 
     private void DrivesLoaded()
@@ -122,6 +125,20 @@ public partial class MainViewModel : BaseViewModel
             await _linker.DisconnectDriveAsync(drive);
             RecalculateProgress();
         }
+    }
+
+    [RelayCommand]
+    private async Task PerformSearchAsync(string query)
+    {
+        var output = await _driveService.GetAllDrivesAsync();
+
+        if (string.IsNullOrWhiteSpace(query) is false)
+        {
+            output = output.Where(d => d.DriveName.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
+                d.Letter.Contains(query, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        }
+        
+        Drives = output.ToObservableCollection();
     }
 
     [RelayCommand]

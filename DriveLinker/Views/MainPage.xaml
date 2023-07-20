@@ -95,6 +95,15 @@
                     Progress="{Binding Progress}" />
             </VerticalStackLayout>
             <VerticalStackLayout 
+                Margin="40,20,40,0">
+                <SearchBar 
+                    x:Name="SearchBar"
+                    Placeholder="Search"
+                    PlaceholderColor="White"
+                    SearchCommand="{Binding PerformSearchCommand}"
+                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout 
                 Grid.Row="1"          
                 Grid.Column="0">
                 <VerticalStackLayout 
