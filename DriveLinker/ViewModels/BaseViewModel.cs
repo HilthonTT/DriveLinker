@@ -3,6 +3,8 @@
 namespace DriveLinker.ViewModels;
 public partial class BaseViewModel : ObservableObject
 {
+    private const bool Animate = true;
+
     private static CountdownTimer _timer;
     private readonly ISettingsService _settingsService;
     private readonly IWindowsHelper _windowsHelper;
@@ -23,11 +25,39 @@ public partial class BaseViewModel : ObservableObject
 
     [ObservableProperty]
     private int _secondsRemaining;
-    
+
+    [ObservableProperty]
+    private Drive _selectedDrive = new();
+
     [RelayCommand]
     public static async Task ClosePageAsync()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    public async Task LoadDrivePageAsync()
+    {
+        var parameters = new Dictionary<string, object>
+        {
+            { "Drive", SelectedDrive },
+        };
+
+        await Shell.Current.GoToAsync(nameof(DrivePage), Animate, parameters);
+
+        SelectedDrive = null;
+    }
+
+    [RelayCommand]
+    public async Task LoadSettingsPage()
+    {
+        await Shell.Current.GoToAsync(nameof(SettingsPage), Animate);
+    }
+
+    [RelayCommand]
+    public async Task LoadCreatePage()
+    {
+        await Shell.Current.GoToAsync(nameof(CreatePage), Animate);
     }
 
     private void HandleCountdownFinished()

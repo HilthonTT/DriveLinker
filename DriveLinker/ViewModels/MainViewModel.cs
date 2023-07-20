@@ -47,9 +47,6 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private List<string> _searchResults;
 
-    [ObservableProperty]
-    private Drive _selectedDrive = new();
-
     private void DrivesLoaded()
     {
         IsLoading = false;
@@ -134,35 +131,41 @@ public partial class MainViewModel : BaseViewModel
 
         if (string.IsNullOrWhiteSpace(query) is false)
         {
-            output = output.Where(d => d.DriveName.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
-                d.Letter.Contains(query, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            var drivesWithScores = output.Select(d => new
+            {
+                Drive = d,
+                Score = CalculateMatchingScore(d, query)
+            });
+
+            var sortedDrives = drivesWithScores.OrderByDescending(d => d.Score).Select(d => d.Drive).ToList();
+
+            Drives = sortedDrives.ToObservableCollection();
         }
-        
-        Drives = output.ToObservableCollection();
-    }
-
-    [RelayCommand]
-    private async Task LoadDrivePageAsync()
-    {
-        var parameters = new Dictionary<string, object>
+        else
         {
-            { "Drive", SelectedDrive },
-        };
-
-        await Shell.Current.GoToAsync(nameof(DrivePage), Animate, parameters);
-
-        SelectedDrive = null;
+            Drives = output.ToObservableCollection();
+        }
     }
 
-    [RelayCommand]
-    private async Task LoadSettingsPage()
+    private static int CalculateMatchingScore(Drive drive, string query)
     {
-        await Shell.Current.GoToAsync(nameof(SettingsPage), Animate);
+        int score = 0;
+
+        score += CountOccurrences(drive.DriveName, query, StringComparison.InvariantCultureIgnoreCase);
+        score += CountOccurrences(drive.Letter, query, StringComparison.InvariantCultureIgnoreCase);
+
+        return score;
     }
 
-    [RelayCommand]
-    private async Task LoadCreatePage()
+    private static int CountOccurrences(string source, string query, StringComparison comparison)
     {
-        await Shell.Current.GoToAsync(nameof(CreatePage), Animate);
+        int count = 0;
+        int i = 0;
+        while ((i = source.IndexOf(query, i, comparison)) != -1)
+        {
+            i += query.Length;
+            count++;
+        }
+        return count;
     }
 }
