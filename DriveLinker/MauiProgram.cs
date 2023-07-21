@@ -22,6 +22,7 @@ public static class MauiProgram
 		builder.ConfigureViewModels();
 		builder.ConfigurePages();
 		builder.ConfigureServices();
+		builder.ConfigureLanguages();
 
 		RegisterServices.ConfigureRouting();
 

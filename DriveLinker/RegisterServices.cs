@@ -33,6 +33,16 @@ public static class RegisterServices
         builder.Services.AddTransient<DrivePage>();
     }
 
+    public static void ConfigureLanguages(this MauiAppBuilder builder)
+    {
+        builder.Services.AddSingleton<ILanguageDictionary, LanguageDictionary>();
+
+        builder.Services.AddSingleton<IEnglishDictionary, EnglishDictionary>();
+        builder.Services.AddSingleton<IFrenchDictionary, FrenchDictionary>();
+        builder.Services.AddSingleton<IGermanDictionary, GermanDictionary>();
+        builder.Services.AddSingleton<IIndonesianDictionary, IndonesianDictionary>();
+    }
+
     public static void ConfigureRouting()
     {
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));

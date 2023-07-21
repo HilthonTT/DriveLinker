@@ -1,0 +1,30 @@
+﻿namespace DriveLinker.Core.Enums;
+
+public enum Keyword
+{
+    CreateADrive,
+    Settings,
+    Search,
+    RecentlyAdded,
+    DriveListing,
+    LinkDrives,
+    UnlinkDrives,
+    Letter,
+    LetterDesc,
+    IpAddress,
+    IpAddressDesc,
+    DriveName,
+    DriveNameDesc,
+    Password,
+    PasswordDesc,
+    UserName,
+    UserNameDesc,
+    Create,
+    AutoLinkDrives,
+    AutoMinimize,
+    Language,
+    English,
+    French,
+    German,
+    Indonesian,
+}

@@ -19,3 +19,5 @@ global using DriveLinker.Models;
 global using DriveLinker.Helpers;
 global using CommunityToolkit.Maui.Alerts;
 global using Microsoft.Extensions.Caching.Memory;
+global using DriveLinker.Core.Languages;
+global using DriveLinker.Core.Languages.Interfaces;
