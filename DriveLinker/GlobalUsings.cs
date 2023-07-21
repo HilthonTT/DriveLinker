@@ -16,3 +16,4 @@ global using CommunityToolkit.Maui.Core;
 global using Microsoft.Extensions.Logging;
 global using DriveLinker.Core.Enums;
 global using DriveLinker.Models;
+global using DriveLinker.Helpers;

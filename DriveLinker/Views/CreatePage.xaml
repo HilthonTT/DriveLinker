@@ -15,9 +15,9 @@
                     Margin="0,0,5,0"
                     IsVisible="{Binding TimerTracker.IsCountdownVisible}">
                 <Border 
-                        BackgroundColor="White"
-                        HorizontalOptions="FillAndExpand"
-                        StrokeThickness="0">
+                    BackgroundColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    StrokeThickness="0">
                     <Border.StrokeShape>
                         <RoundRectangle Margin="22"/>
                     </Border.StrokeShape>
@@ -26,12 +26,12 @@
                             Orientation="Horizontal"   
                             VerticalOptions="CenterAndExpand">
                         <Label 
-                                Text="{Binding TimerTracker.SecondsRemaining, StringFormat='Countdown: {0}'}"
-                                HorizontalOptions="CenterAndExpand" 
-                                VerticalOptions="CenterAndExpand" 
-                                FontSize="24"
-                                TextColor="Black"
-                                TextTransform="Uppercase"/>
+                            Text="{Binding TimerTracker.SecondsRemaining, StringFormat='Countdown: {0}'}"
+                            HorizontalOptions="CenterAndExpand" 
+                            VerticalOptions="CenterAndExpand" 
+                            FontSize="24"
+                            TextColor="Black"
+                            TextTransform="Uppercase"/>
                     </StackLayout>
                 </Border>
             </VerticalStackLayout>
