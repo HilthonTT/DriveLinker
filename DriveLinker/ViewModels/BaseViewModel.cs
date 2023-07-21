@@ -1,6 +1,4 @@
-﻿using DriveLinker.Helpers;
-
-namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels;
 public partial class BaseViewModel : ObservableObject
 {
     private const bool Animate = true;
@@ -73,7 +71,7 @@ public partial class BaseViewModel : ObservableObject
         {
             TimerTracker.IsCountdownVisible = true;
 
-            _timer = new(10);
+            _timer = new(15);
             _timer.Start();
             _timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
             _timer.CountdownFinished += (s, e) => HandleCountdownFinished();
@@ -82,5 +80,20 @@ public partial class BaseViewModel : ObservableObject
         {
             TimerTracker.IsCountdownVisible = false;
         }
+    }
+
+    [RelayCommand]
+    public void StopTimer()
+    {
+        if (_timer is null)
+        {
+            return;
+        }
+
+        _timer.Stop();
+        _timer = null;
+
+        TimerTracker.IsCountdownVisible = false;
+        TimerTracker.SecondsRemaining = 0;
     }
 }

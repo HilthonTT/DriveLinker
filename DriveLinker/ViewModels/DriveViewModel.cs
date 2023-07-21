@@ -1,8 +1,4 @@
-﻿using DriveLinker.Helpers;
-using Microsoft.Extensions.Caching.Memory;
-
-namespace DriveLinker.ViewModels;
-
+﻿namespace DriveLinker.ViewModels;
 public partial class DriveViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IDriveService _driveService;

@@ -1,6 +1,4 @@
-﻿using DriveLinker.Helpers;
-
-namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;

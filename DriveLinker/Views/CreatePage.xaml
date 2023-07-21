@@ -32,6 +32,9 @@
                             FontSize="24"
                             TextColor="Black"
                             TextTransform="Uppercase"/>
+                        <ImageButton 
+                            Style="{StaticResource CloseButton}"
+                            Command="{Binding StopTimerCommand}"/>
                     </StackLayout>
                 </Border>
             </VerticalStackLayout>
