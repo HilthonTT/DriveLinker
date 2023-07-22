@@ -119,6 +119,19 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task ToggleLinkAsync(Drive drive)
+    {
+        if (drive.Connected)
+        {
+            await _linker.DisconnectDriveAsync(drive);
+        }
+        else
+        {
+            await _linker.ConnectDriveAsync(drive);
+        }
+    }
+
+    [RelayCommand]
     private async Task PerformSearchAsync(string query)
     {
         var output = await _driveService.GetAllDrivesAsync();

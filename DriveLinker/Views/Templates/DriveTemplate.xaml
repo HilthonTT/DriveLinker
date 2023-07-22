@@ -69,7 +69,8 @@
                         Spacing="10">
                         <HorizontalStackLayout>
                             <Button 
-                                BackgroundColor="{Binding DriveButtonColorAsColor}"/>
+                                BackgroundColor="{Binding DriveButtonColorAsColor}"
+                                Clicked="OnButtonClicked"/>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
                 </HorizontalStackLayout>

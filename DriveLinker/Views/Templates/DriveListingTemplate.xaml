@@ -138,7 +138,8 @@
                         WidthRequest="100"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
-                        Margin="10">
+                        Margin="10"
+                        Clicked="OnButtonClicked">
                     </Button>
                 </Grid>
             </VerticalStackLayout>

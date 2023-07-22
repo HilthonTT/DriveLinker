@@ -176,7 +176,7 @@
                                 ItemSpacing="8"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Drive">
                                 <templates:DriveListingTemplate />
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
