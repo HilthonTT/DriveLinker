@@ -40,4 +40,7 @@ public partial class Drive : ObservableObject
 
     [Ignore]
     public bool Connected { get; set; }
+
+    [Ignore]
+    public DriveInfo DriveInfo { get; set; }
 }

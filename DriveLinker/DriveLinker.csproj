@@ -49,7 +49,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\date_icon.svg" />
 	  <None Remove="Resources\Images\hard_drive_icon.svg" />
+	  <None Remove="Resources\Images\info_icon.svg" />
+	  <None Remove="Resources\Images\network_icon.svg" />
+	  <None Remove="Resources\Images\tag_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

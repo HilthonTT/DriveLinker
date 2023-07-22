@@ -5,53 +5,143 @@
              x:Class="DriveLinker.Views.Templates.DriveListingTemplate"
              x:DataType="models:Drive">
 
-
-    <Border HeightRequest="100" Padding="6">
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="15"/>
-        </Border.StrokeShape>
-        <Grid ColumnDefinitions="Auto, *">
-
-            <FlexLayout Grid.Column="0">
-                <Frame CornerRadius="80"
-                       WidthRequest="85"
-                       HeightRequest="85"
-                       BorderColor="White"
-                       BackgroundColor="#121212">
-                    <Label Text="{Binding Letter}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           FontSize="Large"
-                           TextColor="White"/>
-                </Frame>
-            </FlexLayout>
-
-            <StackLayout Grid.Column="1" Padding="10" Spacing="8">
-                <Label Text="{Binding DriveName}"
-                       MaxLines="1"
-                       LineBreakMode="TailTruncation"
-                       FontSize="16"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"/>
-                <Label Text="{Binding DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
-                       MaxLines="1"
-                       LineBreakMode="TailTruncation"
-                       FontSize="16"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"/>
-            </StackLayout>
-
-            <Button Grid.Column="1"
-                    BackgroundColor="{Binding DriveButtonColorAsColor}"
-                    HeightRequest="30"
-                    WidthRequest="100"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    Margin="10">
-            </Button>
-        </Grid>
-    </Border>
-
+    <VerticalStackLayout>
+        <Border 
+            HeightRequest="100"
+            Padding="6">
+            <Border.StrokeShape>
+                <RoundRectangle 
+                    CornerRadius="15"/>
+            </Border.StrokeShape>
+            <VerticalStackLayout Spacing="7">
+                <Grid 
+                    ColumnDefinitions="Auto, *">
+                    <Grid
+                        Grid.Column="0">
+                        <FlexLayout>
+                            <Frame 
+                                CornerRadius="80"
+                                WidthRequest="85"
+                                HeightRequest="85"
+                                BorderColor="White"
+                                BackgroundColor="#121212">
+                                <Label 
+                                    Text="{Binding Letter}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    FontSize="Large"
+                                    TextColor="White"/>
+                            </Frame>
+                        </FlexLayout>
+                    </Grid>
+                    <Grid
+                        HorizontalOptions="Center"
+                        Grid.Column="1"
+                        ColumnSpacing="50"
+                        ColumnDefinitions="Auto,Auto,Auto,Auto">
+                        <HorizontalStackLayout 
+                            Grid.Column="0">
+                            <HorizontalStackLayout 
+                                Spacing="8">
+                                <Border 
+                                    HeightRequest="40" 
+                                    WidthRequest="40" 
+                                    Padding="6" 
+                                    BackgroundColor="#f6eff3">
+                                    <Border.StrokeShape>
+                                        <Ellipse/>
+                                    </Border.StrokeShape>
+                                    <Image 
+                                        Source="tag_icon.png"></Image>
+                                </Border>
+                                <Label 
+                                   Text="{Binding DriveName}" 
+                                   TextColor="White" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"></Label>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout 
+                            Grid.Column="1">
+                            <HorizontalStackLayout 
+                                Spacing="8">
+                                <Border
+                                    HeightRequest="40" 
+                                    WidthRequest="40" 
+                                    Padding="6" 
+                                    BackgroundColor="#f6eff3">
+                                    <Border.StrokeShape>
+                                        <Ellipse/>
+                                    </Border.StrokeShape>
+                                    <Image 
+                                        Source="date_icon.png"></Image>
+                                </Border>
+                                <Label 
+                                   Text="{Binding DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
+                                   TextColor="White" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"></Label>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout 
+                            Grid.Column="2">
+                            <HorizontalStackLayout 
+                                Spacing="8">
+                                <Border 
+                                    HeightRequest="40" 
+                                    WidthRequest="40" 
+                                    Padding="6" 
+                                    BackgroundColor="#f6eff3" >
+                                    <Border.StrokeShape>
+                                        <Ellipse/>
+                                    </Border.StrokeShape>
+                                    <Image 
+                                        Source="info_icon.png"></Image>
+                                </Border>
+                                <Label Text="{Binding DriveInfo.DriveFormat, StringFormat='Format: {0}'}" 
+                                   TextColor="White" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"></Label>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout 
+                            Grid.Column="3">
+                            <HorizontalStackLayout 
+                                Spacing="8">
+                                <Border 
+                                    HeightRequest="40" 
+                                    WidthRequest="40" 
+                                    Padding="6" 
+                                    BackgroundColor="#f6eff3">
+                                    <Border.StrokeShape>
+                                        <Ellipse/>
+                                    </Border.StrokeShape>
+                                    <Image 
+                                        Source="network_icon.png" ></Image>
+                                </Border>
+                                <Label 
+                                   Text="{Binding DriveInfo.DriveType, StringFormat='Type: {0}'}" 
+                                   TextColor="White" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"></Label>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="{Binding DriveButtonColorAsColor}"
+                        HeightRequest="30"
+                        WidthRequest="100"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Margin="10">
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
 </ContentView>

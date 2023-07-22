@@ -1,6 +1,5 @@
 ﻿using DriveLinker.Core.Encryption.Interfaces;
 using DriveLinker.Core.Helpers;
-using DriveLinker.Core.Linker.Interfaces;
 using DriveLinker.Core.Models;
 using DriveLinker.Core.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
@@ -11,6 +10,7 @@ public class DriveService : IDriveService
 {
     private const string CacheName = nameof(DriveService);
     private const string DbName = "Drive.db3";
+    private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
     private readonly IAesEncryption _encryption;
     private SQLiteAsyncConnection _db;
@@ -110,6 +110,17 @@ public class DriveService : IDriveService
         drive.IpAddress = await _encryption.DecryptAsync(drive.IpAddress, key, iv);
         drive.UserName = await _encryption.DecryptAsync(drive.UserName, key, iv);
 
+        drive.DriveInfo = GetDriveInfo(drive);
+
         return drive;
+    }
+
+    private DriveInfo GetDriveInfo(Drive drive)
+    {
+        var driveInfo = _driveInfos.FirstOrDefault(d => d.VolumeLabel
+            .Contains(drive.DriveName, StringComparison.InvariantCultureIgnoreCase) && 
+            d.RootDirectory.Name.Contains(drive.Letter, StringComparison.InvariantCultureIgnoreCase));
+
+        return driveInfo;
     }
 }

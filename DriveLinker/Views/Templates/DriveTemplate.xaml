@@ -5,51 +5,74 @@
              x:Class="DriveLinker.Views.Templates.DriveTemplate"
              x:DataType="models:Drive">
     <VerticalStackLayout>
-        <Border WidthRequest="250" Padding="8,8,8,12">
+        <Border 
+            WidthRequest="250" 
+            Padding="8,8,8,12">
             <Border.StrokeShape>
-                <RoundRectangle CornerRadius="15"/>
+                <RoundRectangle 
+                    CornerRadius="15"/>
             </Border.StrokeShape>
-            <VerticalStackLayout Spacing="7">
+            <VerticalStackLayout 
+                Spacing="7">
                 <Grid>
-                    <FlexLayout HorizontalOptions="Center">
-                        <Frame CornerRadius="90"
-                               WidthRequest="95"
-                               HeightRequest="95"
-                               HorizontalOptions="Center"
-                               BorderColor="White"
-                               BackgroundColor="#121212">
-                            <Label Text="{Binding Letter}"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   FontSize="Large"
-                                   TextColor="White"/>
+                    <FlexLayout 
+                        HorizontalOptions="Center">
+                        <Frame 
+                            CornerRadius="90"
+                            WidthRequest="95"
+                            HeightRequest="95"
+                            HorizontalOptions="Center"
+                            BorderColor="White"
+                            BackgroundColor="#121212">
+                            <Label 
+                                Text="{Binding Letter}" 
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="Large"
+                                TextColor="White"/>
                         </Frame>
                     </FlexLayout>
                 </Grid>
-
-                <StackLayout Padding="5" Spacing="8">
-                    <Label Text="{Binding DriveName}"
-                           MaxLines="1"
-                           LineBreakMode="TailTruncation"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Start"/>
-                    <Label Text="{Binding DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
-                           MaxLines="1"
-                           LineBreakMode="TailTruncation"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Start"/>
-                    <HorizontalStackLayout Spacing="14" HorizontalOptions="CenterAndExpand">
-                        <HorizontalStackLayout Spacing="10">
-                            <HorizontalStackLayout>
-                                <Button BackgroundColor="{Binding DriveButtonColorAsColor}"/>
-                            </HorizontalStackLayout>
+                <Grid
+                    HorizontalOptions="Start"
+                    Grid.Column="1"
+                    ColumnSpacing="50"
+                    ColumnDefinitions="Auto">
+                    <HorizontalStackLayout
+                        Grid.Column="0">
+                        <HorizontalStackLayout 
+                            Spacing="8">
+                            <Border 
+                                HeightRequest="40" 
+                                WidthRequest="40" 
+                                Padding="6" 
+                                BackgroundColor="#f6eff3">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Image 
+                                    Source="tag_icon.png"></Image>
+                            </Border>
+                            <Label 
+                                Text="{Binding DriveName}" 
+                                TextColor="White" 
+                                FontSize="18" 
+                                FontAttributes="Bold" 
+                                VerticalOptions="Center"></Label>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
-                </StackLayout>
+                </Grid>
+                <HorizontalStackLayout 
+                    Spacing="14" 
+                    HorizontalOptions="CenterAndExpand">
+                    <HorizontalStackLayout 
+                        Spacing="10">
+                        <HorizontalStackLayout>
+                            <Button 
+                                BackgroundColor="{Binding DriveButtonColorAsColor}"/>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>
