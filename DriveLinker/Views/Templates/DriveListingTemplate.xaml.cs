@@ -11,7 +11,7 @@ public partial class DriveListingTemplate : ContentView
     {
         if (BindingContext is Drive drive)
         {
-            MessagingCenter.Send(this, "ToggleLinkMessage", drive);
+            WeakReferenceMessenger.Default.Send(new Message(drive));
         }
     }
 }

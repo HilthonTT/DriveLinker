@@ -21,3 +21,4 @@ global using CommunityToolkit.Maui.Alerts;
 global using Microsoft.Extensions.Caching.Memory;
 global using DriveLinker.Core.Languages;
 global using DriveLinker.Core.Languages.Interfaces;
+global using CommunityToolkit.Mvvm.Messaging;
