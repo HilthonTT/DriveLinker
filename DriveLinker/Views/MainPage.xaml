@@ -121,7 +121,7 @@
                     <Grid>
                         <CollectionView 
                             x:Name="RecentlyAdded"                                     
-                            ItemsSource="{Binding Drives}"                                       
+                            ItemsSource="{Binding RecentlyAddedDrives}"                                       
                             SelectionMode="Single"                                        
                             SelectedItem="{Binding SelectedDrive}"                                       
                             SelectionChangedCommand="{Binding LoadDrivePageCommand}"                        

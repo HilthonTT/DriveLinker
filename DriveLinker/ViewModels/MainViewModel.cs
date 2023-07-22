@@ -35,11 +35,17 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private double _progress = 0;
 
-    [ObservableProperty] 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(RecentlyAddedDrives))]
     private ObservableCollection<Drive> _drives = new();
 
     [ObservableProperty]
     private List<string> _searchResults;
+
+    public ObservableCollection<Drive> RecentlyAddedDrives => Drives
+        .OrderByDescending(d => d.DateCreated)
+        .Take(10)
+        .ToObservableCollection();
 
     private void DrivesLoaded()
     {
