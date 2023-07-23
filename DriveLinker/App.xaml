@@ -13,6 +13,12 @@
             <Color x:Key="CardBackground">White</Color>
             <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
+            <x:String x:Key="TekturFont">TekturRegular</x:String>
+
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+            </Style>
+
             <Style x:Key="CardView" TargetType="Frame">
                 <Setter Property="BorderColor" Value="#DDDDDD" />
                 <Setter Property="HasShadow" Value="{OnPlatform iOS=false, MacCatalyst=false, Default=true}" />
@@ -43,6 +49,7 @@
             </Style>
 
             <Style x:Key="Button" TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
                 <Setter Property="BackgroundColor" Value="Black"/>
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="CornerRadius" Value="10"/>
@@ -74,6 +81,15 @@
             <Style x:Key="AppIconFrameSmall" TargetType="Frame">
                 <Setter Property="WidthRequest" Value="100"/>
                 <Setter Property="HeightRequest" Value="100"/>
+                <Setter Property="CornerRadius" Value="90"/>
+                <Setter Property="BorderColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="15"/>
+            </Style>
+
+            <Style x:Key="AppIconFrameVerySmall" TargetType="Frame">
+                <Setter Property="WidthRequest" Value="20"/>
+                <Setter Property="HeightRequest" Value="20"/>
                 <Setter Property="CornerRadius" Value="90"/>
                 <Setter Property="BorderColor" Value="White"/>
                 <Setter Property="BackgroundColor" Value="White" />

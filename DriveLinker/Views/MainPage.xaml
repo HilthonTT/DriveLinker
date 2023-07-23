@@ -10,6 +10,18 @@
              Title="Drive Linker"
              x:Name="mainPage">
 
+    <Shell.TitleView>
+        <Grid>
+            <Label 
+                Text="Drive Linker" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior
             EventName="Appearing" 

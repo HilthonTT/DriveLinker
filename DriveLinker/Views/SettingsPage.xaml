@@ -7,6 +7,18 @@
              x:DataType="viewModels:SettingsViewModel"
              Title="Settings">
 
+    <Shell.TitleView>
+        <Grid>
+            <Label 
+                Text="Settings" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 

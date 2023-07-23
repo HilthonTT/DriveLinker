@@ -5,6 +5,18 @@
              x:DataType="viewModels:DriveViewModel"
              x:Class="DriveLinker.Views.DrivePage"
              Title="{Binding Drive.Letter}">
+    <Shell.TitleView>
+        <Grid>
+            <Label 
+                Text="{Binding Drive.Letter}" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ScrollView>
         <VerticalStackLayout 
             Spacing="5" 

@@ -6,6 +6,18 @@
              x:DataType="viewModels:CreateViewModel"
              Title="Create A Drive">
 
+    <Shell.TitleView>
+        <Grid>
+            <Label 
+                Text="Create A Drive" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ScrollView>
         <VerticalStackLayout 
             Spacing="30" 
