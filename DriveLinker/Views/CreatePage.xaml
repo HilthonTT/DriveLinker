@@ -57,6 +57,22 @@
                     </Frame>
                 </Grid>
             </VerticalStackLayout>
+            <Grid
+                ColumnDefinitions="*"
+                Padding="15,0,15,0">
+                <Frame
+                    Style="{StaticResource CardView}"
+                    Padding="15">
+                    <HorizontalStackLayout>
+                        <CheckBox 
+                            IsChecked="{Binding ClearEssentials}"/>
+                        <Label 
+                            Text="Clear Only Letter/Drive Name"
+                            TextTransform="Uppercase"
+                            VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Frame>
+            </Grid>
             <Grid 
                 ColumnDefinitions="*"
                 Padding="15">

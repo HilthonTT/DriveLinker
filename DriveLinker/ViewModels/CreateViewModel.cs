@@ -13,12 +13,22 @@ public partial class CreateViewModel : BaseViewModel
         _driveService = driveService;
     }
 
-    [ObservableProperty] private CreateDriveModel _model = new();
+    [ObservableProperty] 
+    private CreateDriveModel _model = new();
+
+    [ObservableProperty]
+    private bool _clearEssentials = false;
+
 
     [RelayCommand]
     private async Task CreateDriveAsync()
     {
         if (IsBusy)
+        {
+            return;
+        }
+
+        if (await IsDriveTakenAsync())
         {
             return;
         }
@@ -39,22 +49,68 @@ public partial class CreateViewModel : BaseViewModel
 
         await _driveService.CreateDriveAsync(newDrive);
 
-        Model = new();
-        await ClosePageAsync();
+        await FlushCreatePageAsync();
     }
 
-    private static async Task ClosePageAsync()
+    private async Task FlushCreatePageAsync()
     {
-        await Shell.Current.GoToAsync("..", true);
+        if (ClearEssentials)
+        {
+            Model.DriveName = "";
+            Model.Letter = "";
+        }
+        else
+        {
+            Model = new();
+            await ClosePageAsync();
+        }
     }
 
     private static async Task OpenSnackbarAsync(string text)
     {
-        string actionButtonText = "Dismiss";
-        var duration = TimeSpan.FromSeconds(3);
-        var snackbar = Snackbar.Make(text, null, actionButtonText, duration);
+        text = text.ToUpper();
+        await Shell.Current.DisplayAlert("Error!", text, "Ok");
+    }
 
-        await snackbar.Show();
+    private async Task<bool> IsDriveTakenAsync()
+    {
+        var output = await _driveService.GetAllDrivesAsync();
+        bool isLetterTaken = false;
+        bool isDriveNameTaken = false;
+
+        var driveWithLetter = output.FirstOrDefault(d => d.Letter == Model.Letter);
+        if (driveWithLetter is not null)
+        {
+            Model.Letter = "";
+            isLetterTaken = true;
+        }
+
+        var driveWithName = output.FirstOrDefault(d => d.DriveName == Model.DriveName);
+        if (driveWithName is not null)
+        {
+            Model.DriveName = "";
+            isDriveNameTaken = true;
+        }
+        
+        if (isLetterTaken && isDriveNameTaken)
+        {
+            await OpenSnackbarAsync("Drive letter and drive name are both taken.");
+            return true;
+        }
+
+        if (isDriveNameTaken)
+        {
+            await OpenSnackbarAsync("Drive name is already taken.");
+            return true;
+        }
+
+        if (isLetterTaken)
+        {
+            await OpenSnackbarAsync("Drive letter is already taken.");
+            return true;
+        }
+
+        return false;
     }
 
     private async Task<bool> IsFieldNotFilled()
