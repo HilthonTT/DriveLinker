@@ -2,45 +2,138 @@
 public partial class LanguageViewModel : ObservableObject
 {
     private readonly ILanguageDictionary _language;
+    private Dictionary<Keyword, string> _keywords;
 
     public LanguageViewModel(ILanguageDictionary language)
     {
         _language = language;
+        InitializeDictionary();      
     }
 
-    private Dictionary<Keyword, string> GetDictionary()
+    [RelayCommand]
+    private void InitializeDictionary()
     {
-        var dictionary = _language.GetDictionary();
-        return dictionary;
+        _keywords = _language.GetDictionary();
+        ChangeKeyWordData();
     }
 
-    public string Countdown => GetDictionary()[Keyword.Countdown];
-    public string CreateDriveLabel => GetDictionary()[Keyword.CreateADrive];
-    public string SettingsLabel => GetDictionary()[Keyword.Settings];
-    public string SearchLabel => GetDictionary()[Keyword.Search];
-    public string RecentlyAddedLabel => GetDictionary()[Keyword.RecentlyAdded];
-    public string DriveListingLabel => GetDictionary()[Keyword.DriveListing];
-    public string LinkDrivesLabel => GetDictionary()[Keyword.LinkDrives];
-    public string UnlinkDrivesLabel => GetDictionary()[Keyword.UnlinkDrives];
-    public string LetterLabel => GetDictionary()[Keyword.Letter];
-    public string LetterDescLabel => GetDictionary()[Keyword.LetterDesc];
-    public string IpAddressLabel => GetDictionary()[Keyword.IpAddress];
-    public string IpAddressDescLabel => GetDictionary()[Keyword.IpAddressDesc];
-    public string DriveNameLabel => GetDictionary()[Keyword.DriveName];
-    public string DriveNameDescLabel => GetDictionary()[Keyword.DriveNameDesc];
-    public string PasswordLabel => GetDictionary()[Keyword.Password];
-    public string PasswordDescLabel => GetDictionary()[Keyword.PasswordDesc];
-    public string UserNameLabel => GetDictionary()[Keyword.UserName];
-    public string UserNameDescLabel => GetDictionary()[Keyword.UserNameDesc];
-    public string DateCreatedLabel => GetDictionary()[Keyword.DateCreated];
-    public string CreateLabel => GetDictionary()[Keyword.Create];
-    public string AutoLinkDrivesLabel => GetDictionary()[Keyword.AutoLinkDrives];
-    public string AutoMinimizeLabel => GetDictionary()[Keyword.AutoMinimize];
-    public string ClearOnlyLetterDriveNameLabel => GetDictionary()[Keyword.ClearOnlyLetterDriveName];
-    public string SaveLabel => GetDictionary()[Keyword.Save];
-    public string LanguageLabel => GetDictionary()[Keyword.Language];
-    public string EnglishLabel => GetDictionary()[Keyword.English];
-    public string FrenchLabel => GetDictionary()[Keyword.French];
-    public string GermanLabel => GetDictionary()[Keyword.German];
-    public string IndonesianLabel => GetDictionary()[Keyword.Indonesian];
+    private void ChangeKeyWordData()
+    {
+        Countdown = _keywords[Keyword.Countdown];
+        CreateDriveLabel = _keywords[Keyword.CreateADrive];
+        SettingsLabel = _keywords[Keyword.Settings];
+        SearchLabel = _keywords[Keyword.Search];
+        RecentlyAddedLabel = _keywords[Keyword.RecentlyAdded];
+        DriveListingLabel = _keywords[Keyword.DriveListing];
+        LinkDrivesLabel = _keywords[Keyword.LinkDrives];
+        UnlinkDrivesLabel = _keywords[Keyword.UnlinkDrives];
+        LetterLabel = _keywords[Keyword.Letter];
+        LetterDescLabel = _keywords[Keyword.LetterDesc];
+        IpAddressLabel = _keywords[Keyword.IpAddress];
+        IpAddressDescLabel = _keywords[Keyword.IpAddressDesc];
+        DriveNameLabel = _keywords[Keyword.DriveName];
+        DriveNameDescLabel = _keywords[Keyword.DriveNameDesc];
+        PasswordLabel = _keywords[Keyword.Password];
+        PasswordDescLabel = _keywords[Keyword.PasswordDesc];
+        UserNameLabel = _keywords[Keyword.UserName];
+        UserNameDescLabel = _keywords[Keyword.UserNameDesc];
+        DateCreatedLabel = _keywords[Keyword.DateCreated];
+        CreateLabel = _keywords[Keyword.Create];
+        AutoLinkDrivesLabel = _keywords[Keyword.AutoLinkDrives];
+        AutoMinimizeLabel = _keywords[Keyword.AutoMinimize];
+        ClearOnlyLetterDriveNameLabel = _keywords[Keyword.ClearOnlyLetterDriveName];
+        SaveLabel = _keywords[Keyword.Save];
+        LanguageLabel = _keywords[Keyword.Language];
+        EnglishLabel = _keywords[Keyword.English];
+        FrenchLabel = _keywords[Keyword.French];
+        GermanLabel = _keywords[Keyword.German];
+        IndonesianLabel = _keywords[Keyword.Indonesian];
+    }
+
+    [ObservableProperty]
+    private string _countdown;
+
+    [ObservableProperty]
+    private string _createDriveLabel;
+
+    [ObservableProperty]
+    private string _settingsLabel;
+
+    [ObservableProperty]
+    private string _searchLabel;
+
+    [ObservableProperty]
+    private string _recentlyAddedLabel;
+
+    [ObservableProperty]
+    private string _driveListingLabel;
+
+    [ObservableProperty]
+    private string _linkDrivesLabel;
+
+    [ObservableProperty]
+    private string _unlinkDrivesLabel;
+
+    [ObservableProperty]
+    private string _letterLabel;
+
+    [ObservableProperty]
+    private string _letterDescLabel;
+
+    [ObservableProperty]
+    private string _ipAddressLabel;
+
+    [ObservableProperty]
+    private string _ipAddressDescLabel;
+
+    [ObservableProperty]
+    private string _driveNameLabel;
+
+    [ObservableProperty]
+    private string _driveNameDescLabel;
+
+    [ObservableProperty]
+    private string _passwordLabel;
+
+    [ObservableProperty]
+    private string _passwordDescLabel;
+
+    [ObservableProperty]
+    private string _userNameLabel;
+
+    [ObservableProperty]
+    private string _userNameDescLabel;
+
+    [ObservableProperty]
+    private string _dateCreatedLabel;
+
+    [ObservableProperty]
+    private string _createLabel;
+
+    [ObservableProperty]
+    private string _autoLinkDrivesLabel;
+
+    [ObservableProperty]
+    private string _autoMinimizeLabel;
+
+    [ObservableProperty]
+    private string _clearOnlyLetterDriveNameLabel;
+
+    [ObservableProperty]
+    private string _saveLabel;
+
+    [ObservableProperty]
+    private string _languageLabel;
+
+    [ObservableProperty]
+    private string _englishLabel;
+
+    [ObservableProperty]
+    private string _frenchLabel;
+
+    [ObservableProperty]
+    private string _germanLabel;
+
+    [ObservableProperty]
+    private string _indonesianLabel;
 }

@@ -26,6 +26,9 @@
         <behaviors:EventToCommandBehavior
             EventName="Appearing" 
             Command="{Binding LoadSettingsCommand}"/>
+        <behaviors:EventToCommandBehavior
+            EventName="Appearing" 
+            Command="{Binding InitializeDictionaryCommand}"/>
     </ContentPage.Behaviors>
 
     <ScrollView>

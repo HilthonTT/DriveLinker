@@ -12,7 +12,7 @@
 
     <Shell.TitleView>
         <Grid>
-            <Label 
+            <Label
                 Text="Drive Linker" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
@@ -29,6 +29,9 @@
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 
             Command="{Binding AutoLinkDrivesCommand}"/>
+        <behaviors:EventToCommandBehavior 
+            EventName="Appearing" 
+            Command="{Binding InitializeDictionaryCommand}"/>
     </ContentPage.Behaviors>
 
     <ContentPage.Resources>
