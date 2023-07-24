@@ -1,5 +1,5 @@
 ﻿namespace DriveLinker.ViewModels;
-public partial class BaseViewModel : ObservableObject
+public partial class BaseViewModel : LanguageViewModel
 {
     private const bool Animate = true;
 
@@ -10,7 +10,9 @@ public partial class BaseViewModel : ObservableObject
     public BaseViewModel(
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
+        ILanguageDictionary languageDictionary,
         TimerTracker timerTracker)
+        : base(languageDictionary)
     {
         _settingsService = settingsService;
         _windowsHelper = windowsHelper;

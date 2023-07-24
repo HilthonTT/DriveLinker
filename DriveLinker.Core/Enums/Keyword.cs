@@ -2,6 +2,7 @@
 
 public enum Keyword
 {
+    Countdown,
     CreateADrive,
     Settings,
     Search,
@@ -22,6 +23,9 @@ public enum Keyword
     Create,
     AutoLinkDrives,
     AutoMinimize,
+    Save,
+    DateCreated,
+    ClearOnlyLetterDriveName,
     Language,
     English,
     French,

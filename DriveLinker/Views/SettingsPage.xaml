@@ -10,7 +10,7 @@
     <Shell.TitleView>
         <Grid>
             <Label 
-                Text="Settings" 
+                Text="{Binding SettingsLabel}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
@@ -67,7 +67,7 @@
                     <Grid 
                         ColumnDefinitions="*,Auto">
                         <Label 
-                            Text="Settings" 
+                            Text="{Binding SettingsLabel}" 
                             HorizontalOptions="Start"
                             VerticalOptions="Center"
                             TextTransform="Uppercase"
@@ -109,7 +109,7 @@
                                     RowDefinitions="Auto,Auto,Auto">
 
                                     <Label 
-                                        Text="Automatically Link Drives On Launch"
+                                        Text="{Binding AutoLinkDrivesLabel}"
                                         HorizontalOptions="Start"
                                         Grid.Column="0"
                                         Grid.Row="0"
@@ -122,7 +122,7 @@
                                         IsToggled="{Binding Settings.AutoLink}"/>
 
                                     <Label 
-                                        Text="Automatically Minimize After linking"
+                                        Text="{Binding AutoMinimizeLabel}"
                                         HorizontalOptions="Start"
                                         Grid.Column="0"
                                         Grid.Row="1"
@@ -135,7 +135,7 @@
                                         IsToggled="{Binding Settings.AutoMinimize}"/>
 
                                     <Label 
-                                        Text="Language"
+                                        Text="{Binding LanguageLabel}"
                                         HorizontalOptions="Start"
                                         Grid.Column="0"
                                         Grid.Row="2"
@@ -148,7 +148,7 @@
                                         ItemsSource="{Binding Languages}" />
                                 </Grid>
                                 <Button 
-                                    Text="Save"
+                                    Text="{Binding SaveLabel}"
                                     Margin="0,30,0,0"
                                     Command="{Binding SaveSettingsCommand}"
                                     Style="{StaticResource Button}"/>

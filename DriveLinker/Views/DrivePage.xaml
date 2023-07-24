@@ -109,9 +109,10 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="Letter: "
+                                            Text="{Binding LetterLabel, StringFormat='{0}: '} "
                                             TextColor="LightGray"
                                             FontSize="Title"/>
+                                        
                                         <Span 
                                             Text="{Binding Drive.Letter}"
                                             TextColor="White"
@@ -131,7 +132,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="Drive Name: "
+                                            Text="{Binding DriveNameLabel, StringFormat='{0}: '} "
                                             TextColor="LightGray"
                                             FontSize="Title"/>
                                         <Span 
@@ -153,7 +154,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="IP Address: "
+                                            Text="{Binding IpAddressLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
                                             FontSize="Title"/>
                                         <Span 
@@ -175,7 +176,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="Password: "
+                                            Text="{Binding PasswordLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
                                             FontSize="Title"/>
                                         <Span 
@@ -197,7 +198,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="Username: "
+                                            Text="{Binding UserNameLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
                                             FontSize="Title"/>
                                         <Span 
@@ -220,7 +221,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span 
-                                            Text="Date Added: "
+                                            Text="{Binding DateCreatedLabel, StringFormat='{0}: '}"
                                             FontSize="Title"
                                             TextColor="LightGray"/>
                                         <Span 

@@ -8,8 +8,9 @@ public partial class SettingsViewModel : BaseViewModel
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
         ILanguageService languageService,
+        ILanguageDictionary languageDictionary,
         TimerTracker timerTracker)
-        : base(settingsService, windowsHelper, timerTracker)
+        : base(settingsService, windowsHelper, languageDictionary, timerTracker)
     {
         _settingsService = settingsService;
         _languageService = languageService;
@@ -29,11 +30,6 @@ public partial class SettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     private Language _selectedLanguage = Language.English;
-
-    private static async Task ClosePageAsync()
-    {
-        await Shell.Current.GoToAsync("..");
-    }
 
     [RelayCommand]
     private void LoadLanguages()

@@ -12,8 +12,9 @@ public partial class MainViewModel : BaseViewModel
         ISettingsService settingsService,
         ILinker linker,
         IWindowsHelper windowsHelper,
+        ILanguageDictionary languageDictionary,
         TimerTracker timerTracker)
-        : base(settingsService, windowsHelper, timerTracker)
+        : base(settingsService, windowsHelper, languageDictionary, timerTracker)
     {
         _driveService = driveService;
         _dummyService = dummyService;

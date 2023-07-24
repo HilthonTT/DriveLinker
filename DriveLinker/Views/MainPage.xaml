@@ -91,13 +91,13 @@
                 <Button 
                     Grid.Row="0"
                     Grid.Column="0"
-                    Text="Create A Drive"
+                    Text="{Binding CreateDriveLabel}"
                     Command="{Binding LoadCreatePageCommand}"
                     Style="{StaticResource Button}"/>
                 <Button 
                     Grid.Row="0"
                     Grid.Column="1"
-                    Text="Settings"
+                    Text="{Binding SettingsLabel}"
                     Command="{Binding LoadSettingsPageCommand}"
                     Style="{StaticResource Button}"/>
             </Grid>
@@ -113,7 +113,7 @@
                 Margin="40,20,40,0">
                 <SearchBar 
                     x:Name="SearchBar"
-                    Placeholder="Search"
+                    Placeholder="{Binding SearchLabel}"
                     PlaceholderColor="White"
                     SearchCommand="{Binding PerformSearchCommand}"
                     SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
@@ -126,7 +126,7 @@
                     Padding="20,0,0,0"                                     
                     HeightRequest="340">
                     <Label 
-                        Text="Recently added drives" 
+                        Text="{Binding RecentlyAddedLabel}" 
                         FontAttributes="Bold"
                         TextTransform="Uppercase"
                         FontSize="18" />
@@ -161,17 +161,17 @@
                     Spacing="6" 
                     Padding="20,0">
                     <Label 
-                        Text="Drive Listing" 
+                        Text="{Binding DriveListingLabel}" 
                         FontAttributes="Bold"
                         TextTransform="Uppercase"
                         FontSize="18"/>
                     <HorizontalStackLayout Spacing="8">
                         <Button 
-                            Text="Link Drives"
+                            Text="{Binding LinkDrivesLabel}"
                             Command="{Binding LinkAllDrivesCommand}"
                             Style="{StaticResource Button}"/>
                         <Button 
-                            Text="Unlink Drives"
+                            Text="{Binding UnlinkDrivesLabel}"
                             Command="{Binding UnlinkAllDrivesCommand}"
                             Style="{StaticResource Button}"/>
                     </HorizontalStackLayout>

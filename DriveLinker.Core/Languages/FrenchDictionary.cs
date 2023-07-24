@@ -29,6 +29,7 @@ public class FrenchDictionary : IFrenchDictionary
     {
         return new Dictionary<Keyword, string>()
         {
+            { Keyword.Countdown, "Compte à rebours" },
             { Keyword.CreateADrive, "Créer un disque" },
             { Keyword.Settings, "Paramètres" },
             { Keyword.Search, "Rechercher" },
@@ -46,9 +47,12 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.PasswordDesc, "Entrez le mot de passe de votre disque." },
             { Keyword.UserName, "Nom d'utilisateur" },
             { Keyword.UserNameDesc, "Entrez le nom d'utilisateur de votre disque." },
+            { Keyword.DateCreated, " Date de création" },
             { Keyword.Create, "Créer" },
             { Keyword.AutoLinkDrives, "Lier automatiquement les disques au démarrage" },
             { Keyword.AutoMinimize, "Réduire automatiquement l'application" },
+            { Keyword.ClearOnlyLetterDriveName, "Effacer uniquement la lettre / le nom du lecteur" },
+            { Keyword.Save, "Sauvegarder" },
             { Keyword.Language, "Langue" },
             { Keyword.English, "Anglais" },
             { Keyword.French, "Français" },

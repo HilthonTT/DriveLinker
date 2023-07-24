@@ -29,6 +29,7 @@ public class IndonesianDictionary : IIndonesianDictionary
     {
         return new Dictionary<Keyword, string>()
         {
+            { Keyword.Countdown, "Mundur Waktu" },
             { Keyword.CreateADrive, "Buat Drive" },
             { Keyword.Settings, "Pengaturan" },
             { Keyword.Search, "Cari" },
@@ -46,9 +47,12 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.PasswordDesc, "Masukkan kata sandi drive Anda." },
             { Keyword.UserName, "Nama Pengguna" },
             { Keyword.UserNameDesc, "Masukkan nama pengguna drive Anda." },
+            { Keyword.DateCreated, "Tanggal Dibuat" },
             { Keyword.Create, "Buat" },
             { Keyword.AutoLinkDrives, "Hubungkan Drive secara Otomatis Saat Memulai" },
             { Keyword.AutoMinimize, "Minimalkan Aplikasi secara Otomatis" },
+            { Keyword.ClearOnlyLetterDriveName, "Hapus Hanya Huruf / Nama Drive" },
+            { Keyword.Save, "Simpan" },
             { Keyword.Language, "Bahasa" },
             { Keyword.English, "Inggris" },
             { Keyword.French, "Perancis" },

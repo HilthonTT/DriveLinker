@@ -29,6 +29,7 @@ public class GermanDictionary : IGermanDictionary
     {
         return new Dictionary<Keyword, string>()
         {
+            { Keyword.Countdown, "Countdown" },
             { Keyword.CreateADrive, "Ein Laufwerk erstellen" },
             { Keyword.Settings, "Einstellungen" },
             { Keyword.Search, "Suche" },
@@ -46,9 +47,12 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.PasswordDesc, "Geben Sie das Passwort Ihres Laufwerks ein." },
             { Keyword.UserName, "Benutzername" },
             { Keyword.UserNameDesc, "Geben Sie den Benutzernamen Ihres Laufwerks ein." },
+            { Keyword.DateCreated, "Erstellungsdatum" },
             { Keyword.Create, "Erstellen" },
             { Keyword.AutoLinkDrives, "Laufwerke beim Start automatisch verbinden" },
             { Keyword.AutoMinimize, "Anwendung beim Start automatisch minimieren" },
+            { Keyword.ClearOnlyLetterDriveName, "Nur Laufwerksbuchstaben / Laufwerksname löschen" },
+            { Keyword.Save, "Speichern" },
             { Keyword.Language, "Sprache" },
             { Keyword.English, "Englisch" },
             { Keyword.French, "Französisch" },

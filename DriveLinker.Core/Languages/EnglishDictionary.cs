@@ -29,6 +29,7 @@ public class EnglishDictionary : IEnglishDictionary
     {
         return new Dictionary<Keyword, string>()
         {
+            { Keyword.Countdown, "Countdown" },
             { Keyword.CreateADrive, "Create A Drive" },
             { Keyword.Settings, "Settings" },
             { Keyword.Search, "Search" },
@@ -46,9 +47,12 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.PasswordDesc, "Enter your drive's password." },
             { Keyword.UserName, "Username" },
             { Keyword.UserNameDesc, "Enter your drive's username." },
+            { Keyword.DateCreated, "Date Created" },
             { Keyword.Create, "Create" },
             { Keyword.AutoLinkDrives, "Automatically Link Drives On Launch" },
             { Keyword.AutoMinimize, "Automatically Minimize App" },
+            { Keyword.ClearOnlyLetterDriveName, "Clear Only Letter/Drive Name" },
+            { Keyword.Save, "Save" },
             { Keyword.Language, "Language" },
             { Keyword.English, "English" },
             { Keyword.French, "French" },

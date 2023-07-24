@@ -7,8 +7,9 @@ public partial class CreateViewModel : BaseViewModel
         IDriveService driveService,
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
+        ILanguageDictionary languageDictionary,
         TimerTracker timerTracker)
-        : base(settingsService, windowsHelper, timerTracker)
+        : base(settingsService, windowsHelper, languageDictionary, timerTracker)
     {
         _driveService = driveService;
     }
