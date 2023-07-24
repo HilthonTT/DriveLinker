@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DriveLinker", "DriveLinker\DriveLinker.csproj", "{9E43032E-DBDC-4C62-AA69-EBAF155E1E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveLinker.Core", "DriveLinker.Core\DriveLinker.Core.csproj", "{236DFCC5-FA0F-4B38-B20C-C0B8212510B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DriveLinker.Core", "DriveLinker.Core\DriveLinker.Core.csproj", "{236DFCC5-FA0F-4B38-B20C-C0B8212510B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2BB41C00-DD49-42C2-B2EA-C416F778A266}"
+	ProjectSection(SolutionItems) = preProject
+		Ideas.txt = Ideas.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

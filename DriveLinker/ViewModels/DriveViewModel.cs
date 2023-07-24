@@ -35,9 +35,9 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         bool? isDecrypted = _cache.Get<bool>(key);
         if (isDecrypted is null)
         {
-            Drive.Password = await _encryption.DecryptAsync(Drive.Password, Drive.Key, Drive.Iv);
-            Drive.UserName = await _encryption.DecryptAsync(Drive.UserName, Drive.Key, Drive.Iv);
-            Drive.IpAddress = await _encryption.DecryptAsync(Drive.IpAddress, Drive.Key, Drive.Iv);
+            Drive.Password = await _encryption.AesDecryptAsync(Drive.Password, Drive.Key, Drive.Iv);
+            Drive.UserName = await _encryption.AesDecryptAsync(Drive.UserName, Drive.Key, Drive.Iv);
+            Drive.IpAddress = await _encryption.AesDecryptAsync(Drive.IpAddress, Drive.Key, Drive.Iv);
 
             isDecrypted = true;
             _cache.Set(key, isDecrypted);

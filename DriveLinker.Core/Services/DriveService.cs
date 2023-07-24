@@ -94,9 +94,9 @@ public class DriveService : IDriveService
         drive.Key = _encryption.GetKey();
         drive.Iv = _encryption.GetIV();
 
-        drive.Password = await _encryption.EncryptAsync(drive.Password);
-        drive.IpAddress = await _encryption.EncryptAsync(drive.IpAddress);
-        drive.UserName = await _encryption.EncryptAsync(drive.UserName);
+        drive.Password = await _encryption.AesEncryptAsync(drive.Password);
+        drive.IpAddress = await _encryption.AesEncryptAsync(drive.IpAddress);
+        drive.UserName = await _encryption.AesEncryptAsync(drive.UserName);
 
         return drive;
     }
@@ -106,9 +106,9 @@ public class DriveService : IDriveService
         string key = drive.Key;
         string iv = drive.Iv;
 
-        drive.Password = await _encryption.DecryptAsync(drive.Password, key, iv);
-        drive.IpAddress = await _encryption.DecryptAsync(drive.IpAddress, key, iv);
-        drive.UserName = await _encryption.DecryptAsync(drive.UserName, key, iv);
+        drive.Password = await _encryption.AesDecryptAsync(drive.Password, key, iv);
+        drive.IpAddress = await _encryption.AesDecryptAsync(drive.IpAddress, key, iv);
+        drive.UserName = await _encryption.AesDecryptAsync(drive.UserName, key, iv);
 
         drive.DriveInfo = GetDriveInfo(drive);
 
