@@ -8,6 +8,7 @@
              x:DataType="viewModels:MainViewModel"
              x:Class="DriveLinker.MainPage"
              Title="Drive Linker"
+         
              x:Name="mainPage">
 
     <Shell.TitleView>
@@ -21,6 +22,10 @@
                 FontSize="Title"/>
         </Grid>
     </Shell.TitleView>
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
 
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior

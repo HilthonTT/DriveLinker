@@ -19,6 +19,12 @@
         </Grid>
     </Shell.TitleView>
 
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior 
+            EventName="Appearing" 
+            Command="{Binding VerifyAccountExistanceCommand}"/>
+    </ContentPage.Behaviors>
+
     <ScrollView>
         <VerticalStackLayout
             Spacing="30"
@@ -49,6 +55,7 @@
                             Grid.Column="0"
                             Placeholder="Password"
                             HeightRequest="50"
+                            Text="{Binding Password}"
                             IsPassword="{Binding DontShowPassword}"/>
                         <ImageButton 
                             Grid.Column="1"
@@ -58,6 +65,7 @@
                 </FlexLayout>
                 <Button 
                     Style="{StaticResource Button}"
+                    Command="{Binding AuthenticateCommand}"
                     Text="Login"
                     Margin="0,20,0,0"/>
             </VerticalStackLayout>
@@ -69,10 +77,13 @@
                         <Button 
                             Text="Don't have an account?" 
                             Style="{StaticResource AuthButton}"
+                            Command="{Binding RegisterCommand}"
+                            IsVisible="{Binding ShowRegisterButton}"
                             HorizontalOptions="Start" />
                         <Button 
                             Text="Forgot password" 
                             Style="{StaticResource AuthButton}"
+                            Command="{Binding ForgotPasswordCommand}"
                             Grid.Column="1" 
                             HorizontalOptions="End" />
                     </Grid>
