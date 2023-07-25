@@ -30,6 +30,21 @@ public class Authentication : IAuthentication
         return hashedPassword == storedPassword;
     }
 
+    public async Task<string> ChangePasswordAsync(string newPassword)
+    {
+        bool isRemoved = SecureStorage.Remove(Key);
+
+        if (isRemoved)
+        {
+            string newHashedPassword = await ComputeSha512Hash(newPassword);
+            await SecureStorage.SetAsync(Key, newHashedPassword);
+
+            return newHashedPassword;
+        }
+
+        return "";
+    }
+
     public async Task<string> ResetPasswordAsync(string newPassword)
     {
         bool isRemoved = SecureStorage.Remove(Key);

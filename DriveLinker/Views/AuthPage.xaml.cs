@@ -4,7 +4,7 @@ public partial class AuthPage : ContentPage
 {
 	public AuthPage(AuthViewModel viewModel)
 	{
-		InitializeComponent();
+        InitializeComponent();
 		BindingContext = viewModel;
 	}
 }

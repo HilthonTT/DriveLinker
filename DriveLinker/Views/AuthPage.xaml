@@ -6,7 +6,78 @@
              x:DataType="viewModel:AuthViewModel"
              x:Class="DriveLinker.Views.AuthPage"
              Title="AuthPage">
+
+    <Shell.TitleView>
+        <Grid>
+            <Label
+                Text="Drive Linker" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ScrollView>
-        
+        <VerticalStackLayout
+            Spacing="30"
+            Padding="0,20"
+            HorizontalOptions="Center">
+            <VerticalStackLayout>
+                <Frame
+                    Style="{StaticResource AppIconFrame}">
+                    <Image 
+                        Style="{StaticResource AppIcon}"/>
+                </Frame>
+                <Label
+                    Text="Drive Linker"
+                    HorizontalOptions="Center"
+                    TextTransform="Uppercase"
+                    FontSize="24"
+                    Margin="0,10,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                WidthRequest="500">
+                <FlexLayout Direction="Column">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Entry 
+                            Grid.Column="0"
+                            Placeholder="Password"
+                            HeightRequest="50"
+                            IsPassword="{Binding DontShowPassword}"/>
+                        <ImageButton 
+                            Grid.Column="1"
+                            Style="{StaticResource ShowButton}"
+                            Command="{Binding ToggleShowPasswordCommand}"/>
+                    </Grid>
+                </FlexLayout>
+                <Button 
+                    Style="{StaticResource Button}"
+                    Text="Login"
+                    Margin="0,20,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                WidthRequest="500">
+                <FlexLayout Direction="Column">
+                    <Grid
+                        ColumnDefinitions="*,*">
+                        <Button 
+                            Text="Don't have an account?" 
+                            Style="{StaticResource AuthButton}"
+                            HorizontalOptions="Start" />
+                        <Button 
+                            Text="Forgot password" 
+                            Style="{StaticResource AuthButton}"
+                            Grid.Column="1" 
+                            HorizontalOptions="End" />
+                    </Grid>
+                </FlexLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

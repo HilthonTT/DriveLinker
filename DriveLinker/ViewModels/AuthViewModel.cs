@@ -30,6 +30,15 @@ public partial class AuthViewModel : BaseViewModel
     [ObservableProperty]
     private string _password;
 
+    [ObservableProperty]
+    private bool _dontShowPassword = true;
+
+    [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        DontShowPassword = !DontShowPassword;
+    }
+
     [RelayCommand]
     private async Task AuthenticateAsync()
     {
