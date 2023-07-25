@@ -47,20 +47,15 @@ public class Authentication : IAuthentication
 
     public async Task<string> ResetPasswordAsync(string newPassword)
     {
-        bool isRemoved = SecureStorage.Remove(Key);
+        SecureStorage.Remove(Key);
 
-        if (isRemoved)
-        {
-            string newHashedPassword = await ComputeSha512Hash(newPassword);
-            await SecureStorage.SetAsync(Key, newHashedPassword);
+        string newHashedPassword = await ComputeSha512Hash(newPassword);
+        await SecureStorage.SetAsync(Key, newHashedPassword);
 
-            // Removes all drives to not gain access to it.
-            await _driveService.DeleteAllAsync();
+        // Delete database to not gain access to it.
+        _driveService.DeleteDb();
 
-            return newHashedPassword;
-        }
-
-        return "";
+        return newHashedPassword;
     }
 
     public async Task<string> FetchPasswordAsync()

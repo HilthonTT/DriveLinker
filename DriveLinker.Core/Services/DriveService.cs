@@ -2,7 +2,7 @@
 public class DriveService : IDriveService
 {
     private const string CacheName = nameof(DriveService);
-    private const string DbName = "Drive.db3";
+    private const string DbName = "Drive.db4";
     private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
     private readonly IAesEncryption _encryption;
@@ -24,10 +24,7 @@ public class DriveService : IDriveService
             return;
         }
 
-        string dbPath = Path.Combine(
-            Environment.GetFolderPath(
-                Environment.SpecialFolder.LocalApplicationData), DbName);
-
+        string dbPath = GetDbPath();
         string password = await FetchPasswordAsync();
 
         var options = new SQLiteConnectionString(dbPath, true, key: password);
@@ -96,11 +93,10 @@ public class DriveService : IDriveService
         return await _db.DeleteAsync(drive);
     }
 
-    public async Task DeleteAllAsync()
+    public void DeleteDb()
     {
-        await InitializeDb();
-
-        await _db.DeleteAllAsync<Drive>();
+        string dbPath = GetDbPath();
+        File.Delete(dbPath);
     }
 
     private async Task<Drive> EncryptDrive(Drive drive)
@@ -149,5 +145,12 @@ public class DriveService : IDriveService
         }
 
         return hashedPassword;
+    }
+
+    private static string GetDbPath()
+    {
+        return Path.Combine(
+            Environment.GetFolderPath(
+                Environment.SpecialFolder.LocalApplicationData), DbName);
     }
 }
