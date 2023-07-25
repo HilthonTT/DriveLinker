@@ -20,6 +20,7 @@ public static class RegisterServices
 
     public static void ConfigureViewModels(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<AuthViewModel>();
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<CreateViewModel>();
@@ -28,6 +29,7 @@ public static class RegisterServices
 
     public static void ConfigurePages(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<AuthPage>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<CreatePage>();
