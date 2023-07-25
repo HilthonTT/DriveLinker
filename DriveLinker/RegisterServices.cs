@@ -13,6 +13,7 @@ public static class RegisterServices
         builder.Services.AddSingleton<TimerTracker>();
 
         builder.Services.AddTransient<IAesEncryption, AesEncryption>();
+        builder.Services.AddTransient<IAuthentication, Authentication>();
         builder.Services.AddTransient<ILinker, Linker>();
         builder.Services.AddTransient<IWindowsHelper, WindowsHelper>();
     }

@@ -13,18 +13,20 @@ public class DriveService : IDriveService
     private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
     private readonly IAesEncryption _encryption;
+    private readonly IAuthentication _auth;
     private SQLiteAsyncConnection _db;
 
     public DriveService(
         IMemoryCache cache,
-        IAesEncryption encryption)
+        IAesEncryption encryption,
+        IAuthentication auth)
     {
         _cache = cache;
         _encryption = encryption;
-        InitializeDb();
+        _auth = auth;
     }
 
-    private void InitializeDb()
+    private async Task InitializeDb()
     {
         if (_db is not null)
         {
@@ -35,12 +37,18 @@ public class DriveService : IDriveService
             Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData), DbName);
 
-        _db = new(dbPath);
-        _db.CreateTableAsync<Drive>();
+        string password = await _auth.FetchPasswordAsync();
+
+        var options = new SQLiteConnectionString(dbPath, true, key: password);
+
+        _db = new(options);
+        await _db.CreateTableAsync<Drive>();
     }
 
     public async Task<List<Drive>> GetAllDrivesAsync()
     {
+        await InitializeDb();
+
         var output = _cache.Get<List<Drive>>(CacheName);
         if (output is null)
         {
@@ -55,6 +63,8 @@ public class DriveService : IDriveService
 
     public async Task<Drive> GetDriveAsync(int id)
     {
+        await InitializeDb();
+
         var output = _cache.Get<Drive>(id);
         if (output is null)
         {
@@ -69,6 +79,8 @@ public class DriveService : IDriveService
 
     public async Task<int> CreateDriveAsync(Drive drive)
     {
+        await InitializeDb();
+
         _cache.Remove(CacheName);
 
         drive = await EncryptDrive(drive);
@@ -77,6 +89,8 @@ public class DriveService : IDriveService
 
     public async Task<int> UpdateDriveAsync(Drive drive)
     {
+        await InitializeDb();
+
         _cache.Remove(CacheName);
         drive = await EncryptDrive(drive);
 
@@ -85,8 +99,17 @@ public class DriveService : IDriveService
 
     public async Task<int> DeleteDriveAsync(Drive drive)
     {
+        await InitializeDb();
+
         _cache.Remove(CacheName);
         return await _db.DeleteAsync(drive);
+    }
+
+    public async Task DeleteAllAsync()
+    {
+        await InitializeDb();
+
+        await _db.DeleteAllAsync<Drive>();
     }
 
     private async Task<Drive> EncryptDrive(Drive drive)
