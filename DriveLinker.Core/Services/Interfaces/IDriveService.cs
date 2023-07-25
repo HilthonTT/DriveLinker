@@ -1,6 +1,4 @@
-﻿using DriveLinker.Core.Models;
-
-namespace DriveLinker.Core.Services.Interfaces;
+﻿namespace DriveLinker.Core.Services.Interfaces;
 public interface IDriveService
 {
     Task<int> CreateDriveAsync(Drive drive);

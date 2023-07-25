@@ -1,8 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using DriveLinker.Core.Encryption.Interfaces;
-
-namespace DriveLinker.Core.Encryption;
+﻿namespace DriveLinker.Core.Encryption;
 public class AesEncryption : IAesEncryption
 {
     private readonly Aes _aes;

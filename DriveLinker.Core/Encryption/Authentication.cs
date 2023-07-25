@@ -1,9 +1,4 @@
-﻿using DriveLinker.Core.Encryption.Interfaces;
-using DriveLinker.Core.Services.Interfaces;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace DriveLinker.Core.Encryption;
+﻿namespace DriveLinker.Core.Encryption;
 public class Authentication : IAuthentication
 {
     private const string Key = nameof(Authentication);

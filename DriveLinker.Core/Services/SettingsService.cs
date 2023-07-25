@@ -1,9 +1,4 @@
-﻿using DriveLinker.Core.Models;
-using DriveLinker.Core.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
-using SQLite;
-
-namespace DriveLinker.Core.Services;
+﻿namespace DriveLinker.Core.Services;
 public class SettingsService : ISettingsService
 {
     private const string CacheName = nameof(SettingsService);

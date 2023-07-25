@@ -1,8 +1,4 @@
-﻿using DriveLinker.Core.Enums;
-using DriveLinker.Core.Languages.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
-
-namespace DriveLinker.Core.Languages;
+﻿namespace DriveLinker.Core.Languages;
 public class EnglishDictionary : IEnglishDictionary
 {
     private const string CacheName = nameof(EnglishDictionary);

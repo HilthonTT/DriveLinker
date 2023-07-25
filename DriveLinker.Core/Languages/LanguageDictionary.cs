@@ -1,9 +1,4 @@
-﻿using DriveLinker.Core.Enums;
-using DriveLinker.Core.Languages.Interfaces;
-using DriveLinker.Core.Models;
-using DriveLinker.Core.Services.Interfaces;
-
-namespace DriveLinker.Core.Languages;
+﻿namespace DriveLinker.Core.Languages;
 public class LanguageDictionary : ILanguageDictionary
 {
     private readonly ISettingsService _settingsService;

@@ -1,14 +1,8 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using DriveLinker.Core.Linker.Interfaces;
-using DriveLinker.Core.Models;
-using System.Diagnostics;
-
-namespace DriveLinker.Core.Linker;
+﻿namespace DriveLinker.Core.Linker;
 public class Linker : ILinker
 {
     private const string Green = "#00FF00";
     private const string Red = "#FF0000";
-
 
     public async Task ConnectDriveAsync(Drive drive)
     {

@@ -1,7 +1,4 @@
-﻿using DriveLinker.Core.Models;
-using Microsoft.Extensions.Caching.Memory;
-
-namespace DriveLinker.Core.Services;
+﻿namespace DriveLinker.Core.Services;
 public class DummyService : IDummyService
 {
     private const string CacheName = nameof(DummyService);

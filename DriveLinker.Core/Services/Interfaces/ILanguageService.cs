@@ -1,6 +1,4 @@
-﻿using DriveLinker.Core.Enums;
-
-namespace DriveLinker.Core.Services;
+﻿namespace DriveLinker.Core.Services.Interfaces;
 public interface ILanguageService
 {
     List<Language> GetLanguages();

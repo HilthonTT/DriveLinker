@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DriveLinker.Core.Enums;
-using SQLite;
-
-namespace DriveLinker.Core.Models;
+﻿namespace DriveLinker.Core.Models;
 public partial class Settings : ObservableObject
 {
     [PrimaryKey, AutoIncrement]

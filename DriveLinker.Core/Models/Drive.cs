@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using SQLite;
-
-namespace DriveLinker.Core.Models;
+﻿namespace DriveLinker.Core.Models;
 public partial class Drive : ObservableObject
 {
     [PrimaryKey, AutoIncrement]
