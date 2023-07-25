@@ -12,3 +12,4 @@ global using System.Diagnostics;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using SQLite;
 global using DriveLinker.Core.Helpers;
+global using DriveLinker.Core.Encryption;

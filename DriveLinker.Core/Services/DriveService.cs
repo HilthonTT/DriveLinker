@@ -11,12 +11,10 @@ public class DriveService : IDriveService
 
     public DriveService(
         IMemoryCache cache,
-        IAesEncryption encryption,
-        IAuthentication auth)
+        IAesEncryption encryption)
     {
         _cache = cache;
         _encryption = encryption;
-        _auth = auth;
     }
 
     private async Task InitializeDb()
@@ -30,7 +28,7 @@ public class DriveService : IDriveService
             Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData), DbName);
 
-        string password = await _auth.FetchPasswordAsync();
+        string password = await FetchPasswordAsync();
 
         var options = new SQLiteConnectionString(dbPath, true, key: password);
 
@@ -138,5 +136,18 @@ public class DriveService : IDriveService
             d.RootDirectory.Name.Contains(drive.Letter, StringComparison.InvariantCultureIgnoreCase));
 
         return driveInfo;
+    }
+
+    private async Task<string> FetchPasswordAsync()
+    {
+        const string Key = nameof(Authentication);
+        string hashedPassword = await SecureStorage.GetAsync(Key);
+
+        if (hashedPassword is null)
+        {
+            return "";
+        }
+
+        return hashedPassword;
     }
 }
