@@ -54,6 +54,9 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.French, "French" },
             { Keyword.German, "German" },
             { Keyword.Indonesian, "Indonesian" },
+            { Keyword.DontHaveAnAccount, "Don't have an account?" },
+            { Keyword.ForgotMyPassword, "Forgot my password" },
+            { Keyword.Login, "Login" },
         };
     }
 }

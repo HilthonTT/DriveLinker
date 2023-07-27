@@ -53,7 +53,7 @@
                         </Grid.ColumnDefinitions>
                         <Entry 
                             Grid.Column="0"
-                            Placeholder="Password"
+                            Placeholder="{Binding PasswordLabel}"
                             HeightRequest="50"
                             Text="{Binding Password}"
                             IsPassword="{Binding DontShowPassword}"/>
@@ -66,7 +66,7 @@
                 <Button 
                     Style="{StaticResource Button}"
                     Command="{Binding AuthenticateCommand}"
-                    Text="Login"
+                    Text="{Binding LoginLabel}"
                     Margin="0,20,0,0"/>
             </VerticalStackLayout>
             <VerticalStackLayout
@@ -75,19 +75,36 @@
                     <Grid
                         ColumnDefinitions="*,*">
                         <Button 
-                            Text="Don't have an account?" 
+                            Text="{Binding DontHaveAnAccountLabel}" 
                             Style="{StaticResource AuthButton}"
                             Command="{Binding RegisterCommand}"
                             IsVisible="{Binding ShowRegisterButton}"
                             HorizontalOptions="Start" />
                         <Button 
-                            Text="Forgot password" 
+                            Text="{Binding ForgotPasswordLabel}" 
                             Style="{StaticResource AuthButton}"
                             Command="{Binding ForgotPasswordCommand}"
                             Grid.Column="1" 
                             HorizontalOptions="End" />
                     </Grid>
                 </FlexLayout>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label 
+                    Text="{Binding LanguageLabel}"/>
+                <Picker 
+                    WidthRequest="500"
+                    ItemsSource="{Binding Languages}"
+                    SelectedItem="{Binding SelectedLanguage}"/>
+                <StackLayout
+                    Padding="5">
+                    <Button
+                        Text="{Binding SaveLabel}"
+                        Style="{StaticResource Button}"
+                        Command="{Binding SaveLanguageCommand}"
+                        WidthRequest="200"
+                        Margin="10"/>
+                </StackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

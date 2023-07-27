@@ -54,6 +54,9 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.French, "Perancis" },
             { Keyword.German, "Jerman" },
             { Keyword.Indonesian, "Indonesia" },
+            { Keyword.DontHaveAnAccount, "Belum punya akun?" },
+            { Keyword.ForgotMyPassword, "Lupa kata sandi" },
+            { Keyword.Login, "Masuk" },
         };
     }
 }

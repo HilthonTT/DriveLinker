@@ -11,7 +11,7 @@ public partial class LanguageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void InitializeDictionary()
+    public void InitializeDictionary()
     {
         _keywords = _language.GetDictionary();
         ChangeKeyWordData();
@@ -48,6 +48,9 @@ public partial class LanguageViewModel : ObservableObject
         FrenchLabel = _keywords[Keyword.French];
         GermanLabel = _keywords[Keyword.German];
         IndonesianLabel = _keywords[Keyword.Indonesian];
+        DontHaveAnAccountLabel = _keywords[Keyword.DontHaveAnAccount];
+        ForgotPasswordLabel = _keywords[Keyword.ForgotMyPassword];
+        LoginLabel = _keywords[Keyword.Login];
     }
 
     [ObservableProperty]
@@ -136,4 +139,13 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _indonesianLabel;
+
+    [ObservableProperty]
+    private string _dontHaveAnAccountLabel;
+
+    [ObservableProperty]
+    private string _forgotPasswordLabel;
+
+    [ObservableProperty]
+    private string _loginLabel;
 }

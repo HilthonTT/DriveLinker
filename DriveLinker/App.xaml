@@ -23,6 +23,10 @@
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
             </Style>
 
+            <Style TargetType="Picker">
+                <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+            </Style>
+
             <Style x:Key="CardView" TargetType="Frame">
                 <Setter Property="BorderColor" Value="#DDDDDD" />
                 <Setter Property="HasShadow" Value="{OnPlatform iOS=false, MacCatalyst=false, Default=true}" />

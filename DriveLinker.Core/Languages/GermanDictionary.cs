@@ -54,6 +54,9 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.French, "Französisch" },
             { Keyword.German, "Deutsch" },
             { Keyword.Indonesian, "Indonesisch" },
+            { Keyword.DontHaveAnAccount, "Sie haben noch keinen Account?" },
+            { Keyword.ForgotMyPassword, "Passwort vergessen" },
+            { Keyword.Login, "Einloggen" },
         };
     }
 }

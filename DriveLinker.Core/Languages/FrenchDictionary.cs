@@ -54,6 +54,9 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.French, "Français" },
             { Keyword.German, "Allemand" },
             { Keyword.Indonesian, "Indonésien" },
+            { Keyword.DontHaveAnAccount, "Vous n'avez pas de compte ?" },
+            { Keyword.ForgotMyPassword, "J'ai oublié mon mot de passe" },
+            { Keyword.Login, "Se connecter" },
         };
     }
 }

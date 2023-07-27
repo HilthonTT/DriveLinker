@@ -31,4 +31,7 @@ public enum Keyword
     French,
     German,
     Indonesian,
+    DontHaveAnAccount,
+    ForgotMyPassword,
+    Login,
 }

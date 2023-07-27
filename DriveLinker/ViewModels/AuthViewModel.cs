@@ -1,6 +1,7 @@
 ﻿namespace DriveLinker.ViewModels;
 public partial class AuthViewModel : BaseViewModel
 {
+    private readonly ISettingsService _settingsService;
     private readonly IAuthentication _auth;
     private readonly ILanguageService _languageService;
 
@@ -16,6 +17,7 @@ public partial class AuthViewModel : BaseViewModel
             languageDictionary,
             timerTracker)
     {
+        _settingsService = settingsService;
         _auth = auth;
         _languageService = languageService;
 
@@ -26,6 +28,9 @@ public partial class AuthViewModel : BaseViewModel
 
     [ObservableProperty]
     private ObservableCollection<Language> _languages;
+
+    [ObservableProperty]
+    private Language _selectedLanguage = Language.English;
 
     [ObservableProperty]
     private string _password;
@@ -55,6 +60,16 @@ public partial class AuthViewModel : BaseViewModel
         {
             ShowRegisterButton = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task SaveLanguageAsync()
+    {
+        var settings = await _settingsService.GetSettingsAsync();
+        settings.Language = SelectedLanguage;
+
+        await _settingsService.UpdateSettingsAsync(settings);
+        InitializeDictionary();
     }
 
     [RelayCommand]
