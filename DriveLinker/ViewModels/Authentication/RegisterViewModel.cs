@@ -22,6 +22,9 @@ public partial class RegisterViewModel : BaseViewModel
     private string _password;
 
     [ObservableProperty]
+    private string _username;
+
+    [ObservableProperty]
     private bool _dontShowPassword = true;
 
     [RelayCommand]
@@ -33,7 +36,7 @@ public partial class RegisterViewModel : BaseViewModel
     [RelayCommand]
     private async Task RegisterAsync()
     {
-        if (string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Username))
         {
             return;
         }
@@ -41,7 +44,7 @@ public partial class RegisterViewModel : BaseViewModel
         bool savePassword = await DisplaySavePassword();
         if (savePassword)
         {
-            await _auth.ResetPasswordAsync(Password);
+            await _auth.ResetPasswordAsync(Username, Password);
             await LoadHomePageAsync();
         }
     }

@@ -36,30 +36,15 @@ public partial class AuthViewModel : BaseViewModel
     private string _password;
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    private string _username;
 
     [ObservableProperty]
-    private bool _showRegisterButton;
+    private bool _dontShowPassword = true;
 
     [RelayCommand]
     private void ToggleShowPassword()
     {
         DontShowPassword = !DontShowPassword;
-    }
-
-    [RelayCommand]
-    private async Task VerifyAccountExistance()
-    {
-        string hashedPassword = await SecureStorage.GetAsync(nameof(Authentication));
-
-        if (string.IsNullOrWhiteSpace(hashedPassword))
-        {
-            ShowRegisterButton = true;
-        }
-        else
-        {
-            ShowRegisterButton = false;
-        }
     }
 
     [RelayCommand]
@@ -75,12 +60,12 @@ public partial class AuthViewModel : BaseViewModel
     [RelayCommand]
     private async Task AuthenticateAsync()
     {
-        if (string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Username))
         {
             return;
         }
 
-        bool isCorrectPassword = await _auth.VerifyPasswordAsync(Password);
+        bool isCorrectPassword = await _auth.VerifyPasswordAsync(Username, Password);
 
         if (isCorrectPassword)
         {

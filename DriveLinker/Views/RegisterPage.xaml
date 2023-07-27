@@ -40,14 +40,24 @@
                 <FlexLayout 
                     Direction="Column">
                     <Grid
-                        ColumnDefinitions="*,Auto">
+                        ColumnDefinitions="*,Auto"
+                        RowDefinitions="Auto,Auto">
                         <Entry 
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Placeholder="{Binding UserNameLabel}"
+                            HeightRequest="50"
+                            Text="{Binding Username}"
+                            Margin="0,0,0,10"/>
+                        <Entry 
+                            Grid.Row="1"
                             Grid.Column="0"
                             Placeholder="{Binding PasswordLabel}"
                             HeightRequest="50"
                             Text="{Binding Password}"
                             IsPassword="{Binding DontShowPassword}"/>
                         <ImageButton 
+                            Grid.Row="1"
                             Grid.Column="1"
                             Style="{StaticResource ShowButton}"
                             Command="{Binding ToggleShowPasswordCommand}"/>
@@ -55,7 +65,7 @@
                 </FlexLayout>
                 <Button 
                     Style="{StaticResource Button}"
-                    Command="{Binding AuthenticateCommand}"
+                    Command="{Binding RegisterCommand}"
                     Text="Register"
                     Margin="0,20,0,0"/>
             </VerticalStackLayout>

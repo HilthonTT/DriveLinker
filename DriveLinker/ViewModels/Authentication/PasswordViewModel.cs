@@ -22,6 +22,9 @@ public partial class PasswordViewModel : BaseViewModel
     private string _newPassword;
 
     [ObservableProperty]
+    private string _username;
+
+    [ObservableProperty]
     private bool _dontShowPassword = true;
 
     [RelayCommand]
@@ -33,7 +36,7 @@ public partial class PasswordViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetNewPasswordAsync()
     {
-        if (string.IsNullOrWhiteSpace(NewPassword))
+        if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(Username))
         {
             return;
         }
@@ -41,7 +44,7 @@ public partial class PasswordViewModel : BaseViewModel
         bool saveNewPassword = await DisplaySavePassword();
         if (saveNewPassword)
         {
-            await _auth.ResetPasswordAsync(NewPassword);
+            await _auth.ResetPasswordAsync(Username, NewPassword);
             await LoadHomePageAsync();
         }
     }
