@@ -3,24 +3,49 @@ public class Authentication : IAuthentication
 {
     private const string Key = nameof(Authentication);
     private readonly IDriveService _driveService;
+    private readonly IAccountService _accountService;
 
-    public Authentication(IDriveService driveService)
+    public Authentication(
+        IDriveService driveService,
+        IAccountService accountService)
     {
         _driveService = driveService;
+        _accountService = accountService;
     }
 
-    public async Task<string> SetPasswordAsync(string password)
+    public async Task<string> SetPasswordAsync(string username, string password)
     {
         string hashedPassword = await ComputeSha512Hash(password);
-        await SecureStorage.SetAsync(Key, hashedPassword);
+
+        string key = GetKey(username);
+        await SecureStorage.SetAsync(key, hashedPassword);
 
         return hashedPassword;
     }
 
-    public async Task<bool> VerifyPasswordAsync(string password)
+    public async Task<string> ChangePasswordAsync(string username, string newPassword)
     {
+        string key = GetKey(username);
+        SecureStorage.Remove(key);
+
+        string newHashedPassword = await ComputeSha512Hash(newPassword);
+        await SecureStorage.SetAsync(key, newHashedPassword);
+
+        return newHashedPassword;
+    }
+
+    public async Task<bool> VerifyPasswordAsync(string username, string password)
+    {
+        var account = await _accountService.GetAccountByUsernameAsync(username);
+        if (account is not null)
+        {
+            return true;
+        }
+
         string hashedPassword = await ComputeSha512Hash(password);
-        string storedPassword = await SecureStorage.GetAsync(Key);
+
+        string key = GetKey(username);
+        string storedPassword = await SecureStorage.GetAsync(key);
 
         if (storedPassword is null)
         {
@@ -30,30 +55,24 @@ public class Authentication : IAuthentication
         return hashedPassword == storedPassword;
     }
 
-    public async Task<string> ChangePasswordAsync(string newPassword)
+    public async Task<string> ResetPasswordAsync(string username, string newPassword)
     {
-        bool isRemoved = SecureStorage.Remove(Key);
-
-        if (isRemoved)
-        {
-            string newHashedPassword = await ComputeSha512Hash(newPassword);
-            await SecureStorage.SetAsync(Key, newHashedPassword);
-
-            return newHashedPassword;
-        }
-
-        return "";
-    }
-
-    public async Task<string> ResetPasswordAsync(string newPassword)
-    {
-        SecureStorage.Remove(Key);
+        string key = GetKey(username);
+        SecureStorage.Remove(key);
 
         string newHashedPassword = await ComputeSha512Hash(newPassword);
-        await SecureStorage.SetAsync(Key, newHashedPassword);
+        await SecureStorage.SetAsync(key, newHashedPassword);
 
-        // Delete database to not gain access to it.
-        _driveService.DeleteDb();
+        // Delete drives to not gain access to it.
+        var account = await _accountService.GetAccountByUsernameAsync(username);
+        if (account is not null)
+        {
+            var drives = await _driveService.GetAllAccountDrivesAsync(account.Id);
+            foreach (var drive in drives)
+            {
+                await _driveService.DeleteDriveAsync(drive);
+            }
+        }
 
         return newHashedPassword;
     }
@@ -88,5 +107,10 @@ public class Authentication : IAuthentication
         }
 
         return sb.ToString();
+    }
+
+    private static string GetKey(string username)
+    {
+        return $"{Key}_{username}";
     }
 }

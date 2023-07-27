@@ -46,9 +46,53 @@ public class AccountService : IAccountService
         return output;
     }
 
+    public async Task<Account> GetAccountByUsernameAsync(string username)
+    {
+        string key = CacheNamePrefix + username;
+
+        var output = _cache.Get<Account>(key);
+        if (output is null)
+        {
+            output = await _db.Table<Account>().FirstOrDefaultAsync(a => a.Username == username);
+            _cache.Set(key, output);
+        }
+
+        return output;
+    }
+
+    public async Task<List<Drive>> GetAccountDrivesAsync(int accountId)
+    {
+        string key = $"{nameof(DriveService)}_{CacheNamePrefix}{accountId}";
+
+        var output = _cache.Get<List<Drive>>(key);
+        if (output is null)
+        {
+            output = await _driveService.GetAllAccountDrivesAsync(accountId);
+            _cache.Set(key, output);
+        }
+
+        return output;
+    }
+
+    public async Task<Settings> GetAccountSettingsService(int accountId)
+    {
+        string key = $"{nameof(SettingsService)}_{CacheNamePrefix}{accountId}";
+
+        var output = _cache.Get<Settings>(key);
+        if (output is null)
+        {
+            output = await _settingsService.GetAccountSettingsAsync(accountId);
+            _cache.Set(key, output);
+        }
+
+        return output;
+    }
+
     public async Task<int> CreateAccountAsync(Account account)
     {
-        return await _db.InsertAsync(account);
+        await _db.InsertAsync(account);
+
+        return account.Id;
     }
 
     public async Task<int> UpdateAccountAsync(Account account)

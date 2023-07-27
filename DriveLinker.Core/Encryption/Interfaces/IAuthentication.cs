@@ -1,10 +1,10 @@
-﻿namespace DriveLinker.Core.Encryption.Interfaces;
+﻿namespace DriveLinker.Core.Encryption;
 
 public interface IAuthentication
 {
-    Task<string> ChangePasswordAsync(string newPassword);
+    Task<string> ChangePasswordAsync(string username, string newPassword);
     Task<string> FetchPasswordAsync();
-    Task<string> ResetPasswordAsync(string newPassword);
-    Task<string> SetPasswordAsync(string password);
-    Task<bool> VerifyPasswordAsync(string password);
+    Task<string> ResetPasswordAsync(string username, string newPassword);
+    Task<string> SetPasswordAsync(string username, string password);
+    Task<bool> VerifyPasswordAsync(string username, string password);
 }
