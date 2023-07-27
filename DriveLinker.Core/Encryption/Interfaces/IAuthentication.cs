@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.Core.Encryption;
+﻿namespace DriveLinker.Core.Encryption.Interfaces;
 
 public interface IAuthentication
 {
