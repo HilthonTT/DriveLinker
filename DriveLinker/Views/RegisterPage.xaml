@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Authentication"
+             x:DataType="viewModels:RegisterViewModel"
+             x:Class="DriveLinker.Views.RegisterPage"
+             Title="RegisterPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Register"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -25,6 +25,8 @@ public static class RegisterServices
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<CreateViewModel>();
         builder.Services.AddTransient<DriveViewModel>();
+        builder.Services.AddTransient<PasswordViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
     }
 
     public static void ConfigurePages(this MauiAppBuilder builder)
@@ -34,6 +36,8 @@ public static class RegisterServices
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<CreatePage>();
         builder.Services.AddTransient<DrivePage>();
+        builder.Services.AddTransient<PasswordPage>();
+        builder.Services.AddTransient<RegisterPage>();
     }
 
     public static void ConfigureLanguages(this MauiAppBuilder builder)
@@ -52,5 +56,7 @@ public static class RegisterServices
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(CreatePage), typeof(CreatePage));
         Routing.RegisterRoute(nameof(DrivePage), typeof(DrivePage));
+        Routing.RegisterRoute(nameof(PasswordPage), typeof(PasswordPage));
+        Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
     }
 }

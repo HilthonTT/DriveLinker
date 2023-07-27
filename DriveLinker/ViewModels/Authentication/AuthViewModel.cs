@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels.Authentication;
 public partial class AuthViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
@@ -98,68 +98,17 @@ public partial class AuthViewModel : BaseViewModel
     [RelayCommand]
     private async Task RegisterAsync()
     {
-        string newPassword = await DisplayRegisterPasswordForm();
-
-        bool savePassword = await DisplaySavePassword(newPassword);
-
-        if (savePassword)
-        {
-            await _auth.ResetPasswordAsync(newPassword);
-            await LoadHomePageAsync();
-        }
+        await Shell.Current.GoToAsync(nameof(RegisterPage));
     }
 
     [RelayCommand]
     private async Task ForgotPasswordAsync()
     {
-        bool changePassword = await DisplayForgotPassword();
-
-        if (changePassword is false)
-        {
-            return;
-        }
-
-        string newPassword = await DisplayForgotPasswordForm();
-        bool savePassword = await DisplaySavePassword(newPassword);
-
-        if (savePassword)
-        {
-            await _auth.ResetPasswordAsync(newPassword);
-            await LoadHomePageAsync();
-        }
+        await Shell.Current.GoToAsync(nameof(PasswordPage));
     }
 
     private async Task LoadHomePageAsync()
     {
         await Shell.Current.GoToAsync(nameof(MainPage));
-    }
-
-    private static async Task<string> DisplayForgotPasswordForm()
-    {
-        string newPassword = await Shell.Current.DisplayPromptAsync("Forgot my password", "Enter your password.");
-        return newPassword;
-    }
-
-    private static async Task<bool> DisplaySavePassword(string newPassword)
-    {
-        bool savePassword = await Shell.Current.DisplayAlert(
-            "Save Password?", $"Your password is {newPassword}, would you like to save it?", "Save", "Cancel");
-
-        return savePassword;
-    }
-
-    private static async Task<string> DisplayRegisterPasswordForm()
-    {
-        string newPassword = await Shell.Current.DisplayPromptAsync("Register", "Enter your password.");
-
-        return newPassword;
-    }
-
-    private static async Task<bool> DisplayForgotPassword()
-    {
-        bool changePassword = await Shell.Current.DisplayAlert(
-            "Forgot your password?", "Changing your password will delete all your drives.", "I forgot my password.", "Cancel");
-
-        return changePassword;
     }
 }

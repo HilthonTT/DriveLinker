@@ -22,3 +22,4 @@ global using Microsoft.Extensions.Caching.Memory;
 global using DriveLinker.Core.Languages;
 global using DriveLinker.Core.Languages.Interfaces;
 global using CommunityToolkit.Mvvm.Messaging;
+global using DriveLinker.ViewModels.Authentication;
