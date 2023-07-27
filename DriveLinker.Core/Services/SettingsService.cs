@@ -2,6 +2,7 @@
 public class SettingsService : ISettingsService
 {
     private const string CacheName = nameof(SettingsService);
+    private const string CacheNamePrefix = $"{CacheName}_";
     private const string DbName = "Settings.db4";
     private readonly IMemoryCache _cache;
     private SQLiteAsyncConnection _asyncDb;
@@ -49,6 +50,22 @@ public class SettingsService : ISettingsService
             output ??= new();
 
             _cache.Set(CacheName, output);
+        }
+
+        return output;
+    }
+
+    public async Task<Settings> GetAccountSettingsAsync(int accountId)
+    {
+        string key = CacheNamePrefix + accountId;
+
+        var output = _cache.Get<Settings>(key);
+        if (output is null)
+        {
+            output = await _asyncDb.Table<Settings>().FirstOrDefaultAsync(s => s.AccountId == accountId);
+            output ??= new();
+
+            _cache.Set(key, output);
         }
 
         return output;

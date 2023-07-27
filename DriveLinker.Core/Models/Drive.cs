@@ -4,6 +4,9 @@ public partial class Drive : ObservableObject
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
+    [Indexed]
+    public int AccountId { get; set; }
+
     [ObservableProperty]
     private string _letter;
 

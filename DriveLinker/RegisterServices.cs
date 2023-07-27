@@ -3,6 +3,7 @@ public static class RegisterServices
 {
     public static void ConfigureServices(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<IAccountService, AccountService>();
         builder.Services.AddTransient<IDriveService, DriveService>();
         builder.Services.AddTransient<ISettingsService, SettingsService>();
         builder.Services.AddTransient<IDummyService, DummyService>();

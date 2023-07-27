@@ -2,6 +2,7 @@
 public class DriveService : IDriveService
 {
     private const string CacheName = nameof(DriveService);
+    private const string CacheNamePrefix = $"{CacheName}_";
     private const string DbName = "Drive.db4";
     private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
@@ -44,6 +45,21 @@ public class DriveService : IDriveService
             var decryptedDrives = await output.SelectAsync(DecryptDrive);
 
             _cache.Set(CacheName, decryptedDrives.ToList());
+        }
+
+        return output;
+    }
+
+    public async Task<List<Drive>> GetAllAccountDrivesAsync(int accountId)
+    {
+        await InitializeDb();
+
+        string key = CacheNamePrefix + accountId;
+        var output = _cache.Get<List<Drive>>(key);
+        if (output is null)
+        {
+            output = await _db.Table<Drive>().Where(d => d.AccountId == accountId).ToListAsync();
+            _cache.Set(key, output);
         }
 
         return output;

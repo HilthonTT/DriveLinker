@@ -4,6 +4,9 @@ public partial class Settings : ObservableObject
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
+    [Indexed]
+    public int AccountId { get; set; }
+
     [ObservableProperty]
     private bool _autoLink = true;
 
