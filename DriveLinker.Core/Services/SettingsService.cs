@@ -2,7 +2,7 @@
 public class SettingsService : ISettingsService
 {
     private const string CacheName = nameof(SettingsService);
-    private const string DbName = "Settings.db3";
+    private const string DbName = "Settings.db4";
     private readonly IMemoryCache _cache;
     private SQLiteAsyncConnection _asyncDb;
     private SQLiteConnection _db;

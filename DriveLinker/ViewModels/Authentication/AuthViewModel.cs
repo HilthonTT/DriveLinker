@@ -107,7 +107,7 @@ public partial class AuthViewModel : BaseViewModel
         await Shell.Current.GoToAsync(nameof(PasswordPage));
     }
 
-    private async Task LoadHomePageAsync()
+    private static async Task LoadHomePageAsync()
     {
         await Shell.Current.GoToAsync(nameof(MainPage));
     }
