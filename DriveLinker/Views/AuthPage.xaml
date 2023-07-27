@@ -45,12 +45,10 @@
             </VerticalStackLayout>
             <VerticalStackLayout
                 WidthRequest="500">
-                <FlexLayout Direction="Column">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                <FlexLayout 
+                    Direction="Column">
+                    <Grid
+                        ColumnDefinitions="*,Auto">
                         <Entry 
                             Grid.Column="0"
                             Placeholder="{Binding PasswordLabel}"

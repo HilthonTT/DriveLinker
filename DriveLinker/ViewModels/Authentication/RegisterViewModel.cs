@@ -25,6 +25,12 @@ public partial class RegisterViewModel : BaseViewModel
     private bool _dontShowPassword = true;
 
     [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        DontShowPassword = !DontShowPassword;
+    }
+
+    [RelayCommand]
     private async Task RegisterAsync()
     {
         if (string.IsNullOrWhiteSpace(Password))

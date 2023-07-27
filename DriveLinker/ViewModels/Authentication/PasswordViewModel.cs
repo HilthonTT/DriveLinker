@@ -25,6 +25,12 @@ public partial class PasswordViewModel : BaseViewModel
     private bool _dontShowPassword = true;
 
     [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        DontShowPassword = !DontShowPassword;
+    }
+
+    [RelayCommand]
     private async Task SetNewPasswordAsync()
     {
         if (string.IsNullOrWhiteSpace(NewPassword))
