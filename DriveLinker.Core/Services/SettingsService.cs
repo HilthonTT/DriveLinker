@@ -41,20 +41,6 @@ public class SettingsService : ISettingsService
         _db.CreateTable<Settings>();
     }
 
-    public async Task<Settings> GetSettingsAsync()
-    {
-        var output = _cache.Get<Settings>(CacheName);
-        if (output is null)
-        {
-            output = await _asyncDb.Table<Settings>().FirstOrDefaultAsync();
-            output ??= new();
-
-            _cache.Set(CacheName, output);
-        }
-
-        return output;
-    }
-
     public async Task<Settings> GetAccountSettingsAsync(int accountId)
     {
         string key = CacheNamePrefix + accountId;
@@ -71,15 +57,17 @@ public class SettingsService : ISettingsService
         return output;
     }
 
-    public Settings GetSettings()
+    public Settings GetAccountSettings(int accountId)
     {
-        var output = _cache.Get<Settings>(CacheName);
+        string key = CacheNamePrefix + accountId;
+
+        var output = _cache.Get<Settings>(key);
         if (output is null)
         {
-            output = _db.Table<Settings>().FirstOrDefault();
+            output = _db.Table<Settings>().FirstOrDefault(s => s.AccountId == accountId);
             output ??= new();
 
-            _cache.Set(CacheName, output);
+            _cache.Set(key, output);
         }
 
         return output;
@@ -99,16 +87,19 @@ public class SettingsService : ISettingsService
 
     public async Task<int> CreateSettingsAsync(Settings settings)
     {
+        RemoveCache(settings.AccountId);
         return await _asyncDb.InsertAsync(settings);
     }
 
     public async Task<int> UpdateSettingsAsync(Settings settings)
     {
+        RemoveCache(settings.AccountId);
         return await _asyncDb.UpdateAsync(settings);
     }
 
     public async Task<int> DeleteSettingsAsync(Settings settings)
     {
+        RemoveCache(settings.AccountId);
         return await _asyncDb.DeleteAsync(settings);
     }
 
@@ -119,6 +110,12 @@ public class SettingsService : ISettingsService
                 Environment.SpecialFolder.LocalApplicationData), DbName);
 
         return dbPath;
+    }
+
+    private void RemoveCache(int accountId)
+    {
+        string key = CacheNamePrefix + accountId;
+        _cache.Remove(key);
     }
 }
 

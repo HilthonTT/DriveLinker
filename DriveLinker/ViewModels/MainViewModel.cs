@@ -5,6 +5,7 @@ public partial class MainViewModel : BaseViewModel
     private readonly IDummyService _dummyService;
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
+    private readonly Account _account;
 
     public MainViewModel(
         IDriveService driveService,
@@ -13,14 +14,20 @@ public partial class MainViewModel : BaseViewModel
         ILinker linker,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
+        Account account,
         TimerTracker timerTracker)
-        : base(settingsService, windowsHelper, languageDictionary, timerTracker)
+        : base(
+            settingsService,
+            windowsHelper,
+            languageDictionary,
+            account,
+            timerTracker)
     {
         _driveService = driveService;
         _dummyService = dummyService;
         _settingsService = settingsService;
         _linker = linker;
-
+        _account = account;
         SetUpTimerAsync();
     }
 
@@ -65,8 +72,10 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadDrivesAsync()
     {
-        var settings = await _settingsService.GetSettingsAsync();
-        var drives = await _driveService.GetAllDrivesAsync();
+        int accountId = _account.Id;
+
+        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
+        var drives = await _driveService.GetAllAccountDrivesAsync(_account.Id);
 
         if (drives?.Count <= 0)
         {
@@ -135,7 +144,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task PerformSearchAsync(string query)
     {
-        var output = await _driveService.GetAllDrivesAsync();
+        var output = await _driveService.GetAllAccountDrivesAsync(_account.Id);
 
         if (string.IsNullOrWhiteSpace(query) is false)
         {

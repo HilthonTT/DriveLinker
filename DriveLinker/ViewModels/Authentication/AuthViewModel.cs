@@ -4,6 +4,7 @@ public partial class AuthViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
     private readonly IAuthentication _auth;
     private readonly ILanguageService _languageService;
+    private readonly Account _account;
 
     public AuthViewModel(
         ISettingsService settingsService,
@@ -11,15 +12,18 @@ public partial class AuthViewModel : BaseViewModel
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         ILanguageService languageService,
+        Account account,
         TimerTracker timerTracker) : base(
             settingsService,
             windowsHelper,
             languageDictionary,
+            account,
             timerTracker)
     {
         _settingsService = settingsService;
         _auth = auth;
         _languageService = languageService;
+        _account = account;
 
         Languages = _languageService
             .GetLanguages()
@@ -50,7 +54,7 @@ public partial class AuthViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveLanguageAsync()
     {
-        var settings = await _settingsService.GetSettingsAsync();
+        var settings = await _settingsService.GetAccountSettingsAsync(0);
         settings.Language = SelectedLanguage;
 
         await _settingsService.UpdateSettingsAsync(settings);
@@ -65,10 +69,11 @@ public partial class AuthViewModel : BaseViewModel
             return;
         }
 
-        bool isCorrectPassword = await _auth.VerifyPasswordAsync(Username, Password);
+        var verifiedAccount = await _auth.VerifyPasswordAsync(Username, Password);
 
-        if (isCorrectPassword)
+        if (verifiedAccount?.IsCorrect is true)
         {
+            AssignAccount(verifiedAccount);
             await LoadHomePageAsync();
         }
         else
@@ -95,5 +100,12 @@ public partial class AuthViewModel : BaseViewModel
     private static async Task LoadHomePageAsync()
     {
         await Shell.Current.GoToAsync(nameof(MainPage));
+    }
+
+    private void AssignAccount(VerifiedAccount verifiedAccount)
+    {
+        _account.Id = verifiedAccount.Account.Id;
+        _account.Username = verifiedAccount.Account.Username;
+        _account.SettingsId = verifiedAccount.Account.SettingsId;
     }
 }

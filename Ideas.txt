@@ -15,3 +15,9 @@ AUTH
 Add multiple accounts
 
 - add username, password.
+- Auto generate recovery keys if password has been lost.
+
+
+FIRST TIME
+*********
+Add a first time boot, to choose the language.

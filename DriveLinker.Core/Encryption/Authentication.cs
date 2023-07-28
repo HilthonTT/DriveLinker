@@ -34,13 +34,10 @@ public class Authentication : IAuthentication
         return newHashedPassword;
     }
 
-    public async Task<bool> VerifyPasswordAsync(string username, string password)
+    public async Task<VerifiedAccount> VerifyPasswordAsync(string username, string password)
     {
         var account = await _accountService.GetAccountByUsernameAsync(username);
-        if (account is not null)
-        {
-            return true;
-        }
+        var dirtyAccount = new VerifiedAccount() { Account = account, IsCorrect = false };
 
         string hashedPassword = await ComputeSha512Hash(password);
 
@@ -49,10 +46,17 @@ public class Authentication : IAuthentication
 
         if (storedPassword is null)
         {
-            return false;
+            return dirtyAccount;
         }
 
-        return hashedPassword == storedPassword;
+        if (hashedPassword == storedPassword)
+        {
+            return new() { Account = account, IsCorrect = true };
+        }
+        else
+        {
+            return dirtyAccount;
+        }
     }
 
     public async Task<string> ResetPasswordAsync(string username, string newPassword)

@@ -11,6 +11,7 @@ public static class RegisterServices
 
         // Misc
         builder.Services.AddMemoryCache();
+        builder.Services.AddSingleton<Account>();
         builder.Services.AddSingleton<TimerTracker>();
 
         builder.Services.AddTransient<IAesEncryption, AesEncryption>();

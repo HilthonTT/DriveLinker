@@ -12,8 +12,14 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
+        Account account,
         TimerTracker timerTracker)
-        : base(settingsService, windowsHelper, languageDictionary, timerTracker)
+        : base(
+            settingsService,
+            windowsHelper,
+            languageDictionary,
+            account,
+            timerTracker)
     {
         _driveService = driveService;
         _encryption = encryption;

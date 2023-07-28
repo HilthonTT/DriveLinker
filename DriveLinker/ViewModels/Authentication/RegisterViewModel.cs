@@ -3,19 +3,26 @@
 public partial class RegisterViewModel : BaseViewModel
 {
     private readonly IAuthentication _auth;
+    private readonly IAccountService _accountService;
+    private readonly Account _account;
 
     public RegisterViewModel(
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
+        IAccountService accountService,
+        Account account,
         TimerTracker timerTracker) : base(
             settingsService,
             windowsHelper,
             languageDictionary,
+            account,
             timerTracker)
     {
         _auth = auth;
+        _accountService = accountService;
+        _account = account;
     }
 
     [ObservableProperty]
@@ -44,7 +51,8 @@ public partial class RegisterViewModel : BaseViewModel
         bool savePassword = await DisplaySavePassword();
         if (savePassword)
         {
-            await _auth.ResetPasswordAsync(Username, Password);
+            await _accountService.CreateAccountAsync(new() { Username = Username });
+            await _auth.ChangePasswordAsync(Username, Password);
             await LoadHomePageAsync();
         }
     }
@@ -60,5 +68,12 @@ public partial class RegisterViewModel : BaseViewModel
     private static async Task LoadHomePageAsync()
     {
         await Shell.Current.GoToAsync(nameof(MainPage));
+    }
+
+    private void AssignAccount(Account account)
+    {
+        _account.Id = account.Id;
+        _account.Username = account.Username;
+        _account.SettingsId = account.SettingsId;
     }
 }

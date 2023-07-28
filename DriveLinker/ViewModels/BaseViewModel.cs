@@ -6,16 +6,20 @@ public partial class BaseViewModel : LanguageViewModel
     private static CountdownTimer _timer;
     private readonly ISettingsService _settingsService;
     private readonly IWindowsHelper _windowsHelper;
+    private readonly Account _account;
 
     public BaseViewModel(
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
+        Account account,
         TimerTracker timerTracker)
         : base(languageDictionary)
     {
         _settingsService = settingsService;
         _windowsHelper = windowsHelper;
+        _account = account;
+
         TimerTracker = timerTracker;
     }
 
@@ -67,7 +71,7 @@ public partial class BaseViewModel : LanguageViewModel
 
     public async Task SetUpTimerAsync()
     {
-        var settings = await _settingsService.GetSettingsAsync();
+        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
 
         if (settings?.AutoMinimize is true)
         {

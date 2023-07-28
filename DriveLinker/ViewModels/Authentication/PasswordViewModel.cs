@@ -9,10 +9,12 @@ public partial class PasswordViewModel : BaseViewModel
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
+        Account account,
         TimerTracker timerTracker) : base(
             settingsService,
             windowsHelper,
             languageDictionary,
+            account,
             timerTracker)
     {
         _auth = auth;
