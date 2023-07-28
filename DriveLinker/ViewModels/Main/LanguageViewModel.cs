@@ -7,13 +7,13 @@ public partial class LanguageViewModel : ObservableObject
     public LanguageViewModel(ILanguageDictionary language)
     {
         _language = language;
-        InitializeDictionary();      
+        InitializeDictionary();   
     }
 
     [RelayCommand]
-    public void InitializeDictionary()
+    public async Task InitializeDictionary()
     {
-        _keywords = _language.GetDictionary();
+        _keywords = await _language.GetDictionary();
         ChangeKeyWordData();
     }
 

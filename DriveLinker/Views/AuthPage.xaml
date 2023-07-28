@@ -19,6 +19,12 @@
         </Grid>
     </Shell.TitleView>
 
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior 
+            EventName="Appearing" 
+            Command="{Binding InitializeDictionaryCommand}"/>
+    </ContentPage.Behaviors>
+
     <ScrollView>
         <VerticalStackLayout
             Spacing="30"
