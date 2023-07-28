@@ -6,13 +6,13 @@ public class DriveService : IDriveService
     private const string DbName = "Drive.db4";
     private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
-    private readonly IAesEncryption _encryption;
+    private readonly IEncryption _encryption;
     private readonly IPasswordGenerator _passwordGenerator;
     private SQLiteAsyncConnection _db;
 
     public DriveService(
         IMemoryCache cache,
-        IAesEncryption encryption,
+        IEncryption encryption,
         IPasswordGenerator passwordGenerator)
     {
         _cache = cache;

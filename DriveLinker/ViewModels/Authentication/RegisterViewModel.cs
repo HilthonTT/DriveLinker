@@ -51,9 +51,9 @@ public partial class RegisterViewModel : BaseViewModel
         bool savePassword = await DisplaySavePassword();
         if (savePassword)
         {
-            await _accountService.CreateAccountAsync(new() { Username = Username });
+            var account = await _accountService.CreateAccountAsync(new() { Username = Username });
             await _auth.ChangePasswordAsync(Username, Password);
-            await LoadHomePageAsync();
+            await LoadRecoveryPageAsync(account);
         }
     }
 
@@ -65,8 +65,13 @@ public partial class RegisterViewModel : BaseViewModel
         return savePassword;
     }
 
-    private static async Task LoadHomePageAsync()
+    private static async Task LoadRecoveryPageAsync(Account account)
     {
-        await Shell.Current.GoToAsync(nameof(MainPage));
+        var parameters = new Dictionary<string, object>
+        {
+            { "Account", account },
+        };
+
+        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), true, parameters);
     }
 }

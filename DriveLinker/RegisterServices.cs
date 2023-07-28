@@ -14,9 +14,10 @@ public static class RegisterServices
         builder.Services.AddSingleton<Account>();
         builder.Services.AddSingleton<TimerTracker>();
 
-        builder.Services.AddTransient<IAesEncryption, AesEncryption>();
+        builder.Services.AddTransient<IEncryption, Encryption>();
         builder.Services.AddTransient<IAuthentication, Authentication>();
         builder.Services.AddTransient<IPasswordGenerator, PasswordGenerator>();
+        builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ILinker, Linker>();
         builder.Services.AddTransient<IWindowsHelper, WindowsHelper>();
     }
@@ -30,6 +31,7 @@ public static class RegisterServices
         builder.Services.AddTransient<DriveViewModel>();
         builder.Services.AddTransient<PasswordViewModel>();
         builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<RecoveryKeyViewModel>();
     }
 
     public static void ConfigurePages(this MauiAppBuilder builder)
@@ -41,6 +43,7 @@ public static class RegisterServices
         builder.Services.AddTransient<DrivePage>();
         builder.Services.AddTransient<PasswordPage>();
         builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<RecoveryKeyPage>();
     }
 
     public static void ConfigureLanguages(this MauiAppBuilder builder)
@@ -61,5 +64,7 @@ public static class RegisterServices
         Routing.RegisterRoute(nameof(DrivePage), typeof(DrivePage));
         Routing.RegisterRoute(nameof(PasswordPage), typeof(PasswordPage));
         Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+        Routing.RegisterRoute(nameof(AuthPage), typeof(AuthPage));
+        Routing.RegisterRoute(nameof(RecoveryKeyPage), typeof(RecoveryKeyPage));
     }
 }

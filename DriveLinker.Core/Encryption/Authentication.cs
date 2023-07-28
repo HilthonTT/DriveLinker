@@ -2,20 +2,23 @@
 public class Authentication : IAuthentication
 {
     private const string Key = nameof(Authentication);
+    private readonly IEncryption _encryption;
     private readonly IDriveService _driveService;
     private readonly IAccountService _accountService;
 
     public Authentication(
+        IEncryption encryption,
         IDriveService driveService,
         IAccountService accountService)
     {
+        _encryption = encryption;
         _driveService = driveService;
         _accountService = accountService;
     }
 
     public async Task<string> SetPasswordAsync(string username, string password)
     {
-        string hashedPassword = await ComputeSha512Hash(password);
+        string hashedPassword = await _encryption.ComputeSha512Hash(password);
 
         string key = GetKey(username);
         await SecureStorage.SetAsync(key, hashedPassword);
@@ -28,7 +31,7 @@ public class Authentication : IAuthentication
         string key = GetKey(username);
         SecureStorage.Remove(key);
 
-        string newHashedPassword = await ComputeSha512Hash(newPassword);
+        string newHashedPassword = await _encryption.ComputeSha512Hash(newPassword);
         await SecureStorage.SetAsync(key, newHashedPassword);
 
         return newHashedPassword;
@@ -39,7 +42,7 @@ public class Authentication : IAuthentication
         var account = await _accountService.GetAccountByUsernameAsync(username);
         var dirtyAccount = new VerifiedAccount() { Account = account, IsCorrect = false };
 
-        string hashedPassword = await ComputeSha512Hash(password);
+        string hashedPassword = await _encryption.ComputeSha512Hash(password);
 
         string key = GetKey(username);
         string storedPassword = await SecureStorage.GetAsync(key);
@@ -64,7 +67,7 @@ public class Authentication : IAuthentication
         string key = GetKey(username);
         SecureStorage.Remove(key);
 
-        string newHashedPassword = await ComputeSha512Hash(newPassword);
+        string newHashedPassword = await _encryption.ComputeSha512Hash(newPassword);
         await SecureStorage.SetAsync(key, newHashedPassword);
 
         // Delete drives to not gain access to it.
@@ -91,26 +94,6 @@ public class Authentication : IAuthentication
         }
 
         return hashedPassword;
-    }
-
-    private static async Task<string> ComputeSha512Hash(string plainText)
-    {
-        using SHA512 sha512 = SHA512.Create();
-        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] hashedBytes;
-
-        using (var inputStream = new MemoryStream(plainTextBytes))
-        {
-            hashedBytes = await sha512.ComputeHashAsync(inputStream);
-        }
-
-        var sb = new StringBuilder();
-        foreach (byte b in hashedBytes)
-        {
-            sb.Append(b.ToString("x2"));
-        }
-
-        return sb.ToString();
     }
 
     private static string GetKey(string username)

@@ -102,13 +102,13 @@ public class AccountService : IAccountService
         return output;
     }
 
-    public async Task<int> CreateAccountAsync(Account account)
+    public async Task<Account> CreateAccountAsync(Account account)
     {
         await InitializeDb();
 
         await _db.InsertAsync(account);
 
-        return account.Id;
+        return account;
     }
 
     public async Task<int> UpdateAccountAsync(Account account)

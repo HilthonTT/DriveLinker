@@ -1,9 +1,9 @@
 ﻿namespace DriveLinker.Core.Encryption;
-public class AesEncryption : IAesEncryption
+public class Encryption : IEncryption
 {
     private readonly Aes _aes;
 
-    public AesEncryption()
+    public Encryption()
     {
         _aes = Aes.Create();
         _aes.GenerateKey();
@@ -60,6 +60,26 @@ public class AesEncryption : IAesEncryption
         string decrytedText = Encoding.UTF8.GetString(decryptedBytes).TrimEnd('\0');
 
         return decrytedText;
+    }
+
+    public async Task<string> ComputeSha512Hash(string plainText)
+    {
+        using SHA512 sha512 = SHA512.Create();
+        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+        byte[] hashedBytes;
+
+        using (var inputStream = new MemoryStream(plainTextBytes))
+        {
+            hashedBytes = await sha512.ComputeHashAsync(inputStream);
+        }
+
+        var sb = new StringBuilder();
+        foreach (byte b in hashedBytes)
+        {
+            sb.Append(b.ToString("x2"));
+        }
+
+        return sb.ToString();
     }
 
     public string GetKey()

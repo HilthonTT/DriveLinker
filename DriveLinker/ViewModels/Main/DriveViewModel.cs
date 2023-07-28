@@ -2,12 +2,12 @@
 public partial class DriveViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IDriveService _driveService;
-    private readonly IAesEncryption _encryption;
+    private readonly IEncryption _encryption;
     private readonly IMemoryCache _cache;
 
     public DriveViewModel(
         IDriveService driveService,
-        IAesEncryption encryption,
+        IEncryption encryption,
         IMemoryCache cache, 
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
