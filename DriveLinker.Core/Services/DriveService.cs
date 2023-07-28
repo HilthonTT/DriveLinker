@@ -7,14 +7,17 @@ public class DriveService : IDriveService
     private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
     private readonly IAesEncryption _encryption;
+    private readonly IPasswordGenerator _passwordGenerator;
     private SQLiteAsyncConnection _db;
 
     public DriveService(
         IMemoryCache cache,
-        IAesEncryption encryption)
+        IAesEncryption encryption,
+        IPasswordGenerator passwordGenerator)
     {
         _cache = cache;
         _encryption = encryption;
+        _passwordGenerator = passwordGenerator;
     }
 
     private async Task InitializeDb()
@@ -27,7 +30,7 @@ public class DriveService : IDriveService
         string dbPath = GetDbPath();
         string password = await FetchPasswordAsync();
 
-        var options = new SQLiteConnectionString(dbPath, true, key: password);
+        var options = new SQLiteConnectionString(dbPath, true, password);
 
         _db = new(options);
         await _db.CreateTableAsync<Drive>();
@@ -128,9 +131,9 @@ public class DriveService : IDriveService
         return driveInfo;
     }
 
-    private static async Task<string> FetchPasswordAsync()
+    private async Task<string> FetchPasswordAsync()
     {
-        var password = await PasswordGenerator.FetchPasswordAsync();
+        var password = await _passwordGenerator.FetchPasswordAsync();
         return password;
     }
 

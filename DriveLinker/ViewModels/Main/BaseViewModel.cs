@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels.Main;
 public partial class BaseViewModel : LanguageViewModel
 {
     private const bool Animate = true;

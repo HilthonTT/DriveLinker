@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels.Main;
 public partial class LanguageViewModel : ObservableObject
 {
     private readonly ILanguageDictionary _language;

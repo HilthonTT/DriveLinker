@@ -1,10 +1,10 @@
 ﻿namespace DriveLinker.Core.Encryption;
-public static class PasswordGenerator
+public class PasswordGenerator : IPasswordGenerator
 {
     private const string Key = nameof(PasswordGenerator);
     private const string ValidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
 
-    public static async Task<string> FetchPasswordAsync()
+    public async Task<string> FetchPasswordAsync()
     {
         string password = await SecureStorage.GetAsync(Key);
         if (string.IsNullOrWhiteSpace(password))

@@ -16,6 +16,7 @@ public static class RegisterServices
 
         builder.Services.AddTransient<IAesEncryption, AesEncryption>();
         builder.Services.AddTransient<IAuthentication, Authentication>();
+        builder.Services.AddTransient<IPasswordGenerator, PasswordGenerator>();
         builder.Services.AddTransient<ILinker, Linker>();
         builder.Services.AddTransient<IWindowsHelper, WindowsHelper>();
     }

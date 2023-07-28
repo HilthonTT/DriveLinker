@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels;
+﻿namespace DriveLinker.ViewModels.Main;
 public partial class MainViewModel : BaseViewModel
 {    
     private readonly IDriveService _driveService;

@@ -1,7 +1,7 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:DriveLinker.Core.Models;assembly=DriveLinker.Core"
-             xmlns:viewModels="clr-namespace:DriveLinker.ViewModels"
+             xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Main"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:templates="clr-namespace:DriveLinker.Views.Templates"
              xmlns:helpers="clr-namespace:DriveLinker.Helpers"
