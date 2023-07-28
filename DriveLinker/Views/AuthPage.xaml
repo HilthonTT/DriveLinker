@@ -96,23 +96,6 @@
                     </Grid>
                 </FlexLayout>
             </VerticalStackLayout>
-            <VerticalStackLayout>
-                <Label 
-                    Text="{Binding LanguageLabel}"/>
-                <Picker 
-                    WidthRequest="500"
-                    ItemsSource="{Binding Languages}"
-                    SelectedItem="{Binding SelectedLanguage}"/>
-                <StackLayout
-                    Padding="5">
-                    <Button
-                        Text="{Binding SaveLabel}"
-                        Style="{StaticResource Button}"
-                        Command="{Binding SaveLanguageCommand}"
-                        WidthRequest="200"
-                        Margin="10"/>
-                </StackLayout>
-            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -24,7 +24,7 @@ public class LanguageDictionary : ILanguageDictionary
         _german = german;
     }
 
-    public async Task<Dictionary<Keyword, string>> GetDictionary()
+    public async Task<Dictionary<Keyword, string>> GetDictionaryAsync()
     {
         var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
 

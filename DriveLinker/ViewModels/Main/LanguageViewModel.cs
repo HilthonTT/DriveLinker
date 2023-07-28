@@ -2,7 +2,7 @@
 public partial class LanguageViewModel : ObservableObject
 {
     private readonly ILanguageDictionary _language;
-    private Dictionary<Keyword, string> _keywords;
+    private static Dictionary<Keyword, string> _keywords;
 
     public LanguageViewModel(ILanguageDictionary language)
     {
@@ -13,11 +13,11 @@ public partial class LanguageViewModel : ObservableObject
     [RelayCommand]
     public async Task InitializeDictionary()
     {
-        _keywords = await _language.GetDictionary();
-        ChangeKeyWordData();
+        _keywords = await _language.GetDictionaryAsync();
+        ChangeKeywordData();
     }
 
-    private void ChangeKeyWordData()
+    private void ChangeKeywordData()
     {
         Countdown = _keywords[Keyword.Countdown];
         CreateDriveLabel = _keywords[Keyword.CreateADrive];

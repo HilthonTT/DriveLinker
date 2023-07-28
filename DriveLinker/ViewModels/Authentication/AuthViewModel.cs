@@ -3,7 +3,6 @@ public partial class AuthViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
     private readonly IAuthentication _auth;
-    private readonly ILanguageService _languageService;
     private readonly Account _account;
 
     public AuthViewModel(
@@ -11,7 +10,6 @@ public partial class AuthViewModel : BaseViewModel
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
-        ILanguageService languageService,
         Account account,
         TimerTracker timerTracker) : base(
             settingsService,
@@ -22,12 +20,7 @@ public partial class AuthViewModel : BaseViewModel
     {
         _settingsService = settingsService;
         _auth = auth;
-        _languageService = languageService;
         _account = account;
-
-        Languages = _languageService
-            .GetLanguages()
-            .ToObservableCollection();
     }
 
     [ObservableProperty]
@@ -106,6 +99,5 @@ public partial class AuthViewModel : BaseViewModel
     {
         _account.Id = verifiedAccount.Account.Id;
         _account.Username = verifiedAccount.Account.Username;
-        _account.SettingsId = verifiedAccount.Account.SettingsId;
     }
 }

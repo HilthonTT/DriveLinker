@@ -69,11 +69,4 @@ public partial class RegisterViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync(nameof(MainPage));
     }
-
-    private void AssignAccount(Account account)
-    {
-        _account.Id = account.Id;
-        _account.Username = account.Username;
-        _account.SettingsId = account.SettingsId;
-    }
 }
