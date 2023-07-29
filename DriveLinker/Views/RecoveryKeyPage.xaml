@@ -27,8 +27,14 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Spacing="30"
             Padding="0,20">
+            <VerticalStackLayout
+                HorizontalOptions="End"
+                Margin="0,0,20,0">
+                <ImageButton
+                    Style="{StaticResource CloseButton}"
+                    Command="{Binding ClosePageCommand}"/>
+            </VerticalStackLayout>
             <VerticalStackLayout 
                 HorizontalOptions="Center">
                 <Frame 

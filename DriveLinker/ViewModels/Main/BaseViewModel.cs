@@ -35,7 +35,7 @@ public partial class BaseViewModel : LanguageViewModel
     [RelayCommand]
     public static async Task ClosePageAsync()
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("..", Animate);
     }
 
     [RelayCommand]
@@ -78,6 +78,15 @@ public partial class BaseViewModel : LanguageViewModel
         };
 
         await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate, parameters);
+    }
+
+    [RelayCommand]
+    public async Task LogOut()
+    {
+        _account.Id = 0;
+        _account.Username = "";
+
+        await Shell.Current.Navigation.PopToRootAsync(Animate);
     }
 
     private void HandleCountdownFinished()

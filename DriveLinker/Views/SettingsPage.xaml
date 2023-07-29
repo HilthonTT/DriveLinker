@@ -33,6 +33,10 @@
             Text="Recovery Keys"
             Order="Secondary"
             Command="{Binding LoadRecoveryPageCommand}"/>
+        <ToolbarItem 
+            Text="Logout"
+            Order="Secondary"
+            Command="{Binding LogOutCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Behaviors>
