@@ -19,6 +19,22 @@
         </Grid>
     </Shell.TitleView>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Home"
+            Order="Secondary"
+            Priority="0"
+            Command="{Binding LoadHomePageCommand}"/>
+        <ToolbarItem 
+            Text="Settings"
+            Order="Secondary"
+            Command="{Binding LoadSettingsPageCommand}"/>
+        <ToolbarItem 
+            Text="Recovery Keys"
+            Order="Secondary"
+            Command="{Binding LoadRecoveryPageCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 
