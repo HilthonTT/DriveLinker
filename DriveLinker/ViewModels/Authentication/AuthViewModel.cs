@@ -64,6 +64,12 @@ public partial class AuthViewModel : BaseViewModel
 
         var verifiedAccount = await _auth.VerifyPasswordAsync(Username, Password);
 
+        if (verifiedAccount.Account is null)
+        {
+            await Shell.Current.DisplayAlert(
+                "Wrong username!", "Your account's username doesn't exists.", "OK");
+        }
+
         if (verifiedAccount?.IsCorrect is true)
         {
             AssignAccount(verifiedAccount);
@@ -72,9 +78,7 @@ public partial class AuthViewModel : BaseViewModel
         else
         {
             await Shell.Current.DisplayAlert(
-                "Wrong password!",
-                "The password you've enter is wrong",
-                "Ok");
+                "Wrong password!", "The password you've enter is wrong.", "OK");
         }
     }
 

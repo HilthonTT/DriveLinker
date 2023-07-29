@@ -35,7 +35,7 @@ public partial class PasswordViewModel : BaseViewModel
     private List<string> _recoveryKeys;
 
     [RelayCommand]
-    private async Task VerifyRecoveryKey()
+    private async Task VerifyRecoveryKeyAsync()
     {
         if (IsFormInvalid())
         {

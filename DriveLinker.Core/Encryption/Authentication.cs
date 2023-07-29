@@ -42,6 +42,11 @@ public class Authentication : IAuthentication
         var account = await _accountService.GetAccountByUsernameAsync(username);
         var dirtyAccount = new VerifiedAccount() { Account = account, IsCorrect = false };
 
+        if (account is null)
+        {
+            return dirtyAccount;
+        }
+
         string hashedPassword = await _encryption.ComputeSha512Hash(password);
 
         string key = GetKey(username);
