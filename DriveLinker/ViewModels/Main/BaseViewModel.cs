@@ -21,6 +21,7 @@ public partial class BaseViewModel : LanguageViewModel
         _account = account;
 
         TimerTracker = timerTracker;
+        AccountUsername = account.Username;
     }
 
     [ObservableProperty]
@@ -28,6 +29,9 @@ public partial class BaseViewModel : LanguageViewModel
 
     [ObservableProperty] 
     private bool _isBusy;
+
+    [ObservableProperty]
+    private string _accountUsername;
 
     [ObservableProperty]
     private Drive _selectedDrive = new();

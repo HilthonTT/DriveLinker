@@ -7,13 +7,22 @@
              x:Class="DriveLinker.Views.DrivePage"
              Title="{Binding Drive.Letter}">
     <Shell.TitleView>
-        <Grid>
+        <Grid
+             ColumnDefinitions="*,*">
             <Label 
+                Grid.Column="0"
                 Text="{Binding Drive.Letter}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
                 TextColor="White" 
+                FontSize="Title"/>
+            <Label 
+                Grid.Column="1"
+                Text="{Binding AccountUsername}"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                TextColor="White"
                 FontSize="Title"/>
         </Grid>
     </Shell.TitleView>

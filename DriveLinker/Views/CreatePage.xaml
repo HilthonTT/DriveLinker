@@ -8,13 +8,22 @@
              Title="Create A Drive">
 
     <Shell.TitleView>
-        <Grid>
+        <Grid
+            ColumnDefinitions="*,*">
             <Label 
+                Grid.Column="0"
                 Text="{Binding CreateDriveLabel}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
                 TextColor="White" 
+                FontSize="Title"/>
+            <Label 
+                Grid.Column="1"
+                Text="{Binding AccountUsername}"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                TextColor="White"
                 FontSize="Title"/>
         </Grid>
     </Shell.TitleView>
