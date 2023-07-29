@@ -57,6 +57,11 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.DontHaveAnAccount, "Belum punya akun?" },
             { Keyword.ForgotMyPassword, "Lupa kata sandi" },
             { Keyword.Login, "Masuk" },
+            { Keyword.RecoveryKey, "Kunci Pemulihan" },
+            { Keyword.RecoveryKeyDesc, "Masukkan salah satu kunci pemulihan Anda" },
+            { Keyword.RecoveryKeyHelperText, "Anda dapat menggunakannya jika Anda lupa kata sandi Anda." },
+            { Keyword.Copyclipboard, "Salin ke papan klip" },
+            { Keyword.Register, "Daftar" },
         };
     }
 }

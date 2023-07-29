@@ -57,6 +57,11 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.DontHaveAnAccount, "Sie haben noch keinen Account?" },
             { Keyword.ForgotMyPassword, "Passwort vergessen" },
             { Keyword.Login, "Einloggen" },
+            { Keyword.RecoveryKey, "Wiederherstellungsschlüssel" },
+            { Keyword.RecoveryKeyDesc, "Geben Sie einen Ihrer Wiederherstellungsschlüssel ein" },
+            { Keyword.RecoveryKeyHelperText, "Sie können sie verwenden, wenn Sie Ihr Passwort vergessen." },
+            { Keyword.Copyclipboard, "In die Zwischenablage kopieren" },
+            { Keyword.Register, "Registrieren" },
         };
     }
 }

@@ -57,6 +57,11 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.DontHaveAnAccount, "Vous n'avez pas de compte ?" },
             { Keyword.ForgotMyPassword, "J'ai oublié mon mot de passe" },
             { Keyword.Login, "Se connecter" },
+            { Keyword.RecoveryKey, "Clé de récupération" },
+            { Keyword.RecoveryKeyDesc, "Entrez l'une de vos clés de récupération" },
+            { Keyword.RecoveryKeyHelperText, "Vous pouvez les utiliser si vous oubliez votre mot de passe." },
+            { Keyword.Copyclipboard, "Copier dans le presse-papiers" },
+            { Keyword.Register, "S'inscrire" },
         };
     }
 }

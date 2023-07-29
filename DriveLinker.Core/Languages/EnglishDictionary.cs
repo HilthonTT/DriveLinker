@@ -57,6 +57,11 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.DontHaveAnAccount, "Don't have an account?" },
             { Keyword.ForgotMyPassword, "Forgot my password" },
             { Keyword.Login, "Login" },
+            { Keyword.RecoveryKey, "Recovery Keys" },
+            { Keyword.RecoveryKeyDesc, "Enter one of your recovery keys" },
+            { Keyword.RecoveryKeyHelperText, "You can use them if you ever forget your password." },
+            { Keyword.Copyclipboard, "Copy to clipboard" },
+            { Keyword.Register, "Register" },
         };
     }
 }

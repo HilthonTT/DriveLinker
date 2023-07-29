@@ -51,6 +51,11 @@ public partial class LanguageViewModel : ObservableObject
         DontHaveAnAccountLabel = _keywords[Keyword.DontHaveAnAccount];
         ForgotPasswordLabel = _keywords[Keyword.ForgotMyPassword];
         LoginLabel = _keywords[Keyword.Login];
+        RecoveryKeyLabel = _keywords[Keyword.RecoveryKey];
+        RecoveryKeyDescLabel = _keywords[Keyword.RecoveryKeyDesc];
+        RecoveryKeyHelperText = _keywords[Keyword.RecoveryKeyHelperText];
+        ClipboardLabel = _keywords[Keyword.Copyclipboard];
+        RegisterLabel = _keywords[Keyword.Register];
     }
 
     [ObservableProperty]
@@ -148,4 +153,19 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _loginLabel;
+
+    [ObservableProperty]
+    private string _recoveryKeyLabel;
+
+    [ObservableProperty]
+    private string _recoveryKeyDescLabel;
+
+    [ObservableProperty]
+    private string _recoveryKeyHelperText;
+
+    [ObservableProperty]
+    private string _clipboardLabel;
+
+    [ObservableProperty]
+    private string _registerLabel;
 }

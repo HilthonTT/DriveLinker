@@ -34,4 +34,12 @@ public enum Keyword
     DontHaveAnAccount,
     ForgotMyPassword,
     Login,
+
+
+    
+    RecoveryKey,
+    RecoveryKeyDesc,
+    RecoveryKeyHelperText,
+    Copyclipboard,
+    Register,
 }
