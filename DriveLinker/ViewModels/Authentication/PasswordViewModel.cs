@@ -2,13 +2,16 @@
 
 public partial class PasswordViewModel : BaseViewModel
 {
-    private readonly IAuthentication _auth;
+    private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
+    private readonly IAccountService _accountService;
+    private readonly Account _account;
 
     public PasswordViewModel(
         ISettingsService settingsService,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
-        IAuthentication auth,
+        IRecoveryKeyGenerator recoveryKeyGenerator,
+        IAccountService accountService,
         Account account,
         TimerTracker timerTracker) : base(
             settingsService,
@@ -17,45 +20,59 @@ public partial class PasswordViewModel : BaseViewModel
             account,
             timerTracker)
     {
-        _auth = auth;
+        _recoveryKeyGenerator = recoveryKeyGenerator;
+        _accountService = accountService;
+        _account = account;
     }
-
-    [ObservableProperty]
-    private string _newPassword;
 
     [ObservableProperty]
     private string _username;
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    private string _recoveryKey;
+
+    [ObservableProperty]
+    private List<string> _recoveryKeys;
 
     [RelayCommand]
-    private void ToggleShowPassword()
+    private async Task VerifyRecoveryKey()
     {
-        DontShowPassword = !DontShowPassword;
-    }
-
-    [RelayCommand]
-    private async Task SetNewPasswordAsync()
-    {
-        if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(Username))
+        if (IsFormInvalid())
         {
             return;
         }
 
-        bool saveNewPassword = await DisplaySavePassword();
-        if (saveNewPassword)
+        var account = await _accountService.GetAccountByUsernameAsync(Username);
+        if (account is null)
         {
-            await _auth.ResetPasswordAsync(Username, NewPassword);
+            await Shell.Current.DisplayAlert(
+                "Error.", $"There is not such account with username: {Username}.", "OK");
+            return;
+        }
+
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(account);
+
+        if (recoveryKeys.Contains(RecoveryKey))
+        {
+            _account.Id = account.Id;
+            _account.Username = account.Username;
+
             await LoadHomePage();
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert(
+                "Error.", $"Invalid recovery key.", "OK");
         }
     }
 
-    private async Task<bool> DisplaySavePassword()
+    private bool IsFormInvalid()
     {
-        bool savePassword = await Shell.Current.DisplayAlert(
-            "Save Password?", $"Your password is {NewPassword}, would you like to save it?", "Save", "Cancel");
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(RecoveryKey))
+        {
+            return true;
+        }
 
-        return savePassword;
+        return false;
     }
 }
