@@ -14,5 +14,14 @@ public partial class Settings : ObservableObject
     private bool _autoMinimize = false;
 
     [ObservableProperty]
+    private int _timerCount = 15;
+
+    [ObservableProperty]
     private Language _language = Language.English;
+
+    [ObservableProperty]
+    private MinimizeOption _minimizeOption = MinimizeOption.MinimizeApp;
+
+    [ObservableProperty]
+    private MinimizeAfter _minimizeAfter = MinimizeAfter.TimerFinished;
 }
