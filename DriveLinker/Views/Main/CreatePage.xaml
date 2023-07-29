@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Main"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DriveLinker.Views.CreatePage"
+             x:Class="DriveLinker.Views.Main.CreatePage"
              x:DataType="viewModels:CreateViewModel"
              Title="Create A Drive">
 

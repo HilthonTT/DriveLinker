@@ -1,4 +1,4 @@
-namespace DriveLinker.Views;
+namespace DriveLinker.Views.Auth;
 
 public partial class AuthPage : ContentPage
 {

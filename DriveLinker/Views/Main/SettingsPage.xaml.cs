@@ -1,4 +1,4 @@
-namespace DriveLinker.Views;
+namespace DriveLinker.Views.Main;
 
 public partial class SettingsPage : ContentPage
 {

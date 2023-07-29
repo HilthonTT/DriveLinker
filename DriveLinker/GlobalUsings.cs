@@ -24,3 +24,5 @@ global using DriveLinker.Core.Languages.Interfaces;
 global using CommunityToolkit.Mvvm.Messaging;
 global using DriveLinker.ViewModels.Authentication;
 global using DriveLinker.ViewModels.Main;
+global using DriveLinker.Views.Auth;
+global using DriveLinker.Views.Main;

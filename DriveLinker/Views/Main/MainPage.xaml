@@ -6,7 +6,7 @@
              xmlns:templates="clr-namespace:DriveLinker.Views.Templates"
              xmlns:helpers="clr-namespace:DriveLinker.Helpers"
              x:DataType="viewModels:MainViewModel"
-             x:Class="DriveLinker.MainPage"
+             x:Class="DriveLinker.Views.Main.MainPage"
              Title="Drive Linker"
              x:Name="mainPage">
     <Shell.TitleView>

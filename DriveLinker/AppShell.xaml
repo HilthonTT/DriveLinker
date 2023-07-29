@@ -8,7 +8,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:Views.AuthPage}"
+        ContentTemplate="{DataTemplate local:Views.Auth.AuthPage}"
         Route="AuthPage" />
 
 </Shell>

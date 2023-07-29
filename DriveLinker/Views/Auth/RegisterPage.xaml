@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Authentication"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="viewModels:AuthViewModel"
-             x:Class="DriveLinker.Views.AuthPage"
-             Title="AuthPage">
-
+             x:DataType="viewModels:RegisterViewModel"
+             x:Class="DriveLinker.Views.Auth.RegisterPage"
+             Title="RegisterPage">
     <Shell.TitleView>
         <Grid>
             <Label
-                Text="Drive Linker" 
+                Text="Register" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
@@ -37,7 +36,7 @@
                         Style="{StaticResource AppIcon}"/>
                 </Frame>
                 <Label
-                    Text="Drive Linker"
+                    Text="Register"
                     HorizontalOptions="Center"
                     TextTransform="Uppercase"
                     FontSize="24"
@@ -73,28 +72,9 @@
                 </FlexLayout>
                 <Button 
                     Style="{StaticResource Button}"
-                    Command="{Binding AuthenticateCommand}"
-                    Text="{Binding LoginLabel}"
+                    Command="{Binding RegisterCommand}"
+                    Text="Register"
                     Margin="0,20,0,0"/>
-            </VerticalStackLayout>
-            <VerticalStackLayout
-                WidthRequest="500">
-                <FlexLayout Direction="Column">
-                    <Grid
-                        ColumnDefinitions="*,*">
-                        <Button 
-                            Text="{Binding DontHaveAnAccountLabel}" 
-                            Style="{StaticResource AuthButton}"
-                            Command="{Binding RegisterCommand}"
-                            HorizontalOptions="Start" />
-                        <Button 
-                            Text="{Binding ForgotPasswordLabel}" 
-                            Style="{StaticResource AuthButton}"
-                            Command="{Binding ForgotPasswordCommand}"
-                            Grid.Column="1" 
-                            HorizontalOptions="End" />
-                    </Grid>
-                </FlexLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

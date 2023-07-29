@@ -1,4 +1,4 @@
-﻿namespace DriveLinker;
+﻿namespace DriveLinker.Views.Main;
 
 public partial class MainPage : ContentPage
 {
