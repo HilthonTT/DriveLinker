@@ -63,7 +63,12 @@ public class AccountService : IAccountService
         var output = _cache.Get<Account>(key);
         if (output is null)
         {
-            output = await _db.Table<Account>().FirstOrDefaultAsync(a => a.Username == username);
+            var accounts = await _db.Table<Account>().ToListAsync();
+
+            output = accounts
+                .FirstOrDefault(a => a.Username
+                .Equals(username, StringComparison.InvariantCultureIgnoreCase));
+
             _cache.Set(key, output);
         }
 

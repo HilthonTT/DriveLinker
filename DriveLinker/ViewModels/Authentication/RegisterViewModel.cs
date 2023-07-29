@@ -48,6 +48,13 @@ public partial class RegisterViewModel : BaseViewModel
             return;
         }
 
+        if (await AccountExistsAsync())
+        {
+            await Shell.Current.DisplayAlert(
+                "Error.", "An account with this username already exists.", "OK");
+            return;
+        }
+
         bool savePassword = await DisplaySavePassword();
         if (savePassword)
         {
@@ -63,6 +70,18 @@ public partial class RegisterViewModel : BaseViewModel
             "Save Password?", $"Your password is {Password}, would you like to save it?", "Save", "Cancel");
 
         return savePassword;
+    }
+
+    private async Task<bool> AccountExistsAsync()
+    {
+        var account = await _accountService.GetAccountByUsernameAsync(Username);
+
+        if (account is not null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private static async Task LoadRecoveryPageAsync(Account account)
