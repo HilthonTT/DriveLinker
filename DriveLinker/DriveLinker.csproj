@@ -55,6 +55,7 @@
 	  <None Remove="Resources\Images\hard_drive_icon.svg" />
 	  <None Remove="Resources\Images\info_icon.svg" />
 	  <None Remove="Resources\Images\network_icon.svg" />
+	  <None Remove="Resources\Images\question_icon.svg" />
 	  <None Remove="Resources\Images\tag_icon.svg" />
 	</ItemGroup>
 

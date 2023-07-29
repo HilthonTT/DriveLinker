@@ -2,7 +2,6 @@
 public partial class MainViewModel : BaseViewModel
 {
     private readonly IDriveService _driveService;
-    private readonly IDummyService _dummyService;
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
     private readonly IWindowsHelper _windowsHelper;
@@ -10,7 +9,6 @@ public partial class MainViewModel : BaseViewModel
 
     public MainViewModel(
         IDriveService driveService,
-        IDummyService dummyService,
         ISettingsService settingsService,
         ILinker linker,
         IWindowsHelper windowsHelper,
@@ -23,7 +21,6 @@ public partial class MainViewModel : BaseViewModel
             timerTracker)
     {
         _driveService = driveService;
-        _dummyService = dummyService;
         _settingsService = settingsService;
         _linker = linker;
         _windowsHelper = windowsHelper;
@@ -77,11 +74,6 @@ public partial class MainViewModel : BaseViewModel
 
         var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
         var drives = await _driveService.GetAllAccountDrivesAsync(_account.Id);
-
-        if (drives?.Count <= 0)
-        {
-            drives = _dummyService.GetDummyDrives();
-        }
 
         Parallel.ForEach(drives, (d) => _linker.IsDriveConnected(d));
         Drives = new(drives);

@@ -174,9 +174,27 @@
                             SelectionChangedCommand="{Binding LoadDrivePageCommand}"                        
                             SelectionChangedCommandParameter="{Binding SelectedDrive}"                                        
                             IsVisible="{Binding IsDrivesLoaded}">
+                            <CollectionView.EmptyView>
+                                <StackLayout
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="200"
+                                    HeightRequest="200">
+                                    <Frame 
+                                        Style="{StaticResource AppIconFrame}">
+                                        <Image 
+                                            Source="question_icon.png"
+                                            BackgroundColor="White"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand"
+                                            Aspect="AspectFit"/>
+                                    </Frame>
+                                </StackLayout>
+                            </CollectionView.EmptyView>
                             <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal"
-                                                   ItemSpacing="8" />
+                                <LinearItemsLayout 
+                                    Orientation="Horizontal"
+                                    ItemSpacing="8" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -217,6 +235,23 @@
                         SelectedItem="{Binding SelectedDrive}"
                         SelectionChangedCommand="{Binding LoadDrivePageCommand}"
                         SelectionChangedCommandParameter="{Binding SelectedDrive}">
+                        <CollectionView.EmptyView>
+                            <StackLayout
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    WidthRequest="200"
+                                    HeightRequest="200">
+                                <Frame 
+                                        Style="{StaticResource AppIconFrame}">
+                                    <Image 
+                                            Source="question_icon.png"
+                                            BackgroundColor="White"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand"
+                                            Aspect="AspectFit"/>
+                                </Frame>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout 
                                 Orientation="Vertical"     
