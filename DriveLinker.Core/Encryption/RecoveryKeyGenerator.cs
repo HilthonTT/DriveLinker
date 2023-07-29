@@ -39,6 +39,7 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
             return output;
         }
 
+        output = new();
         for (int i = 0; i < MaxKeyCount; i++)
         {
             string key = GetRecoveryCacheName(account, i);

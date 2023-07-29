@@ -51,7 +51,7 @@ public partial class AuthViewModel : BaseViewModel
         settings.Language = SelectedLanguage;
 
         await _settingsService.UpdateSettingsAsync(settings);
-        InitializeDictionary();
+        await InitializeDictionary();
     }
 
     [RelayCommand]
@@ -67,7 +67,7 @@ public partial class AuthViewModel : BaseViewModel
         if (verifiedAccount?.IsCorrect is true)
         {
             AssignAccount(verifiedAccount);
-            await LoadHomePageAsync();
+            await LoadHomePage();
         }
         else
         {
@@ -88,11 +88,6 @@ public partial class AuthViewModel : BaseViewModel
     private async Task ForgotPasswordAsync()
     {
         await Shell.Current.GoToAsync(nameof(PasswordPage));
-    }
-
-    private static async Task LoadHomePageAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(MainPage));
     }
 
     private void AssignAccount(VerifiedAccount verifiedAccount)

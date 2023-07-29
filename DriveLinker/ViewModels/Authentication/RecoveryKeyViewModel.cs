@@ -44,4 +44,21 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
             RecoveryKeys = new(generatedRecoveryKeys);
         }
     }
+
+    [RelayCommand]
+    private async Task CopyToClipboardAsync()
+    {
+        try
+        {
+            string keysText = string.Join(Environment.NewLine, RecoveryKeys);
+
+            await Clipboard.SetTextAsync(keysText);
+
+            await Shell.Current.DisplayAlert("Text Copied", "The text has been copied to the clipboard.", "OK");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+    }
 }

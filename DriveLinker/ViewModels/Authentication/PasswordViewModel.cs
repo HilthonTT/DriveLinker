@@ -47,7 +47,7 @@ public partial class PasswordViewModel : BaseViewModel
         if (saveNewPassword)
         {
             await _auth.ResetPasswordAsync(Username, NewPassword);
-            await LoadHomePageAsync();
+            await LoadHomePage();
         }
     }
 
@@ -57,10 +57,5 @@ public partial class PasswordViewModel : BaseViewModel
             "Save Password?", $"Your password is {NewPassword}, would you like to save it?", "Save", "Cancel");
 
         return savePassword;
-    }
-
-    private static async Task LoadHomePageAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(MainPage));
     }
 }

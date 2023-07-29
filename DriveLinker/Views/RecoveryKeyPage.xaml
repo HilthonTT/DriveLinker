@@ -25,32 +25,60 @@
             Command="{Binding GenerateRecoveryKeyCommand}"/>
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout>
+    <ScrollView>
         <VerticalStackLayout
-            Spacing="6"
-            Padding="20,0,0,0">
-            <Label
-                Text="Recovery Keys"
-                FontAttributes="Bold"
-                TextTransform="Uppercase"
-                FontSize="18"/>
-            <Grid>
-                <CollectionView
-                    ItemsSource="{Binding RecoveryKeys}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout 
-                            Orientation="Vertical"
-                            ItemSpacing="8"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate 
-                            x:DataType="x:String">
-                            <Label 
-                                Text="{Binding .}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
+            Spacing="30"
+            Padding="0,20">
+            <VerticalStackLayout 
+                HorizontalOptions="Center">
+                <Frame 
+                    Style="{StaticResource AppIconFrame}">
+                    <Image 
+                        Style="{StaticResource AppIcon}"/>
+                </Frame>
+                <Label 
+                    Text="Recovery Keys" 
+                    HorizontalOptions="Center"
+                    TextTransform="Uppercase"
+                    FontSize="24"
+                    Margin="0,10,0,0"/>
+                <Label 
+                    Text="You can use them if you ever forget your password." 
+                    HorizontalOptions="Center"
+                    TextTransform="Uppercase"
+                    FontSize="15"
+                    Margin="0,10,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                Spacing="6"
+                Padding="20,0,0,0"
+                HorizontalOptions="Center">
+                <Grid>
+                    <CollectionView
+                        ItemsSource="{Binding RecoveryKeys}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout 
+                                Orientation="Vertical"
+                                ItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate 
+                                x:DataType="x:String">
+                                <Label 
+                                    Text="{Binding .}"
+                                    FontSize="Subtitle"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                HorizontalOptions="Center">
+                <Button 
+                    Text="Copy to clipboard"
+                    Style="{StaticResource Button}"
+                    Command="{Binding CopyToClipboardCommand}"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

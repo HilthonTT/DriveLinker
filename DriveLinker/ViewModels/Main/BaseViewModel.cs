@@ -63,6 +63,23 @@ public partial class BaseViewModel : LanguageViewModel
         await Shell.Current.GoToAsync(nameof(CreatePage), Animate);
     }
 
+    [RelayCommand]
+    public async Task LoadHomePage()
+    {
+        await Shell.Current.GoToAsync(nameof(MainPage), Animate);
+    }
+
+    [RelayCommand]
+    public async Task LoadRecoveryPage()
+    {
+        var parameters = new Dictionary<string, object>()
+        {
+            { "Account", _account },
+        };
+
+        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate, parameters);
+    }
+
     private void HandleCountdownFinished()
     {
         _windowsHelper.MinimizeWindow();
