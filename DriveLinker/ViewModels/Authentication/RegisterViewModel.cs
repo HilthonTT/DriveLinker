@@ -62,6 +62,9 @@ public partial class RegisterViewModel : BaseViewModel
             await _auth.ChangePasswordAsync(Username, Password);
             await LoadRecoveryPageAsync(account);
         }
+
+        Username = "";
+        Password = "";
     }
 
     private async Task<bool> DisplaySavePassword()

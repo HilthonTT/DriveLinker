@@ -80,6 +80,9 @@ public partial class AuthViewModel : BaseViewModel
             await Shell.Current.DisplayAlert(
                 "Wrong password!", "The password you've enter is wrong.", "OK");
         }
+
+        Username = "";
+        Password = "";
     }
 
     [RelayCommand]

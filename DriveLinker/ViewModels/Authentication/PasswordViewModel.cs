@@ -64,6 +64,8 @@ public partial class PasswordViewModel : BaseViewModel
             await Shell.Current.DisplayAlert(
                 "Error.", $"Invalid recovery key.", "OK");
         }
+
+        Username = "";
     }
 
     private bool IsFormInvalid()
