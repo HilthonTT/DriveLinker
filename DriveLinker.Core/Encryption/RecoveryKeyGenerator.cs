@@ -5,45 +5,69 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
     private readonly IMemoryCache _cache;
     private const string KeyPrefix = $"{nameof(RecoveryKeyGenerator)}_";
     private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private const int MaxKeyCount = 5;
 
     public RecoveryKeyGenerator(IMemoryCache cache)
     {
         _cache = cache;
     }
 
-    public async Task<string> GenerateRecoveryKeyAsync(Account account, int keyLength = 12)
+    public async Task<List<string>> GenerateRecoveryKeysAsync(Account account, int keyLength = 12)
     {
-        string recoveryKey = new(Enumerable.Repeat(Characters, keyLength)
-            .Select(s => s[_random.Next(s.Length)]).ToArray());
+        var recoveryKeys = new List<string>();
+        
+        for (int i = 0; i < MaxKeyCount; i++)
+        {
+            string recoveryKey = new(Enumerable.Repeat(Characters, keyLength)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
 
-        await SaveRecoveryKey(account, recoveryKey);
+            recoveryKeys.Add(recoveryKey);
 
-        return recoveryKey;
+            await SaveRecoveryKey(account, recoveryKey, i);
+        }
+        
+        return recoveryKeys;
     }
 
-    public async Task<string> GetRecoveryKeyAsync(Account account)
+    public async Task<List<string>> GetRecoveryKeysAsync(Account account)
     {
-        string key = GetKey(account);
-        
-        string output = _cache.Get<string>(key);
-        if (output is null)
-        {
-            string recoveryKey = await SecureStorage.GetAsync(key); 
+        string accountKey = GetAccountCacheName(account);
+        var output = _cache.Get<List<string>>(accountKey);
 
-            _cache.Set(key, recoveryKey);
+        if (output is not null)
+        {
+            return output;
         }
 
+        for (int i = 0; i < MaxKeyCount; i++)
+        {
+            string key = GetRecoveryCacheName(account, i);
+            string recoveryKey = await SecureStorage.GetAsync(key);
+
+            if (recoveryKey is not null)
+            {
+                output.Add(recoveryKey);
+            }
+        }
+
+        _cache.Set(accountKey, output);
+        
         return output;
     }
 
-    private static async Task SaveRecoveryKey(Account account, string recoveryKey)
+    private static async Task SaveRecoveryKey(Account account, string recoveryKey, int number)
     {
-        string key = GetKey(account);
+        string key = GetRecoveryCacheName(account, number);
         await SecureStorage.SetAsync(key, recoveryKey);
     }
 
-    private static string GetKey(Account account)
+    private static string GetRecoveryCacheName(Account account, int number)
     {
-        return KeyPrefix + account.Id;
+        return $"{KeyPrefix}{account.Id}_{number}";
+    }
+
+    private static string GetAccountCacheName(Account account)
+    {
+        return $"{KeyPrefix}{account.Id}";
     }
 }

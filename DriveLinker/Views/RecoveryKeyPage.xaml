@@ -2,13 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Authentication"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:RecoveryKeyViewModel"
              x:Class="DriveLinker.Views.RecoveryKeyPage"
              Title="RecoveryKeyPage">
+
+    <Shell.TitleView>
+        <Grid>
+            <Label
+                Text="Recovery Keys" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding GenerateRecoveryKeyCommand}"/>
+    </ContentPage.Behaviors>
+
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <VerticalStackLayout
+            Spacing="6"
+            Padding="20,0,0,0">
+            <Label
+                Text="Recovery Keys"
+                FontAttributes="Bold"
+                TextTransform="Uppercase"
+                FontSize="18"/>
+            <Grid>
+                <CollectionView
+                    ItemsSource="{Binding RecoveryKeys}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout 
+                            Orientation="Vertical"
+                            ItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate 
+                            x:DataType="x:String">
+                            <Label 
+                                Text="{Binding .}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

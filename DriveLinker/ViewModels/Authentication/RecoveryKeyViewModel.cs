@@ -23,7 +23,7 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
     private Account _account;
 
     [ObservableProperty]
-    private string _recoveryKey;
+    private List<string> _recoveryKeys;
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
@@ -33,15 +33,15 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task GenerateRecoveryKeyAsync()
     {
-        string recoveryKey = await _recoveryKeyGenerator.GetRecoveryKeyAsync(Account);
-
-        if (string.IsNullOrWhiteSpace(recoveryKey))
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(Account);
+        if (recoveryKeys?.Count > 0)
         {
-            RecoveryKey = await _recoveryKeyGenerator.GenerateRecoveryKeyAsync(Account);
+            RecoveryKeys = new(recoveryKeys);
         }
         else
         {
-            RecoveryKey = recoveryKey;
+            var generatedRecoveryKeys = await _recoveryKeyGenerator.GenerateRecoveryKeysAsync(Account);
+            RecoveryKeys = new(generatedRecoveryKeys);
         }
     }
 }

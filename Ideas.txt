@@ -2,8 +2,6 @@
 
 IDEAS
 -----
-
-- Added Login Screen
 - Have option to MINIMIZE OR QUIT APP
 - Have ability to choose between AFTER LINKING OR TIMER.
 - Put question mark icon to signify there are no drives.
@@ -11,13 +9,4 @@ IDEAS
 
 AUTH
 ****
-
-Add multiple accounts
-
-- add username, password.
-- Auto generate recovery keys if password has been lost.
-
-
-FIRST TIME
-*********
-Add a first time boot, to choose the language.
+- Auto generate recovery keys if password has been lost. (5 keys)

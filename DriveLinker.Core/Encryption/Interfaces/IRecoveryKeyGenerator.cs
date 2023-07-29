@@ -2,6 +2,6 @@
 
 public interface IRecoveryKeyGenerator
 {
-    Task<string> GenerateRecoveryKeyAsync(Account account, int keyLength = 12);
-    Task<string> GetRecoveryKeyAsync(Account account);
+    Task<List<string>> GenerateRecoveryKeysAsync(Account account, int keyLength = 12);
+    Task<List<string>> GetRecoveryKeysAsync(Account account);
 }
