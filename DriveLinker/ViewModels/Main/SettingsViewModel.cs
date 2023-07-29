@@ -7,14 +7,11 @@ public partial class SettingsViewModel : BaseViewModel
 
     public SettingsViewModel(
         ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageService languageService,
         ILanguageDictionary languageDictionary,
         Account account,
         TimerTracker timerTracker)
         : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

@@ -1,10 +1,11 @@
 ﻿namespace DriveLinker.ViewModels.Main;
 public partial class MainViewModel : BaseViewModel
-{    
+{
     private readonly IDriveService _driveService;
     private readonly IDummyService _dummyService;
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
+    private readonly IWindowsHelper _windowsHelper;
     private readonly Account _account;
 
     public MainViewModel(
@@ -17,8 +18,6 @@ public partial class MainViewModel : BaseViewModel
         Account account,
         TimerTracker timerTracker)
         : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)
@@ -27,7 +26,9 @@ public partial class MainViewModel : BaseViewModel
         _dummyService = dummyService;
         _settingsService = settingsService;
         _linker = linker;
+        _windowsHelper = windowsHelper;
         _account = account;
+
         SetUpTimerAsync();
     }
 
@@ -184,5 +185,31 @@ public partial class MainViewModel : BaseViewModel
             count++;
         }
         return count;
+    }
+
+    private void HandleCountdownFinished()
+    {
+        _windowsHelper.MinimizeWindow();
+        TimerTracker.IsCountdownVisible = false;
+    }
+
+    [RelayCommand]
+    private async Task SetUpTimerAsync()
+    {
+        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
+
+        if (settings?.AutoMinimize is true)
+        {
+            TimerTracker.IsCountdownVisible = true;
+
+            TimerTracker.Timer = new(15);
+            TimerTracker.Timer.Start();
+            TimerTracker.Timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
+            TimerTracker.Timer.CountdownFinished += (s, e) => HandleCountdownFinished();
+        }
+        else
+        {
+            TimerTracker.IsCountdownVisible = false;
+        }
     }
 }

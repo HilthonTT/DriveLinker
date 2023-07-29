@@ -2,24 +2,15 @@
 public partial class BaseViewModel : LanguageViewModel
 {
     private const bool Animate = true;
-
-    private static CountdownTimer _timer;
-    private readonly ISettingsService _settingsService;
-    private readonly IWindowsHelper _windowsHelper;
     private readonly Account _account;
 
     public BaseViewModel(
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         Account account,
         TimerTracker timerTracker)
         : base(languageDictionary)
     {
-        _settingsService = settingsService;
-        _windowsHelper = windowsHelper;
         _account = account;
-
         TimerTracker = timerTracker;
         AccountUsername = account.Username;
     }
@@ -93,41 +84,16 @@ public partial class BaseViewModel : LanguageViewModel
         await Shell.Current.Navigation.PopToRootAsync(Animate);
     }
 
-    private void HandleCountdownFinished()
-    {
-        _windowsHelper.MinimizeWindow();
-        TimerTracker.IsCountdownVisible = false;
-    }
-
-    public async Task SetUpTimerAsync()
-    {
-        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
-
-        if (settings?.AutoMinimize is true)
-        {
-            TimerTracker.IsCountdownVisible = true;
-
-            _timer = new(15);
-            _timer.Start();
-            _timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
-            _timer.CountdownFinished += (s, e) => HandleCountdownFinished();
-        }
-        else
-        {
-            TimerTracker.IsCountdownVisible = false;
-        }
-    }
-
     [RelayCommand]
     public void StopTimer()
     {
-        if (_timer is null)
+        if (TimerTracker.Timer is null)
         {
             return;
         }
 
-        _timer.Stop();
-        _timer = null;
+        TimerTracker.Timer.Stop();
+        TimerTracker.Timer = null;
 
         TimerTracker.IsCountdownVisible = false;
         TimerTracker.SecondsRemaining = 0;

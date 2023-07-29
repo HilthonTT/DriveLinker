@@ -7,13 +7,10 @@ public partial class AuthViewModel : BaseViewModel
 
     public AuthViewModel(
         ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         Account account,
         TimerTracker timerTracker) : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

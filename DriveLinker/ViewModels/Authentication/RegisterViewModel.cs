@@ -7,15 +7,11 @@ public partial class RegisterViewModel : BaseViewModel
     private readonly Account _account;
 
     public RegisterViewModel(
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         IAccountService accountService,
         Account account,
         TimerTracker timerTracker) : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

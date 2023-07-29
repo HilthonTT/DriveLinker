@@ -6,14 +6,10 @@ public partial class CreateViewModel : BaseViewModel
 
     public CreateViewModel(
         IDriveService driveService,
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         Account account,
         TimerTracker timerTracker)
         : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

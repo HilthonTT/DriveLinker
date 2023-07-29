@@ -9,14 +9,10 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         IDriveService driveService,
         IEncryption encryption,
         IMemoryCache cache, 
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         Account account,
         TimerTracker timerTracker)
         : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

@@ -4,14 +4,10 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
 
     public RecoveryKeyViewModel(
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         Account account,
         TimerTracker timerTracker) : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)

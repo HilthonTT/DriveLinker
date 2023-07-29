@@ -7,15 +7,11 @@ public partial class PasswordViewModel : BaseViewModel
     private readonly Account _account;
 
     public PasswordViewModel(
-        ISettingsService settingsService,
-        IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         IAccountService accountService,
         Account account,
         TimerTracker timerTracker) : base(
-            settingsService,
-            windowsHelper,
             languageDictionary,
             account,
             timerTracker)
