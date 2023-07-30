@@ -6,7 +6,6 @@ public static class RegisterServices
         builder.Services.AddTransient<IAccountService, AccountService>();
         builder.Services.AddTransient<IDriveService, DriveService>();
         builder.Services.AddTransient<ISettingsService, SettingsService>();
-        builder.Services.AddTransient<ILanguageService, LanguageService>();
 
         // Misc
         builder.Services.AddMemoryCache();

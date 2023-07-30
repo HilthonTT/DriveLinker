@@ -6,7 +6,7 @@ public enum MinimizeOption
     QuitApp,
 }
 
-public enum MinimizeAfter
+public enum MinimizeAfterOption
 {
     TimerFinished,
     Linking,

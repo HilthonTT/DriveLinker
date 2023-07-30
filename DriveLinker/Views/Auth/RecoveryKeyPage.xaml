@@ -36,7 +36,7 @@
             Order="Secondary"
             Priority="0"
             Command="{Binding LoadHomePageCommand}"
-            IsVisible="{Binding IsToolbarItemsVisible}"/>
+            IsVisible="{Binding IsToolbarItemsVisible}" />
         <components:BindableToolbarItem  
             Text="Settings"
             Order="Secondary"

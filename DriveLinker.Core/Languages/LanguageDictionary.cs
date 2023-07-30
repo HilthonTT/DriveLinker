@@ -37,4 +37,15 @@ public class LanguageDictionary : ILanguageDictionary
             _ => _english.GetEnglishDictionary(),
         };
     }
+
+    public List<Language> GetLanguages()
+    {
+        return new List<Language>
+        {
+            Language.English,
+            Language.French,
+            Language.German,
+            Language.Indonesian
+        };
+    }
 }

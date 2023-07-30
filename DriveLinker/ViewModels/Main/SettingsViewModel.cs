@@ -1,13 +1,17 @@
-﻿namespace DriveLinker.ViewModels.Main;
+﻿using DriveLinker.Core.Enums;
+
+namespace DriveLinker.ViewModels.Main;
 public partial class SettingsViewModel : BaseViewModel
 {
+    private readonly static Color Green = Color.FromArgb("#00FF00");
+    private readonly static Color Black = Color.FromArgb("#000000");
+
     private readonly ISettingsService _settingsService;
-    private readonly ILanguageService _languageService;
+    private readonly ILanguageDictionary _languageDictionary;
     private readonly Account _account;
 
     public SettingsViewModel(
         ISettingsService settingsService,
-        ILanguageService languageService,
         ILanguageDictionary languageDictionary,
         Account account,
         TimerTracker timerTracker)
@@ -17,30 +21,67 @@ public partial class SettingsViewModel : BaseViewModel
             timerTracker)
     {
         _settingsService = settingsService;
-        _languageService = languageService;
+        _languageDictionary = languageDictionary;
         _account = account;
+
+        MainSettingsColor = Green;
+        ExtraSettingsColor = Black;
+        LoadLanguages();
+        LoadExtraOptions();
     }
 
     [ObservableProperty]
-    private ObservableCollection<Language> _languages = new();
+    private ObservableCollection<Language> _languages;
 
     [ObservableProperty]
-    private Settings _settings = new();
+    private ObservableCollection<MinimizeOption> _minimizeOptions;
 
     [ObservableProperty]
-    private bool _autoLink = false;
+    private ObservableCollection<MinimizeAfterOption> _minimizeAfterOptions;
 
     [ObservableProperty]
-    private bool _autoMinimize = false;
+    private Settings _settings;
 
     [ObservableProperty]
-    private Language _selectedLanguage = Language.English;
+    private Color _mainSettingsColor;
 
-    [RelayCommand]
+    [ObservableProperty]
+    private Color _extraSettingsColor;
+
+    [ObservableProperty]
+    private string _selectedMinimizeOption;
+
+    [ObservableProperty]
+    private string _selectedMinimizeAfterOption;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotMainSettings))]
+    private bool _isMainSettings = true;
+
+    public bool IsNotMainSettings => !IsMainSettings;
+
     private void LoadLanguages()
     {
-        var languages = _languageService.GetLanguages();
+        var languages = _languageDictionary.GetLanguages();
         Languages = new(languages);
+    }
+
+    private void LoadExtraOptions()
+    {
+        var minimizeOptions = new List<MinimizeOption> 
+        {
+            MinimizeOption.MinimizeApp, 
+            MinimizeOption.QuitApp,
+        };
+
+        var minimizeAfterOptions = new List<MinimizeAfterOption> 
+        {
+            MinimizeAfterOption.TimerFinished, 
+            MinimizeAfterOption.Linking,
+        };
+
+        MinimizeOptions = new(minimizeOptions);
+        MinimizeAfterOptions = new(minimizeAfterOptions);
     }
 
     [RelayCommand]
@@ -56,5 +97,31 @@ public partial class SettingsViewModel : BaseViewModel
 
         await _settingsService.SetSettingsAsync(Settings);
         await ClosePageAsync();
+    }
+
+    [RelayCommand]
+    private void ShowMainSettings()
+    {
+        IsMainSettings = true;
+        ChangeMainSettingsColor();
+    }
+
+    [RelayCommand]
+    private void ShowExtraSettings()
+    {
+        IsMainSettings = false;
+        ChangeExtraSettingsColor();
+    }
+
+    private void ChangeMainSettingsColor()
+    {
+        MainSettingsColor = Green;
+        ExtraSettingsColor = Black;
+    }
+
+    private void ChangeExtraSettingsColor()
+    {
+        MainSettingsColor = Black;
+        ExtraSettingsColor = Green;
     }
 }

@@ -23,5 +23,5 @@ public partial class Settings : ObservableObject
     private MinimizeOption _minimizeOption = MinimizeOption.MinimizeApp;
 
     [ObservableProperty]
-    private MinimizeAfter _minimizeAfter = MinimizeAfter.TimerFinished;
+    private MinimizeAfterOption _minimizeAfter = MinimizeAfterOption.TimerFinished;
 }
