@@ -35,6 +35,9 @@ public partial class SettingsViewModel : BaseViewModel
     private ObservableCollection<Language> _languages;
 
     [ObservableProperty]
+    private List<string> _stringifiedLanguages;
+
+    [ObservableProperty]
     private Settings _settings;
 
     [ObservableProperty]
@@ -46,12 +49,12 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string _selectedLanguage;
 
-    public List<string> StringifiedLanguages => _languageHelper.GetStringifiedLanguages(Languages);
-
-    private void LoadLanguages()
+    private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
         Languages = new(languages);
+
+        StringifiedLanguages = await _languageHelper.GetStringifiedLanguagesAsync(Languages);
     }
 
     [RelayCommand]

@@ -16,10 +16,18 @@ public partial class AuthBaseViewModel : ObservableObject
         _languageSelector = languageSelector;
 
         InitializeDictionary();
+        LoadLanguages();
     }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(StringifiedLanguages))]
     private ObservableCollection<Language> _languages;
+
+    [ObservableProperty]
+    private ObservableCollection<string> _stringifiedLanguages;
+
+    [ObservableProperty]
+    private string _selectedLanguage;
 
     [ObservableProperty]
     private string _usernameLabel;
@@ -51,6 +59,19 @@ public partial class AuthBaseViewModel : ObservableObject
     [ObservableProperty]
     private string _registerLabel;
 
+    [ObservableProperty]
+    private string _saveLabel;
+
+    private async Task LoadLanguages()
+    {
+        var languages = _languageDictionary.GetLanguages();
+        Languages = new(languages);
+
+        var stringifiedLanguages = await _languageHelper.GetStringifiedLanguagesAsync(Languages);
+        StringifiedLanguages = new(stringifiedLanguages);
+
+        SelectedLanguage = _languageHelper.GetLanguageString(Language.English);
+    }
 
     [RelayCommand]
     public void InitializeDictionary()
@@ -67,12 +88,14 @@ public partial class AuthBaseViewModel : ObservableObject
         RecoveryKeyHelperText = keywords[Keyword.RecoveryKeyHelperText];
         ClipboardLabel = keywords[Keyword.Copyclipboard];
         RegisterLabel = keywords[Keyword.Register];
+        SaveLabel = keywords[Keyword.Save];
     }
 
     [RelayCommand]
-    private async Task ChangeLanguage()
+    private void ChangeLanguage()
     {
-
+        _languageSelector.SelectedLanguage = _languageHelper.GetLanguage(SelectedLanguage);
+        InitializeDictionary();
     }
 
     [RelayCommand]

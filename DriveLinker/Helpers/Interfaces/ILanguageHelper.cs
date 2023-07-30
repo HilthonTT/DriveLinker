@@ -3,5 +3,5 @@ public interface ILanguageHelper
 {
     Language GetLanguage(string selectedLanguage);
     string GetLanguageString(Language language);
-    List<string> GetStringifiedLanguages(ObservableCollection<Language> languages);
+    Task<List<string>> GetStringifiedLanguagesAsync(ObservableCollection<Language> languages);
 }

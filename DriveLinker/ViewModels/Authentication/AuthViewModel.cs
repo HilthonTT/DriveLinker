@@ -22,12 +22,6 @@ public partial class AuthViewModel : AuthBaseViewModel
     }
 
     [ObservableProperty]
-    private ObservableCollection<Language> _languages;
-
-    [ObservableProperty]
-    private Language _selectedLanguage = Language.English;
-
-    [ObservableProperty]
     private string _password;
 
     [ObservableProperty]
@@ -40,16 +34,6 @@ public partial class AuthViewModel : AuthBaseViewModel
     private void ToggleShowPassword()
     {
         DontShowPassword = !DontShowPassword;
-    }
-
-    [RelayCommand]
-    private async Task SaveLanguageAsync()
-    {
-        var settings = await _settingsService.GetAccountSettingsAsync(0);
-        settings.Language = SelectedLanguage;
-
-        await _settingsService.UpdateSettingsAsync(settings);
-        InitializeDictionary();
     }
 
     [RelayCommand]

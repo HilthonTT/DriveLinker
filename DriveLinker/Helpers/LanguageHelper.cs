@@ -32,8 +32,9 @@ public partial class LanguageHelper : ObservableObject, ILanguageHelper
         IndonesianLabel = keywords[Keyword.Indonesian];
     }
 
-    public List<string> GetStringifiedLanguages(ObservableCollection<Language> languages)
+    public async Task<List<string>> GetStringifiedLanguagesAsync(ObservableCollection<Language> languages)
     {
+        await InitializeDictionary();
         var stringifiedLanguages = new List<string>();
 
         foreach (var language in languages)

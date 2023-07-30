@@ -26,76 +26,103 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="30"
-            Padding="0,20"
-            HorizontalOptions="Center">
-            <VerticalStackLayout>
-                <Frame
-                    Style="{StaticResource AppIconFrame}">
-                    <Image 
-                        Style="{StaticResource AppIcon}"/>
-                </Frame>
-                <Label
-                    Text="Drive Linker"
-                    HorizontalOptions="Center"
-                    TextTransform="Uppercase"
-                    FontSize="24"
-                    Margin="0,10,0,0"/>
-            </VerticalStackLayout>
+        <Grid
+            ColumnDefinitions="*,Auto,*">
             <VerticalStackLayout
-                WidthRequest="500">
-                <FlexLayout 
-                    Direction="Column">
-                    <Grid
-                        ColumnDefinitions="*,Auto"
-                        RowDefinitions="Auto,Auto">
-                        <Entry 
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Placeholder="{Binding UsernameLabel}"
-                            HeightRequest="50"
-                            Text="{Binding Username}"
-                            Margin="0,0,0,10"/>
-                        <Entry 
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Placeholder="{Binding PasswordLabel}"
-                            HeightRequest="50"
-                            Text="{Binding Password}"
-                            IsPassword="{Binding DontShowPassword}"/>
-                        <ImageButton 
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Style="{StaticResource ShowButton}"
-                            Command="{Binding ToggleShowPasswordCommand}"/>
-                    </Grid>
-                </FlexLayout>
-                <Button 
-                    Style="{StaticResource Button}"
-                    Command="{Binding AuthenticateCommand}"
-                    Text="{Binding LoginLabel}"
-                    Margin="0,20,0,0"/>
+                Grid.Column="1"
+                Spacing="30"
+                Padding="0,20"
+                HorizontalOptions="Center">
+                <VerticalStackLayout>
+                    <Frame
+                        Style="{StaticResource AppIconFrame}">
+                        <Image 
+                            Style="{StaticResource AppIcon}"/>
+                    </Frame>
+                    <Label
+                        Text="Drive Linker"
+                        HorizontalOptions="Center"
+                        TextTransform="Uppercase"
+                        FontSize="24"
+                        Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    WidthRequest="500">
+                    <FlexLayout 
+                        Direction="Column">
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            RowDefinitions="Auto,Auto">
+                            <Entry 
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Placeholder="{Binding UsernameLabel}"
+                                HeightRequest="50"
+                                Text="{Binding Username}"
+                                Margin="0,0,0,10"/>
+                            <Entry 
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Placeholder="{Binding PasswordLabel}"
+                                HeightRequest="50"
+                                Text="{Binding Password}"
+                                IsPassword="{Binding DontShowPassword}"/>
+                            <ImageButton 
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource ShowButton}"
+                                Command="{Binding ToggleShowPasswordCommand}"/>
+                        </Grid>
+                    </FlexLayout>
+                    <Button 
+                        Style="{StaticResource Button}"
+                        Command="{Binding AuthenticateCommand}"
+                        Text="{Binding LoginLabel}"
+                        Margin="0,20,0,0"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    WidthRequest="500">
+                    <FlexLayout Direction="Column">
+                        <Grid
+                            ColumnDefinitions="*,*">
+                            <Button 
+                                Text="{Binding DontHaveAnAccountLabel}" 
+                                Style="{StaticResource AuthButton}"
+                                Command="{Binding RegisterCommand}"
+                                HorizontalOptions="Start" />
+                            <Button 
+                                Text="{Binding ForgotPasswordLabel}" 
+                                Style="{StaticResource AuthButton}"
+                                Command="{Binding ForgotPasswordCommand}"
+                                Grid.Column="1" 
+                                HorizontalOptions="End" />
+                        </Grid>
+                    </FlexLayout>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-            <VerticalStackLayout
-                WidthRequest="500">
-                <FlexLayout Direction="Column">
-                    <Grid
-                        ColumnDefinitions="*,*">
-                        <Button 
-                            Text="{Binding DontHaveAnAccountLabel}" 
-                            Style="{StaticResource AuthButton}"
-                            Command="{Binding RegisterCommand}"
-                            HorizontalOptions="Start" />
-                        <Button 
-                            Text="{Binding ForgotPasswordLabel}" 
-                            Style="{StaticResource AuthButton}"
-                            Command="{Binding ForgotPasswordCommand}"
-                            Grid.Column="1" 
-                            HorizontalOptions="End" />
-                    </Grid>
-                </FlexLayout>
+            <VerticalStackLayout 
+                Grid.Column="2"
+                Margin="0,20,20,0">
+                <HorizontalStackLayout
+                    HorizontalOptions="End">
+                    <HorizontalStackLayout
+                        VerticalOptions="Center">
+                        <Label 
+                            Text="Language"
+                            FontSize="18"/>
+                        <BoxView 
+                            Margin="5"/>
+                        <Picker 
+                            WidthRequest="200"
+                            ItemsSource="{Binding StringifiedLanguages}"
+                            SelectedItem="{Binding SelectedLanguage}"/>
+                    </HorizontalStackLayout>
+                    <Button 
+                        Text="{Binding SaveLabel}"
+                        Style="{StaticResource Button}"
+                        Command="{Binding ChangeLanguageCommand}"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>
