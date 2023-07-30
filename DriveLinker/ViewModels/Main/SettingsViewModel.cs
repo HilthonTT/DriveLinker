@@ -6,11 +6,13 @@ public partial class SettingsViewModel : BaseViewModel
 
     private readonly ISettingsService _settingsService;
     private readonly ILanguageDictionary _languageDictionary;
+    private readonly ILanguageHelper _languageHelper;
     private readonly Account _account;
 
     public SettingsViewModel(
         ISettingsService settingsService,
         ILanguageDictionary languageDictionary,
+        ILanguageHelper languageHelper,
         Account account,
         TimerTracker timerTracker)
         : base(
@@ -20,6 +22,7 @@ public partial class SettingsViewModel : BaseViewModel
     {
         _settingsService = settingsService;
         _languageDictionary = languageDictionary;
+        _languageHelper = languageHelper;
         _account = account;
 
         MainSettingsColor = Green;
@@ -43,7 +46,7 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string _selectedLanguage;
 
-    public List<string> StringifiedLanguages => GetStringifiedLanguages();
+    public List<string> StringifiedLanguages => _languageHelper.GetStringifiedLanguages(Languages);
 
     private void LoadLanguages()
     {
@@ -55,7 +58,7 @@ public partial class SettingsViewModel : BaseViewModel
     private async Task LoadSettingsAsync()
     {
         Settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
-        SelectedLanguage = GetLanguageString(Settings.Language);
+        SelectedLanguage = _languageHelper.GetLanguageString(Settings.Language);
     }
 
     [RelayCommand]
@@ -77,74 +80,9 @@ public partial class SettingsViewModel : BaseViewModel
 
 
         Settings.AccountId = _account.Id;
-        Settings.Language = GetLanguage();
+        Settings.Language = _languageHelper.GetLanguage(SelectedLanguage);
 
         await _settingsService.SetSettingsAsync(Settings);
         await ClosePageAsync();
-    }
-
-    private List<string> GetStringifiedLanguages()
-    {
-        var stringifiedLanguages = new List<string>();
-
-        foreach (var language in Languages)
-        {
-            switch (language)
-            {
-                case Language.English:
-                    stringifiedLanguages.Add(EnglishLabel);
-                    break;
-
-                case Language.French:
-                    stringifiedLanguages.Add(FrenchLabel);
-                    break;
-
-                case Language.German:
-                    stringifiedLanguages.Add(GermanLabel);
-                    break;
-
-                case Language.Indonesian:
-                    stringifiedLanguages.Add(IndonesianLabel);
-                    break;
-                default:
-                    break;
-            }  
-        }
-
-        return stringifiedLanguages;
-    }
-
-    private Language GetLanguage()
-    {
-        if (SelectedLanguage == EnglishLabel)
-        {
-            return Language.English;
-        }
-        else if (SelectedLanguage == FrenchLabel)
-        {
-            return Language.French;
-        }
-        else if (SelectedLanguage == GermanLabel)
-        {
-            return Language.German;
-        }
-        else if (SelectedLanguage == IndonesianLabel)
-        {
-            return Language.Indonesian;
-        }
-        
-        return Language.English;
-    }
-
-    private string GetLanguageString(Language language)
-    {
-        return language switch
-        {
-            Language.English => EnglishLabel,
-            Language.French => FrenchLabel,
-            Language.German => GermanLabel,
-            Language.Indonesian => IndonesianLabel,
-            _ => EnglishLabel,
-        };
     }
 }

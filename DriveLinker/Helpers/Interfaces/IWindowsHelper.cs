@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.Helpers;
+﻿namespace DriveLinker.Helpers.Interfaces;
 
 public interface IWindowsHelper
 {

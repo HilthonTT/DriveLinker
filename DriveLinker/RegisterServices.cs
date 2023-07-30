@@ -19,10 +19,12 @@ public static class RegisterServices
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ILinker, Linker>();
         builder.Services.AddTransient<IWindowsHelper, WindowsHelper>();
+        builder.Services.AddTransient<ILanguageHelper, LanguageHelper>();
     }
 
     public static void ConfigureViewModels(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<AuthBaseViewModel>();
         builder.Services.AddTransient<AuthViewModel>();
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();

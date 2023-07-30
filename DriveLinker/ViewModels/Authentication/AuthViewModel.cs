@@ -9,9 +9,11 @@ public partial class AuthViewModel : AuthBaseViewModel
         ISettingsService settingsService,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
+        ILanguageHelper languageHelper,
         Account account,
         TemporaryLanguageSelector languageSelector) : base(
-            languageDictionary, 
+            languageDictionary,
+            languageHelper,
             languageSelector)
     {
         _settingsService = settingsService;

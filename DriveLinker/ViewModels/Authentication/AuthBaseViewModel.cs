@@ -3,17 +3,23 @@ public partial class AuthBaseViewModel : ObservableObject
 {
     private const bool Animate = true;
     private readonly ILanguageDictionary _languageDictionary;
+    private readonly ILanguageHelper _languageHelper;
     private readonly TemporaryLanguageSelector _languageSelector;
 
     public AuthBaseViewModel(
         ILanguageDictionary languageDictionary,
+        ILanguageHelper languageHelper,
         TemporaryLanguageSelector languageSelector)
     {
         _languageDictionary = languageDictionary;
+        _languageHelper = languageHelper;
         _languageSelector = languageSelector;
 
         InitializeDictionary();
     }
+
+    [ObservableProperty]
+    private ObservableCollection<Language> _languages;
 
     [ObservableProperty]
     private string _usernameLabel;
@@ -61,6 +67,12 @@ public partial class AuthBaseViewModel : ObservableObject
         RecoveryKeyHelperText = keywords[Keyword.RecoveryKeyHelperText];
         ClipboardLabel = keywords[Keyword.Copyclipboard];
         RegisterLabel = keywords[Keyword.Register];
+    }
+
+    [RelayCommand]
+    private async Task ChangeLanguage()
+    {
+
     }
 
     [RelayCommand]

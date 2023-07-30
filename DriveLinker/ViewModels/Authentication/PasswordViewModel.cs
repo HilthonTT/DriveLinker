@@ -10,9 +10,11 @@ public partial class PasswordViewModel : AuthBaseViewModel
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         IAccountService accountService,
+        ILanguageHelper languageHelper,
         Account account,
         TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
+            languageHelper,
             languageSelector)
     {
         _recoveryKeyGenerator = recoveryKeyGenerator;

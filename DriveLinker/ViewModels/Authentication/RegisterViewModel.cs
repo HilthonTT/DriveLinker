@@ -10,9 +10,11 @@ public partial class RegisterViewModel : AuthBaseViewModel
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         IAccountService accountService,
+        ILanguageHelper languageHelper,
         Account account,
         TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
+            languageHelper,
             languageSelector)
     {
         _auth = auth;

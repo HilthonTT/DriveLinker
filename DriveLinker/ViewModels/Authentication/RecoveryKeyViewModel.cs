@@ -7,9 +7,11 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
     public RecoveryKeyViewModel(
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
+        ILanguageHelper languageHelper,
         Account account,
         TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
+            languageHelper,
             languageSelector)
     {
         _recoveryKeyGenerator = recoveryKeyGenerator;
