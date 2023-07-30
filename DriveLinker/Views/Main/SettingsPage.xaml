@@ -189,8 +189,8 @@
                                             Grid.Column="2"
                                             Grid.Row="2"
                                             WidthRequest="200"
-                                            SelectedItem="{Binding Settings.Language}"
-                                            ItemsSource="{Binding Languages}" />
+                                            SelectedItem="{Binding SelectedLanguage}"
+                                            ItemsSource="{Binding StringifiedLanguages}" />
                                     </Grid>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout

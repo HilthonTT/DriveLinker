@@ -31,6 +31,7 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(StringifiedLanguages))]
     private ObservableCollection<Language> _languages;
 
     [ObservableProperty]
@@ -49,16 +50,15 @@ public partial class SettingsViewModel : BaseViewModel
     private Color _extraSettingsColor;
 
     [ObservableProperty]
-    private string _selectedMinimizeOption;
-
-    [ObservableProperty]
-    private string _selectedMinimizeAfterOption;
+    private string _selectedLanguage;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotMainSettings))]
     private bool _isMainSettings = true;
 
     public bool IsNotMainSettings => !IsMainSettings;
+
+    public List<string> StringifiedLanguages => GetStrigifiedLanguages();
 
     private void LoadLanguages()
     {
@@ -88,12 +88,14 @@ public partial class SettingsViewModel : BaseViewModel
     private async Task LoadSettingsAsync()
     {
         Settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
+        SelectedLanguage = GetLanguageString(Settings.Language);
     }
 
     [RelayCommand]
     private async Task SaveSettingsAsync()
     {
         Settings.AccountId = _account.Id;
+        Settings.Language = GetLanguage();
 
         await _settingsService.SetSettingsAsync(Settings);
         await ClosePageAsync();
@@ -123,5 +125,71 @@ public partial class SettingsViewModel : BaseViewModel
     {
         MainSettingsColor = Black;
         ExtraSettingsColor = Green;
+    }
+
+
+    private List<string> GetStrigifiedLanguages()
+    {
+        var stringifiedLanguages = new List<string>();
+
+        foreach (var language in Languages)
+        {
+            switch (language)
+            {
+                case Language.English:
+                    stringifiedLanguages.Add(EnglishLabel);
+                    break;
+
+                case Language.French:
+                    stringifiedLanguages.Add(FrenchLabel);
+                    break;
+
+                case Language.German:
+                    stringifiedLanguages.Add(GermanLabel);
+                    break;
+
+                case Language.Indonesian:
+                    stringifiedLanguages.Add(IndonesianLabel);
+                    break;
+                default:
+                    break;
+            }  
+        }
+
+        return stringifiedLanguages;
+    }
+
+    private Language GetLanguage()
+    {
+        if (SelectedLanguage == EnglishLabel)
+        {
+            return Language.English;
+        }
+        else if (SelectedLanguage == FrenchLabel)
+        {
+            return Language.French;
+        }
+        else if (SelectedLanguage == GermanLabel)
+        {
+            return Language.German;
+        }
+        else if (SelectedLanguage == IndonesianLabel)
+        {
+            return Language.Indonesian;
+        }
+        
+        return Language.English;
+    }
+
+    private string GetLanguageString(Language language)
+    {
+        return language switch
+        {
+            Language.English => EnglishLabel,
+            Language.French => FrenchLabel,
+            Language.German => GermanLabel,
+            Language.Indonesian => IndonesianLabel,
+            _ => EnglishLabel,
+        };
     }
 }
