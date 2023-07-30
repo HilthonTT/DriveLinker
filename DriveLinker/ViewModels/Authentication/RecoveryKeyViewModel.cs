@@ -1,7 +1,8 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
-public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
+public partial class RecoveryKeyViewModel : BaseViewModel
 {
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
+    private readonly Account _account;
 
     public RecoveryKeyViewModel(
         ILanguageDictionary languageDictionary,
@@ -13,30 +14,29 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
             timerTracker)
     {
         _recoveryKeyGenerator = recoveryKeyGenerator;
-    }
+        _account = account;
 
-    [ObservableProperty]
-    private Account _account;
+        IsToolbarItemsVisible = IsLoggedIn();
+    }
 
     [ObservableProperty]
     private List<string> _recoveryKeys;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        Account = query["Account"] as Account;
-    }
+    [ObservableProperty]
+    private bool _isToolbarItemsVisible;
+
 
     [RelayCommand]
     private async Task GenerateRecoveryKeyAsync()
     {
-        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(Account);
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_account);
         if (recoveryKeys?.Count > 0)
         {
             RecoveryKeys = new(recoveryKeys);
         }
         else
         {
-            var generatedRecoveryKeys = await _recoveryKeyGenerator.GenerateRecoveryKeysAsync(Account);
+            var generatedRecoveryKeys = await _recoveryKeyGenerator.GenerateRecoveryKeysAsync(_account);
             RecoveryKeys = new(generatedRecoveryKeys);
         }
     }
@@ -56,5 +56,20 @@ public partial class RecoveryKeyViewModel : BaseViewModel, IQueryAttributable
         {
             await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
+    }
+
+    private bool IsLoggedIn()
+    {
+        if (_account is null)
+        {
+            return false;
+        }
+
+        if (_account.Id is 0 || string.IsNullOrWhiteSpace(_account.Username))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

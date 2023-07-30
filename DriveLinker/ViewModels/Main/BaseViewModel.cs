@@ -67,12 +67,7 @@ public partial class BaseViewModel : LanguageViewModel
     [RelayCommand]
     public async Task LoadRecoveryPage()
     {
-        var parameters = new Dictionary<string, object>()
-        {
-            { "Account", _account },
-        };
-
-        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate, parameters);
+        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate);
     }
 
     [RelayCommand]
