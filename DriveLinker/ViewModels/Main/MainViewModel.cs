@@ -194,7 +194,8 @@ public partial class MainViewModel : BaseViewModel
         {
             TimerTracker.IsCountdownVisible = true;
 
-            TimerTracker.Timer = new(15);
+            TimerTracker.Timer = new(settings.TimerCount);
+            TimerTracker.SecondsRemaining = settings.TimerCount;
             TimerTracker.Timer.Start();
             TimerTracker.Timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
             TimerTracker.Timer.CountdownFinished += (s, e) => HandleCountdownFinished();

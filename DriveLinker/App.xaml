@@ -21,6 +21,8 @@
 
             <Style TargetType="Entry">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing"/>
+                <Setter Property="Keyboard" Value="Text"/>
             </Style>
 
             <Style TargetType="Picker">

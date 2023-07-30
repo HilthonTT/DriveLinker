@@ -18,10 +18,4 @@ public partial class Settings : ObservableObject
 
     [ObservableProperty]
     private Language _language = Language.English;
-
-    [ObservableProperty]
-    private MinimizeOption _minimizeOption = MinimizeOption.MinimizeApp;
-
-    [ObservableProperty]
-    private MinimizeAfterOption _minimizeAfter = MinimizeAfterOption.TimerFinished;
 }

@@ -1,6 +1,4 @@
-﻿using DriveLinker.Core.Enums;
-
-namespace DriveLinker.ViewModels.Main;
+﻿namespace DriveLinker.ViewModels.Main;
 public partial class SettingsViewModel : BaseViewModel
 {
     private readonly static Color Green = Color.FromArgb("#00FF00");
@@ -27,18 +25,11 @@ public partial class SettingsViewModel : BaseViewModel
         MainSettingsColor = Green;
         ExtraSettingsColor = Black;
         LoadLanguages();
-        LoadExtraOptions();
     }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(StringifiedLanguages))]
     private ObservableCollection<Language> _languages;
-
-    [ObservableProperty]
-    private ObservableCollection<MinimizeOption> _minimizeOptions;
-
-    [ObservableProperty]
-    private ObservableCollection<MinimizeAfterOption> _minimizeAfterOptions;
 
     [ObservableProperty]
     private Settings _settings;
@@ -52,36 +43,12 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string _selectedLanguage;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotMainSettings))]
-    private bool _isMainSettings = true;
-
-    public bool IsNotMainSettings => !IsMainSettings;
-
-    public List<string> StringifiedLanguages => GetStrigifiedLanguages();
+    public List<string> StringifiedLanguages => GetStringifiedLanguages();
 
     private void LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
         Languages = new(languages);
-    }
-
-    private void LoadExtraOptions()
-    {
-        var minimizeOptions = new List<MinimizeOption> 
-        {
-            MinimizeOption.MinimizeApp, 
-            MinimizeOption.QuitApp,
-        };
-
-        var minimizeAfterOptions = new List<MinimizeAfterOption> 
-        {
-            MinimizeAfterOption.TimerFinished, 
-            MinimizeAfterOption.Linking,
-        };
-
-        MinimizeOptions = new(minimizeOptions);
-        MinimizeAfterOptions = new(minimizeAfterOptions);
     }
 
     [RelayCommand]
@@ -94,6 +61,21 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveSettingsAsync()
     {
+        if (Settings.TimerCount < 5)
+        {
+            await Shell.Current.DisplayAlert(
+                "Error.", "Your timer count can't be less than 5 seconds", "OK");
+            return;
+        }
+
+        if (Settings.TimerCount > 500)
+        {
+            await Shell.Current.DisplayAlert(
+                "Error.", "Your timer count can't be more than 500 seconds.", "OK");
+            return;
+        }
+
+
         Settings.AccountId = _account.Id;
         Settings.Language = GetLanguage();
 
@@ -101,34 +83,7 @@ public partial class SettingsViewModel : BaseViewModel
         await ClosePageAsync();
     }
 
-    [RelayCommand]
-    private void ShowMainSettings()
-    {
-        IsMainSettings = true;
-        ChangeMainSettingsColor();
-    }
-
-    [RelayCommand]
-    private void ShowExtraSettings()
-    {
-        IsMainSettings = false;
-        ChangeExtraSettingsColor();
-    }
-
-    private void ChangeMainSettingsColor()
-    {
-        MainSettingsColor = Green;
-        ExtraSettingsColor = Black;
-    }
-
-    private void ChangeExtraSettingsColor()
-    {
-        MainSettingsColor = Black;
-        ExtraSettingsColor = Green;
-    }
-
-
-    private List<string> GetStrigifiedLanguages()
+    private List<string> GetStringifiedLanguages()
     {
         var stringifiedLanguages = new List<string>();
 

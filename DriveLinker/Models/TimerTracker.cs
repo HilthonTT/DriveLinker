@@ -7,5 +7,5 @@ public partial class TimerTracker : ObservableObject
     [ObservableProperty]
     private int _secondsRemaining;
 
-    public CountdownTimer Timer { get; set; }
+    public CountdownTimer Timer { get; set; } 
 }
