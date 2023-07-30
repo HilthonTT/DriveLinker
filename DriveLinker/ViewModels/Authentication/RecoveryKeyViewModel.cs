@@ -1,5 +1,5 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
-public partial class RecoveryKeyViewModel : BaseViewModel
+public partial class RecoveryKeyViewModel : AuthBaseViewModel
 {
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
     private readonly Account _account;
@@ -8,15 +8,15 @@ public partial class RecoveryKeyViewModel : BaseViewModel
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         Account account,
-        TimerTracker timerTracker) : base(
+        TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
-            account,
-            timerTracker)
+            languageSelector)
     {
         _recoveryKeyGenerator = recoveryKeyGenerator;
         _account = account;
 
         IsToolbarItemsVisible = IsLoggedIn();
+        AccountUsername = account.Username;
     }
 
     [ObservableProperty]
@@ -25,6 +25,8 @@ public partial class RecoveryKeyViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isToolbarItemsVisible;
 
+    [ObservableProperty]
+    private string _accountUsername;
 
     [RelayCommand]
     private async Task GenerateRecoveryKeyAsync()

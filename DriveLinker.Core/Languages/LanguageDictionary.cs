@@ -38,6 +38,18 @@ public class LanguageDictionary : ILanguageDictionary
         };
     }
 
+    public Dictionary<Keyword, string> GetDictionaryWithEnum(Language language)
+    {
+        return language switch
+        {
+            Language.English => _english.GetEnglishDictionary(),
+            Language.French => _french.GetFrenchDictionary(),
+            Language.German => _german.GetGermanDictionary(),
+            Language.Indonesian => _indonesian.GetIndonesianDictionary(),
+            _ => _english.GetEnglishDictionary(),
+        };
+    }
+
     public List<Language> GetLanguages()
     {
         return new List<Language>

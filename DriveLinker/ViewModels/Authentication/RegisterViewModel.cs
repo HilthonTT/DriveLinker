@@ -1,6 +1,6 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
 
-public partial class RegisterViewModel : BaseViewModel
+public partial class RegisterViewModel : AuthBaseViewModel
 {
     private readonly IAuthentication _auth;
     private readonly IAccountService _accountService;
@@ -11,10 +11,9 @@ public partial class RegisterViewModel : BaseViewModel
         IAuthentication auth,
         IAccountService accountService,
         Account account,
-        TimerTracker timerTracker) : base(
+        TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
-            account,
-            timerTracker)
+            languageSelector)
     {
         _auth = auth;
         _accountService = accountService;

@@ -1,5 +1,5 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
-public partial class AuthViewModel : BaseViewModel
+public partial class AuthViewModel : AuthBaseViewModel
 {
     private readonly ISettingsService _settingsService;
     private readonly IAuthentication _auth;
@@ -10,10 +10,9 @@ public partial class AuthViewModel : BaseViewModel
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         Account account,
-        TimerTracker timerTracker) : base(
-            languageDictionary,
-            account,
-            timerTracker)
+        TemporaryLanguageSelector languageSelector) : base(
+            languageDictionary, 
+            languageSelector)
     {
         _settingsService = settingsService;
         _auth = auth;
@@ -48,7 +47,7 @@ public partial class AuthViewModel : BaseViewModel
         settings.Language = SelectedLanguage;
 
         await _settingsService.UpdateSettingsAsync(settings);
-        await InitializeDictionary();
+        InitializeDictionary();
     }
 
     [RelayCommand]

@@ -9,7 +9,7 @@
     <Shell.TitleView>
         <Grid>
             <Label
-                Text="Register" 
+                Text="{Binding RegisterLabel}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
@@ -52,7 +52,7 @@
                         <Entry 
                             Grid.Row="0"
                             Grid.Column="0"
-                            Placeholder="{Binding UserNameLabel}"
+                            Placeholder="{Binding UsernameLabel}"
                             HeightRequest="50"
                             Text="{Binding Username}"
                             Margin="0,0,0,10"/>

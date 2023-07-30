@@ -11,6 +11,7 @@ public static class RegisterServices
         builder.Services.AddMemoryCache();
         builder.Services.AddSingleton<Account>();
         builder.Services.AddSingleton<TimerTracker>();
+        builder.Services.AddSingleton<TemporaryLanguageSelector>();
 
         builder.Services.AddTransient<IEncryption, Encryption>();
         builder.Services.AddTransient<IAuthentication, Authentication>();

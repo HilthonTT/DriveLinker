@@ -1,6 +1,6 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
 
-public partial class PasswordViewModel : BaseViewModel
+public partial class PasswordViewModel : AuthBaseViewModel
 {
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
     private readonly IAccountService _accountService;
@@ -11,10 +11,9 @@ public partial class PasswordViewModel : BaseViewModel
         IRecoveryKeyGenerator recoveryKeyGenerator,
         IAccountService accountService,
         Account account,
-        TimerTracker timerTracker) : base(
+        TemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
-            account,
-            timerTracker)
+            languageSelector)
     {
         _recoveryKeyGenerator = recoveryKeyGenerator;
         _accountService = accountService;
