@@ -12,7 +12,8 @@
                     CornerRadius="15"/>
             </Border.StrokeShape>
             <VerticalStackLayout 
-                Spacing="7">
+                Spacing="7"
+                VerticalOptions="Center">
                 <Grid 
                     ColumnDefinitions="Auto, *, Auto">
                     <Grid
@@ -32,32 +33,23 @@
                         </FlexLayout>
                     </Grid>
                     <Grid
-                        HorizontalOptions="Center"
-                        Grid.Column="1"
-                        ColumnSpacing="50"
-                        ColumnDefinitions="Auto">
-                        <HorizontalStackLayout 
-                            Grid.Column="0">
-                            <HorizontalStackLayout 
-                                Spacing="8">
-                                <Label 
-                                   Text="{Binding .}" 
-                                   TextColor="White" 
-                                   FontSize="18" 
-                                   FontAttributes="Bold" 
-                                   VerticalOptions="Center"
-                                   LineBreakMode="WordWrap"></Label>
-                            </HorizontalStackLayout>
-                        </HorizontalStackLayout>
+                        Grid.Column="1">
+                        <Label 
+                            Text="{Binding .}" 
+                            TextColor="White" 
+                            FontSize="18" 
+                            FontAttributes="Bold" 
+                            VerticalOptions="Center"
+                            LineBreakMode="WordWrap" />
                     </Grid>
-
                     <ImageButton
                         Grid.Column="2"
                         BackgroundColor="White"
-                        CornerRadius="5"
-                        HeightRequest="20"
+                        CornerRadius="55"
+                        HeightRequest="60"
                         Aspect="AspectFit"
-                        WidthRequest="20"
+                        Padding="8"
+                        WidthRequest="60"
                         Source="copy_icon.png"
                         Clicked="CopyToClipboardClicked"/>
                 </Grid>

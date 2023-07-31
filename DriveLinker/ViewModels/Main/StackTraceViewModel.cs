@@ -16,7 +16,6 @@ public partial class StackTraceViewModel : BaseViewModel
         _stackTrace = stackTrace;
 
         ErrorMessages = _stackTrace.ErrorMessages.ToObservableCollection();
-        DummyData();
     }
 
     [ObservableProperty]
@@ -24,14 +23,4 @@ public partial class StackTraceViewModel : BaseViewModel
     private ObservableCollection<string> _errorMessages;
 
     public int ErrorCount => ErrorMessages.Count;
-
-    private void DummyData()
-    {
-        for (int i = 0; i < 20; i++)
-        {
-            ErrorMessages.Add(
-                "ERROR: THIS IS 100% A REAL ERROR THAT IS VERY LONG BECAUSE " +
-                "OF REASONS THAT I CAN OR CANNOT SAY, I DID NOT INVENT AN ERROR, THIS IS NOT A DRILL.");
-        }
-    }
 }
