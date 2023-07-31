@@ -4,15 +4,15 @@ public partial class PasswordViewModel : AuthBaseViewModel
 {
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
     private readonly IAccountService _accountService;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public PasswordViewModel(
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         IAccountService accountService,
         ILanguageHelper languageHelper,
-        Account account,
-        TemporaryLanguageSelector languageSelector) : base(
+        IAccount account,
+        ITemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
             languageHelper,
             languageSelector)

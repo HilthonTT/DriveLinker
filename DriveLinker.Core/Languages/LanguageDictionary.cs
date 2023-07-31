@@ -1,8 +1,8 @@
 ﻿namespace DriveLinker.Core.Languages;
 public class LanguageDictionary : ILanguageDictionary
 {
-    private readonly Account _account;
-    private readonly TemporaryLanguageSelector _languageSelector;
+    private readonly IAccount _account;
+    private readonly ITemporaryLanguageSelector _languageSelector;
     private readonly ISettingsService _settingsService;
     private readonly IEnglishDictionary _english;
     private readonly IFrenchDictionary _french;
@@ -10,8 +10,8 @@ public class LanguageDictionary : ILanguageDictionary
     private readonly IGermanDictionary _german;
 
     public LanguageDictionary(
-        Account account,
-        TemporaryLanguageSelector languageSelector,
+        IAccount account,
+        ITemporaryLanguageSelector languageSelector,
         ISettingsService settingsService,
         IEnglishDictionary english,
         IFrenchDictionary french,

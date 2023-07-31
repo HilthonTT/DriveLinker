@@ -2,16 +2,16 @@
 public partial class BaseViewModel : LanguageViewModel
 {
     private const bool Animate = true;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public BaseViewModel(
         ILanguageDictionary languageDictionary,
-        Account account,
-        TimerTracker timerTracker)
+        IAccount account,
+        ITimerTracker timerTracker)
         : base(languageDictionary)
     {
         _account = account;
-        TimerTracker = timerTracker;
+        TimerTracker = (TimerTracker)timerTracker;
         AccountUsername = account.Username;
     }
 

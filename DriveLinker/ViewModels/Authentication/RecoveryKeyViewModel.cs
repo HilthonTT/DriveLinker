@@ -2,14 +2,14 @@
 public partial class RecoveryKeyViewModel : AuthBaseViewModel
 {
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public RecoveryKeyViewModel(
         ILanguageDictionary languageDictionary,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         ILanguageHelper languageHelper,
-        Account account,
-        TemporaryLanguageSelector languageSelector) : base(
+        IAccount account,
+        ITemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
             languageHelper,
             languageSelector)
@@ -33,14 +33,14 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
     [RelayCommand]
     private async Task GenerateRecoveryKeyAsync()
     {
-        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_account);
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync((Account)_account);
         if (recoveryKeys?.Count > 0)
         {
             RecoveryKeys = new(recoveryKeys);
         }
         else
         {
-            var generatedRecoveryKeys = await _recoveryKeyGenerator.GenerateRecoveryKeysAsync(_account);
+            var generatedRecoveryKeys = await _recoveryKeyGenerator.GenerateRecoveryKeysAsync((Account)_account);
             RecoveryKeys = new(generatedRecoveryKeys);
         }
     }

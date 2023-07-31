@@ -7,14 +7,14 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
     private readonly ILanguageDictionary _languageDictionary;
     private readonly ILanguageHelper _languageHelper;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public SettingsViewModel(
         ISettingsService settingsService,
         ILanguageDictionary languageDictionary,
         ILanguageHelper languageHelper,
-        Account account,
-        TimerTracker timerTracker)
+        IAccount account,
+        ITimerTracker timerTracker)
         : base(
             languageDictionary,
             account,

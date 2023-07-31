@@ -2,13 +2,13 @@
 public partial class CreateViewModel : BaseViewModel
 {
     private readonly IDriveService _driveService;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public CreateViewModel(
         IDriveService driveService,
         ILanguageDictionary languageDictionary,
-        Account account,
-        TimerTracker timerTracker)
+        IAccount account,
+        ITimerTracker timerTracker)
         : base(
             languageDictionary,
             account,

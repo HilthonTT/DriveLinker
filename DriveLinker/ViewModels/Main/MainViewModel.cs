@@ -5,7 +5,7 @@ public partial class MainViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
     private readonly ILinker _linker;
     private readonly IWindowsHelper _windowsHelper;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public MainViewModel(
         IDriveService driveService,
@@ -13,8 +13,8 @@ public partial class MainViewModel : BaseViewModel
         ILinker linker,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
-        Account account,
-        TimerTracker timerTracker)
+        IAccount account,
+        ITimerTracker timerTracker)
         : base(
             languageDictionary,
             account,

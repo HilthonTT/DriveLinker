@@ -28,3 +28,4 @@ global using DriveLinker.Views.Auth;
 global using DriveLinker.Views.Main;
 global using DriveLinker.Helpers.Interfaces;
 global using DriveLinker.Core.Models.Interfaces;
+global using DriveLinker.Models.Interfaces;

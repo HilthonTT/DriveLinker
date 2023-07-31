@@ -10,8 +10,8 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         IEncryption encryption,
         IMemoryCache cache, 
         ILanguageDictionary languageDictionary,
-        Account account,
-        TimerTracker timerTracker)
+        IAccount account,
+        ITimerTracker timerTracker)
         : base(
             languageDictionary,
             account,

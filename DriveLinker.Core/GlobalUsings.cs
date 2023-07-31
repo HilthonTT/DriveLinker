@@ -14,3 +14,4 @@ global using SQLite;
 global using DriveLinker.Core.Helpers;
 global using DriveLinker.Core.Encryption;
 global using System.Text.Json;
+global using DriveLinker.Core.Models.Interfaces;

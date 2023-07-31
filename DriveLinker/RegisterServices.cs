@@ -9,9 +9,9 @@ public static class RegisterServices
 
         // Misc
         builder.Services.AddMemoryCache();
-        builder.Services.AddSingleton<Account>();
-        builder.Services.AddSingleton<TimerTracker>();
-        builder.Services.AddSingleton<TemporaryLanguageSelector>();
+        builder.Services.AddSingleton<ITimerTracker, TimerTracker>();
+        builder.Services.AddSingleton<IAccount, Account>();
+        builder.Services.AddSingleton<ITemporaryLanguageSelector, TemporaryLanguageSelector>();
         builder.Services.AddSingleton<IStackTrace, StackTrace>();
 
         builder.Services.AddTransient<IEncryption, Encryption>();

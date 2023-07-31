@@ -1,5 +1,5 @@
 ﻿namespace DriveLinker.Models;
-public partial class TimerTracker : ObservableObject
+public partial class TimerTracker : ObservableObject, ITimerTracker
 {
     [ObservableProperty]
     private bool _isCountdownVisible;

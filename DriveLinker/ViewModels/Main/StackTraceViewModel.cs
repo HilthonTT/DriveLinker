@@ -7,8 +7,8 @@ public partial class StackTraceViewModel : BaseViewModel
     public StackTraceViewModel(
         ILanguageDictionary languageDictionary,
         IStackTrace stackTrace,
-        Account account,
-        TimerTracker timerTracker) : base(
+        IAccount account,
+        ITimerTracker timerTracker) : base(
             languageDictionary,
             account,
             timerTracker)

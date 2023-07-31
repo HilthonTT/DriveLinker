@@ -4,15 +4,15 @@ public partial class RegisterViewModel : AuthBaseViewModel
 {
     private readonly IAuthentication _auth;
     private readonly IAccountService _accountService;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public RegisterViewModel(
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         IAccountService accountService,
         ILanguageHelper languageHelper,
-        Account account,
-        TemporaryLanguageSelector languageSelector) : base(
+        IAccount account,
+        ITemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
             languageHelper,
             languageSelector)

@@ -4,12 +4,12 @@ public partial class AuthBaseViewModel : ObservableObject
     private const bool Animate = true;
     private readonly ILanguageDictionary _languageDictionary;
     private readonly ILanguageHelper _languageHelper;
-    private readonly TemporaryLanguageSelector _languageSelector;
+    private readonly ITemporaryLanguageSelector _languageSelector;
 
     public AuthBaseViewModel(
         ILanguageDictionary languageDictionary,
         ILanguageHelper languageHelper,
-        TemporaryLanguageSelector languageSelector)
+        ITemporaryLanguageSelector languageSelector)
     {
         _languageDictionary = languageDictionary;
         _languageHelper = languageHelper;

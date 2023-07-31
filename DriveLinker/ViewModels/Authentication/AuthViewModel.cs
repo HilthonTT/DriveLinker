@@ -3,15 +3,15 @@ public partial class AuthViewModel : AuthBaseViewModel
 {
     private readonly ISettingsService _settingsService;
     private readonly IAuthentication _auth;
-    private readonly Account _account;
+    private readonly IAccount _account;
 
     public AuthViewModel(
         ISettingsService settingsService,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         ILanguageHelper languageHelper,
-        Account account,
-        TemporaryLanguageSelector languageSelector) : base(
+        IAccount account,
+        ITemporaryLanguageSelector languageSelector) : base(
             languageDictionary,
             languageHelper,
             languageSelector)
