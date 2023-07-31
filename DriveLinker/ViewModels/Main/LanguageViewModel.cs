@@ -56,6 +56,35 @@ public partial class LanguageViewModel : ObservableObject
         RecoveryKeyHelperText = _keywords[Keyword.RecoveryKeyHelperText];
         ClipboardLabel = _keywords[Keyword.Copyclipboard];
         RegisterLabel = _keywords[Keyword.Register];
+        LetterNotPopulatedLabel = _keywords[Keyword.LetterNotPopulated];
+        EnterALetterLabel = _keywords[Keyword.EnterALetter];
+        DriveNameNotPopulated = _keywords[Keyword.DriveNameNotPopulated];
+        PasswordNotPopulated = _keywords[Keyword.PasswordNotPopulated];
+        UsernameNotPopulated = _keywords[Keyword.UserNameNotPopulated];
+        IpAddressNotPopulated = _keywords[Keyword.IpAddressNotPopulated];
+        ErrorLabel = _keywords[Keyword.Error];
+        LetterAndDriveNameTakenLabel = _keywords[Keyword.LetterAndDriveNameTaken];
+        LetterTakenLabel = _keywords[Keyword.LetterTaken];
+        DriveNameTakenLabel = _keywords[Keyword.DriveNameTaken];
+
+        EditLetterLabel = _keywords[Keyword.EditLetter];
+        EditLetterDescLabel = _keywords[Keyword.EditLetterDesc];
+        EditDriveNameLabel = _keywords[Keyword.EditDriveName];
+        EditDriveNameDescLabel = _keywords[Keyword.EditDriveNameDesc];
+        EditIpAddressLabel = _keywords[Keyword.EditIpAddress];
+        EditIpAddressDescLabel = _keywords[Keyword.EditIpAddressDesc];
+        EditPasswordLabel = _keywords[Keyword.EditPassword];
+        EditPasswordDescLabel = _keywords[Keyword.EditPasswordDesc];
+        EditUsernameLabel = _keywords[Keyword.EditUsername];
+        EditUserNameDescLabel = _keywords[Keyword.EditUsernameDesc];
+        DeleteDriveLabel = _keywords[Keyword.DeleteDrive];
+        DeleteDriveWarningLabel = _keywords[Keyword.DeleteDriveWarning];
+        YesLabel = _keywords[Keyword.Yes];
+        NoLabel = _keywords[Keyword.No];
+        OkLabel = _keywords[Keyword.Ok];
+        SecondsLabel = _keywords[Keyword.Seconds];
+        TimerCountMinWarningLabel = _keywords[Keyword.TimerCountMinWarning];
+        TimerCountMaxWarningLabel = _keywords[Keyword.TimerCountMaxWarning];
     }
 
     [ObservableProperty]
@@ -168,4 +197,88 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _registerLabel;
+
+    [ObservableProperty]
+    private string _letterNotPopulatedLabel;
+
+    [ObservableProperty]
+    private string _enterALetterLabel;
+
+    [ObservableProperty]
+    private string _ipAddressNotPopulated;
+
+    [ObservableProperty]
+    private string _driveNameNotPopulated;
+
+    [ObservableProperty]
+    private string _passwordNotPopulated;
+
+    [ObservableProperty]
+    private string _usernameNotPopulated;
+
+    [ObservableProperty]
+    private string _errorLabel;
+
+    [ObservableProperty]
+    private string _okLabel;
+
+    [ObservableProperty]
+    private string _letterAndDriveNameTakenLabel;
+
+    [ObservableProperty]
+    private string _letterTakenLabel;
+
+    [ObservableProperty]
+    private string _driveNameTakenLabel;
+
+    [ObservableProperty]
+    private string _deleteDriveLabel;
+
+    [ObservableProperty]
+    private string _deleteDriveWarningLabel;
+
+    [ObservableProperty]
+    private string _yesLabel;
+
+    [ObservableProperty]
+    private string _noLabel;
+
+    [ObservableProperty]
+    private string _editLetterLabel;
+
+    [ObservableProperty]
+    private string _editLetterDescLabel;
+
+    [ObservableProperty]
+    private string _editDriveNameLabel;
+
+    [ObservableProperty]
+    private string _editDriveNameDescLabel;
+
+    [ObservableProperty]
+    private string _editIpAddressLabel;
+
+    [ObservableProperty]
+    private string _editIpAddressDescLabel;
+
+    [ObservableProperty]
+    private string _editPasswordLabel;
+
+    [ObservableProperty]
+    private string _editPasswordDescLabel;
+
+    [ObservableProperty]
+    private string _editUsernameLabel;
+
+    [ObservableProperty]
+    private string _editUserNameDescLabel;
+
+    [ObservableProperty]
+    private string _secondsLabel;
+
+    [ObservableProperty]
+    private string _timerCountMinWarningLabel;
+
+    [ObservableProperty]
+    private string _timerCountMaxWarningLabel;
 }

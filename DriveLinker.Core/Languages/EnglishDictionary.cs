@@ -2,6 +2,7 @@
 public class EnglishDictionary : IEnglishDictionary
 {
     private const string CacheName = nameof(EnglishDictionary);
+    private const string CacheNameInput = CacheName + "_Input";
     private readonly IMemoryCache _cache;
 
     public EnglishDictionary(IMemoryCache cache)
@@ -62,6 +63,36 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.RecoveryKeyHelperText, "You can use them if you ever forget your password." },
             { Keyword.Copyclipboard, "Copy to clipboard" },
             { Keyword.Register, "Register" },
+            { Keyword.Error,"Error" },
+            { Keyword.Ok, "OK" },
+            { Keyword.LetterAndDriveNameTaken, "Drive letter and drive name are both taken." },
+            { Keyword.Letter, "Drive letter is already taken" },
+            { Keyword.DriveNameTaken, "Drive name is already taken." },
+            { Keyword.LetterNotPopulated, "You didn't populate your letter field." },
+            { Keyword.EnterALetter, "Please enter a letter." },
+            { Keyword.IpAddressNotPopulated, "You didn't populate your IP Address field." },
+            { Keyword.DriveNameNotPopulated, "You didn't populate your drive's name field." },
+            { Keyword.PasswordNotPopulated, "You didn't populate your password's field." },
+            { Keyword.UserNameNotPopulated, "You didn't populate your username's field." },
+
+            { Keyword.DeleteDrive, "Delete Drive?" },
+            { Keyword.DeleteDriveWarning, "Deleting a drive is irreversible." },
+            { Keyword.Yes, "Yes" },
+            { Keyword.No, "No" },
+            { Keyword.EditLetter, "Edit Letter?" },
+            { Keyword.EditLetterDesc, "What's your new letter?" },
+            { Keyword.EditDriveName, "Edit Drive Name?" },
+            { Keyword.EditDriveNameDesc, "What's your new drive name?" },
+            { Keyword.IpAddress, "Edit IP Address?" },
+            { Keyword.IpAddressDesc, "What's your new IP Address?" },
+            { Keyword.Password, "Edit Password?" },
+            { Keyword.PasswordDesc, "What's your new Password?" },
+            { Keyword.EditUsername, "Edit Username?" },
+            { Keyword.EditUsernameDesc, "What's your new Username?" },
+
+            { Keyword.Seconds, " seconds" },
+            { Keyword.TimerCountMinWarning, $"Your timer count can't be less than " },
+            { Keyword.TimerCountMaxWarning, $"Your timer count can't be more than " },
         };
     }
 }

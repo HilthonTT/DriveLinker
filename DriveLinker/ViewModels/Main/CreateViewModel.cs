@@ -100,19 +100,19 @@ public partial class CreateViewModel : BaseViewModel
         
         if (isLetterTaken && isDriveNameTaken)
         {
-            await OpenSnackbarAsync("Drive letter and drive name are both taken.");
+            await OpenSnackbarAsync(LetterAndDriveNameTakenLabel);
             return true;
         }
 
         if (isDriveNameTaken)
         {
-            await OpenSnackbarAsync("Drive name is already taken.");
+            await OpenSnackbarAsync(DriveNameTakenLabel);
             return true;
         }
 
         if (isLetterTaken)
         {
-            await OpenSnackbarAsync("Drive letter is already taken.");
+            await OpenSnackbarAsync(LetterTakenLabel);
             return true;
         }
 
@@ -123,37 +123,37 @@ public partial class CreateViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(Model.Letter))
         {
-            await OpenSnackbarAsync("You didn't populate your letter field.");
+            await OpenSnackbarAsync(LetterNotPopulatedLabel);
             return true;
         }
 
         if (Model.Letter.Length > 1)
         {
-            await OpenSnackbarAsync("Please enter a letter.");
+            await OpenSnackbarAsync(EnterALetterLabel);
             return true;
         }
 
         if (string.IsNullOrWhiteSpace(Model.IpAddress))
         {
-            await OpenSnackbarAsync("You didn't populate your IP Address field.");
+            await OpenSnackbarAsync(IpAddressNotPopulated);
             return true;
         }
 
         if (string.IsNullOrWhiteSpace(Model.DriveName))
         {
-            await OpenSnackbarAsync("You didn't populate your drive's name field.");
+            await OpenSnackbarAsync(DriveNameNotPopulated);
             return true;
         }
 
         if (string.IsNullOrWhiteSpace(Model.Password))
         {
-            await OpenSnackbarAsync("You didn't populate your password's field.");
+            await OpenSnackbarAsync(PasswordNotPopulated);
             return true;
         }
 
         if (string.IsNullOrWhiteSpace(Model.UserName))
         {
-            await OpenSnackbarAsync("You didn't populate your username's field.");
+            await OpenSnackbarAsync(UsernameNotPopulated);
             return true;
         }
 

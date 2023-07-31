@@ -67,17 +67,20 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveSettingsAsync()
     {
-        if (Settings.TimerCount < 5)
+        int minSeconds = 5;
+        int maxSeconds = 500;
+
+        if (Settings.TimerCount < minSeconds)
         {
             await Shell.Current.DisplayAlert(
-                "Error.", "Your timer count can't be less than 5 seconds", "OK");
+                ErrorLabel, TimerCountMinWarningLabel + minSeconds + SecondsLabel, OkLabel);
             return;
         }
 
-        if (Settings.TimerCount > 500)
+        if (Settings.TimerCount > maxSeconds)
         {
             await Shell.Current.DisplayAlert(
-                "Error.", "Your timer count can't be more than 500 seconds.", "OK");
+                ErrorLabel, TimerCountMaxWarningLabel + maxSeconds + SecondsLabel, OkLabel);
             return;
         }
 

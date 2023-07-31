@@ -55,10 +55,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     private async Task DeleteRequestAsync()
     {
         bool isDelete = await Shell.Current.DisplayAlert( 
-            "Delete Drive?", 
-            "Deleting a drive is irreversible.", 
-            "Yes", 
-            "No");
+            DeleteDriveLabel, DeleteDriveWarningLabel, YesLabel, NoLabel);
 
         if (isDelete)
         {
@@ -70,7 +67,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task UpdateLetterAsync()
     {
-        string result = await PromptUserAsync("Edit Letter?", "What's your new letter?");
+        string result = await PromptUserAsync(EditLetterLabel, LetterDescLabel);
 
         if (string.IsNullOrWhiteSpace(result) is false && Drive.Letter.Length == 1)
         {
@@ -82,7 +79,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task UpdateDriveNameAsync()
     {
-        string result = await PromptUserAsync("Edit Drive Name?", "What's your new drive name?");
+        string result = await PromptUserAsync(EditDriveNameLabel, EditDriveNameDescLabel);
 
         if (string.IsNullOrWhiteSpace(result) is false)
         {
@@ -94,7 +91,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task UpdateIpAddressAsync()
     {
-        string result = await PromptUserAsync("Edit IP Address?", "What's your new IP Address?");
+        string result = await PromptUserAsync(EditIpAddressLabel, EditIpAddressDescLabel);
 
         if (string.IsNullOrWhiteSpace(result) is false)
         {
@@ -106,7 +103,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task UpdatePasswordAsync()
     {
-        string result = await PromptUserAsync("Edit Password?", "What's your new Password?");
+        string result = await PromptUserAsync(EditPasswordLabel, EditPasswordDescLabel);
 
         if (string.IsNullOrWhiteSpace(result) is false)
         {
@@ -118,7 +115,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task UpdateUserNameAsync()
     {
-        string result = await PromptUserAsync("Edit Username?", "What's your new Username?");
+        string result = await PromptUserAsync(EditUsernameLabel, EditUserNameDescLabel);
 
         if (string.IsNullOrWhiteSpace(result) is false)
         {
