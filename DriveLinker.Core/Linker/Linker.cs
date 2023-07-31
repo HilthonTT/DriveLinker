@@ -1,8 +1,16 @@
-﻿namespace DriveLinker.Core.Linker;
+﻿using DriveLinker.Core.Models.Interfaces;
+
+namespace DriveLinker.Core.Linker;
 public class Linker : ILinker
 {
     private const string Green = "#00FF00";
     private const string Red = "#FF0000";
+    private readonly IStackTrace _stackTrace;
+
+    public Linker(IStackTrace stackTrace)
+    {
+        _stackTrace = stackTrace;
+    }
 
     public async Task ConnectDriveAsync(Drive drive)
     {
@@ -60,7 +68,7 @@ public class Linker : ILinker
         return directoryExists;
     }
 
-    private static async Task GetErrorAsync(Process process, Drive drive)
+    private async Task GetErrorAsync(Process process, Drive drive)
     {
         string message = await process.StandardError.ReadToEndAsync();
 
@@ -79,6 +87,8 @@ public class Linker : ILinker
             await Shell.Current
                 .DisplaySnackbar(message);
         }
+
+        _stackTrace.ErrorMessages.Add(message);
     }
 
     private static Process GetProcess(string fileName, string arguments)
