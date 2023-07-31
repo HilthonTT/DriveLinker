@@ -50,7 +50,9 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Tektur-Regular.ttf" />
+	  <None Remove="Resources\Images\copy_icon.svg" />
 	  <None Remove="Resources\Images\date_icon.svg" />
+	  <None Remove="Resources\Images\exclamation_icon.svg" />
 	  <None Remove="Resources\Images\eye_icon.svg" />
 	  <None Remove="Resources\Images\hard_drive_icon.svg" />
 	  <None Remove="Resources\Images\info_icon.svg" />

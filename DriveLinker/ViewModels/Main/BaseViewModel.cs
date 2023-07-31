@@ -47,27 +47,33 @@ public partial class BaseViewModel : LanguageViewModel
     }
 
     [RelayCommand]
-    public async Task LoadSettingsPage()
+    public static async Task LoadSettingsPage()
     {
         await Shell.Current.GoToAsync(nameof(SettingsPage), Animate);
     }
 
     [RelayCommand]
-    public async Task LoadCreatePage()
+    public static async Task LoadCreatePage()
     {
         await Shell.Current.GoToAsync(nameof(CreatePage), Animate);
     }
 
     [RelayCommand]
-    public async Task LoadHomePage()
+    public static async Task LoadHomePage()
     {
         await Shell.Current.GoToAsync(nameof(MainPage), Animate);
     }
 
     [RelayCommand]
-    public async Task LoadRecoveryPage()
+    public static async Task LoadRecoveryPage()
     {
         await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate);
+    }
+
+    [RelayCommand]
+    public static async Task LoadStackTracePage()
+    {
+        await Shell.Current.GoToAsync(nameof(StackTracePage), Animate);
     }
 
     [RelayCommand]

@@ -13,7 +13,8 @@
                 <RoundRectangle 
                     CornerRadius="15"/>
             </Border.StrokeShape>
-            <VerticalStackLayout Spacing="7">
+            <VerticalStackLayout 
+                Spacing="7">
                 <Grid 
                     ColumnDefinitions="Auto, *">
                     <Grid

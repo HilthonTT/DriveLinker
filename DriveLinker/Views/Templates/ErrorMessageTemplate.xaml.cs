@@ -7,7 +7,7 @@ public partial class ErrorMessageTemplate : ContentView
 		InitializeComponent();
 	}
 
-	private async Task CopyToClipboardClicked(object sender, EventArgs e)
+	private async void CopyToClipboardClicked(object sender, EventArgs e)
 	{
 		if (BindingContext is string message)
 		{

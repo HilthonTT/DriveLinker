@@ -3,13 +3,144 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:DriveLinker.ViewModels.Main"
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:templates="clr-namespace:DriveLinker.Views.Templates"
              x:DataType="viewModels:StackTraceViewModel"
              x:Class="DriveLinker.Views.Main.StackTracePage"
              Title="StackTracePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Shell.TitleView>
+        <Grid
+            ColumnDefinitions="*,*">
+            <Label
+                Grid.Column="0"
+                Text="Stack Trace" 
+                Margin="10,0,0,0" 
+                HorizontalOptions="Start" 
+                VerticalOptions="Center"
+                TextColor="White" 
+                FontSize="Title"/>
+            <Label 
+                Grid.Column="1"
+                Text="{Binding AccountUsername}"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                TextColor="White"
+                FontSize="Title"/>
+        </Grid>
+    </Shell.TitleView>
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Home"
+            Order="Secondary"
+            Priority="0"
+            Command="{Binding LoadHomePageCommand}"/>
+        <ToolbarItem 
+            Text="Settings"
+            Order="Secondary"
+            Command="{Binding LoadSettingsPageCommand}"/>
+        <ToolbarItem 
+            Text="Recovery Keys"
+            Order="Secondary"
+            Command="{Binding LoadRecoveryPageCommand}"/>
+        <ToolbarItem 
+            Text="Logout"
+            Order="Secondary"
+            Command="{Binding LogOutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="30"
+            Padding="0,20">
+            <VerticalStackLayout
+                HorizontalOptions="End"
+                Margin="0,0,5,0"
+                IsVisible="{Binding TimerTracker.IsCountdownVisible}">
+                <Border 
+                    BackgroundColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle Margin="22"/>
+                    </Border.StrokeShape>
+                    <StackLayout 
+                        Margin="12, 2"    
+                        Orientation="Horizontal"   
+                        VerticalOptions="CenterAndExpand">
+                        <Label 
+                            Text="{Binding TimerTracker.SecondsRemaining, StringFormat='Countdown: {0}'}"
+                            HorizontalOptions="CenterAndExpand" 
+                            VerticalOptions="CenterAndExpand" 
+                            FontSize="24"
+                            TextColor="Black"
+                            TextTransform="Uppercase"/>
+                        <ImageButton 
+                            Style="{StaticResource CloseButton}"
+                            Command="{Binding StopTimerCommand}"/>
+                    </StackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout 
+                HorizontalOptions="Center">
+                <Frame 
+                    Style="{StaticResource AppIconFrame}">
+                    <Image 
+                        Style="{StaticResource AppIcon}"/>
+                </Frame>
+                <Label 
+                    Text="Stacktrace" 
+                    HorizontalOptions="Center"
+                    TextTransform="Uppercase"
+                    FontSize="24"
+                    Margin="0,10,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                Grid.Row="1"
+                Grid.Column="0">
+                <VerticalStackLayout 
+                    Spacing="6" 
+                    Padding="20,0">
+                    <Label 
+                        Text="{Binding ErrorCount, StringFormat='Error Count: {0}'}" 
+                        FontAttributes="Bold"
+                        TextTransform="Uppercase"
+                        FontSize="18"/>
+                    <CollectionView 
+                        x:Name="DriveListings"
+                        ItemsSource="{Binding ErrorMessages}"
+                        SelectionMode="Single">
+                        <CollectionView.EmptyView>
+                            <StackLayout
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                WidthRequest="200"
+                                HeightRequest="200">
+                                <Frame 
+                                    Style="{StaticResource AppIconFrame}">
+                                    <Image 
+                                        Source="question_icon.png"
+                                        BackgroundColor="White"
+                                        HorizontalOptions="CenterAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        Aspect="AspectFit"/>
+                                </Frame>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout 
+                                Orientation="Vertical"     
+                                ItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <templates:ErrorMessageTemplate />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -4,9 +4,64 @@
              x:DataType="x:String"
              x:Class="DriveLinker.Views.Templates.ErrorMessageTemplate">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Border 
+            HeightRequest="150"
+            Padding="6">
+            <Border.StrokeShape>
+                <RoundRectangle 
+                    CornerRadius="15"/>
+            </Border.StrokeShape>
+            <VerticalStackLayout 
+                Spacing="7">
+                <Grid 
+                    ColumnDefinitions="Auto, *, Auto">
+                    <Grid
+                        Grid.Column="0">
+                        <FlexLayout>
+                            <Frame 
+                                CornerRadius="80"
+                                WidthRequest="85"
+                                HeightRequest="85"
+                                BorderColor="Black"
+                                BackgroundColor="Red">
+                                <Image 
+                                    Source="exclamation_icon.png"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
+                            </Frame>
+                        </FlexLayout>
+                    </Grid>
+                    <Grid
+                        HorizontalOptions="Center"
+                        Grid.Column="1"
+                        ColumnSpacing="50"
+                        ColumnDefinitions="Auto">
+                        <HorizontalStackLayout 
+                            Grid.Column="0">
+                            <HorizontalStackLayout 
+                                Spacing="8">
+                                <Label 
+                                   Text="{Binding .}" 
+                                   TextColor="White" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap"></Label>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <ImageButton
+                        Grid.Column="2"
+                        BackgroundColor="White"
+                        CornerRadius="5"
+                        HeightRequest="20"
+                        Aspect="AspectFit"
+                        WidthRequest="20"
+                        Source="copy_icon.png"
+                        Clicked="CopyToClipboardClicked"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
     </VerticalStackLayout>
 </ContentView>
