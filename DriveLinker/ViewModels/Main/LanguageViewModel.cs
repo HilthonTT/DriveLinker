@@ -66,7 +66,6 @@ public partial class LanguageViewModel : ObservableObject
         LetterAndDriveNameTakenLabel = _keywords[Keyword.LetterAndDriveNameTaken];
         LetterTakenLabel = _keywords[Keyword.LetterTaken];
         DriveNameTakenLabel = _keywords[Keyword.DriveNameTaken];
-
         EditLetterLabel = _keywords[Keyword.EditLetter];
         EditLetterDescLabel = _keywords[Keyword.EditLetterDesc];
         EditDriveNameLabel = _keywords[Keyword.EditDriveName];
@@ -85,6 +84,9 @@ public partial class LanguageViewModel : ObservableObject
         SecondsLabel = _keywords[Keyword.Seconds];
         TimerCountMinWarningLabel = _keywords[Keyword.TimerCountMinWarning];
         TimerCountMaxWarningLabel = _keywords[Keyword.TimerCountMaxWarning];
+        HomePageLabel = _keywords[Keyword.HomePage];
+        LogoutLabel = _keywords[Keyword.Logout];
+        DriveInfoLabel = _keywords[Keyword.DriveInfo];
     }
 
     [ObservableProperty]
@@ -281,4 +283,13 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _timerCountMaxWarningLabel;
+
+    [ObservableProperty]
+    private string _homePageLabel;
+
+    [ObservableProperty]
+    private string _logoutLabel;
+
+    [ObservableProperty]
+    private string _driveInfoLabel;
 }

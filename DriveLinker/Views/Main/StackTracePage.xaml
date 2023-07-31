@@ -32,20 +32,20 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem 
-            Text="Home"
+            Text="{Binding HomePageLabel}"
             Order="Secondary"
             Priority="0"
             Command="{Binding LoadHomePageCommand}"/>
         <ToolbarItem 
-            Text="Settings"
+            Text="{Binding SettingsLabel}"
             Order="Secondary"
             Command="{Binding LoadSettingsPageCommand}"/>
         <ToolbarItem 
-            Text="Recovery Keys"
+            Text="{Binding RecoveryKeyLabel}"
             Order="Secondary"
             Command="{Binding LoadRecoveryPageCommand}"/>
         <ToolbarItem 
-            Text="Logout"
+            Text="{Binding LogoutLabel}"
             Order="Secondary"
             Command="{Binding LogOutCommand}"/>
     </ContentPage.ToolbarItems>

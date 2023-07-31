@@ -23,7 +23,7 @@ public class GermanDictionary : IGermanDictionary
 
     private static Dictionary<Keyword, string> GetDictionary()
     {
-        return new Dictionary<Keyword, string>()
+        return new()
         {
             { Keyword.Countdown, "Countdown" },
             { Keyword.CreateADrive, "Ein Laufwerk erstellen" },
@@ -65,7 +65,7 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.Error, "Fehler" },
             { Keyword.Ok, "OK" },
             { Keyword.LetterAndDriveNameTaken, "Laufwerksbuchstabe und Laufwerksname sind bereits vergeben." },
-            { Keyword.Letter, "Laufwerksbuchstabe ist bereits vergeben." },
+            { Keyword.LetterTaken, "Laufwerksbuchstabe ist bereits vergeben." },
             { Keyword.DriveNameTaken, "Laufwerkname ist bereits vergeben." },
             { Keyword.LetterNotPopulated, "Sie haben das Buchstabenfeld nicht ausgefüllt." },
             { Keyword.EnterALetter, "Bitte geben Sie einen Buchstaben ein." },
@@ -81,15 +81,18 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.EditLetterDesc, "Was ist Ihr neuer Buchstabe?" },
             { Keyword.EditDriveName, "Laufwerkname bearbeiten?" },
             { Keyword.EditDriveNameDesc, "Was ist Ihr neuer Laufwerkname?" },
-            { Keyword.IpAddress, "IP-Adresse bearbeiten?" },
-            { Keyword.IpAddressDesc, "Was ist Ihre neue IP-Adresse?" },
-            { Keyword.Password, "Passwort bearbeiten?" },
-            { Keyword.PasswordDesc, "Was ist Ihr neues Passwort?" },
+            { Keyword.EditIpAddressDesc, "IP-Adresse bearbeiten?" },
+            { Keyword.EditIpAddressDesc, "Was ist Ihre neue IP-Adresse?" },
+            { Keyword.EditPassword, "Passwort bearbeiten?" },
+            { Keyword.EditPasswordDesc, "Was ist Ihr neues Passwort?" },
             { Keyword.EditUsername, "Benutzernamen bearbeiten?" },
             { Keyword.EditUsernameDesc, "Was ist Ihr neuer Benutzername?" },
             { Keyword.Seconds, " Sekunden sein" },
             { Keyword.TimerCountMinWarning, $"Ihr Timer kann nicht weniger als " },
             { Keyword.TimerCountMaxWarning, $"Ihr Timer kann nicht mehr als " },
+            { Keyword.HomePage, "Startseite" },
+            { Keyword.Logout, "Abmelden" },
+            { Keyword.DriveInfo, "Laufwerkinformationen" },
         };
     }
 }

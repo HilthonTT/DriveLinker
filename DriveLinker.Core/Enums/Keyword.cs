@@ -50,7 +50,6 @@ public enum Keyword
     DriveNameNotPopulated,
     PasswordNotPopulated,
     UserNameNotPopulated,
-
     DeleteDrive,
     DeleteDriveWarning,
     Yes,
@@ -65,8 +64,11 @@ public enum Keyword
     EditPasswordDesc,
     EditUsername,
     EditUsernameDesc,
-
     Seconds,
     TimerCountMinWarning,
     TimerCountMaxWarning,
+
+    HomePage,
+    Logout,
+    DriveInfo,
 }

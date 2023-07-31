@@ -32,23 +32,23 @@
 
     <ContentPage.ToolbarItems>
         <components:BindableToolbarItem  
-            Text="Home"
+            Text="{Binding HomePageLabel}"
             Order="Secondary"
             Priority="0"
             Command="{Binding LoadHomePageCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}" />
         <components:BindableToolbarItem  
-            Text="Settings"
+            Text="{Binding SettingsLabel}"
             Order="Secondary"
             Command="{Binding LoadSettingsPageCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}"/>
         <components:BindableToolbarItem  
-            Text="Recovery Keys"
+            Text="{Binding RecoveryKeyLabel}"
             Order="Secondary"
             Command="{Binding LoadRecoveryPageCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}"/>
         <components:BindableToolbarItem  
-            Text="Logout"
+            Text="{Binding LogoutLabel}"
             Order="Secondary"
             Command="{Binding LogOutCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}"/>

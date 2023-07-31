@@ -23,7 +23,7 @@ public class IndonesianDictionary : IIndonesianDictionary
 
     private static Dictionary<Keyword, string> GetDictionary()
     {
-        return new Dictionary<Keyword, string>()
+        return new()
         {
             { Keyword.Countdown, "Mundur Waktu" },
             { Keyword.CreateADrive, "Buat Drive" },
@@ -65,7 +65,7 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.Error, "Error" },
             { Keyword.Ok, "OK" },
             { Keyword.LetterAndDriveNameTaken, "Huruf drive dan nama drive sudah digunakan." },
-            { Keyword.Letter, "Huruf drive sudah digunakan." },
+            { Keyword.LetterTaken, "Huruf drive sudah digunakan." },
             { Keyword.DriveNameTaken, "Nama drive sudah digunakan." },
             { Keyword.LetterNotPopulated, "Anda tidak mengisi kolom huruf." },
             { Keyword.EnterALetter, "Silakan masukkan huruf." },
@@ -81,15 +81,18 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.EditLetterDesc, "Apa huruf baru Anda?" },
             { Keyword.EditDriveName, "Edit Nama Drive?" },
             { Keyword.EditDriveNameDesc, "Apa nama drive baru Anda?" },
-            { Keyword.IpAddress, "Edit Alamat IP?" },
-            { Keyword.IpAddressDesc, "Apa alamat IP baru Anda?" },
-            { Keyword.Password, "Edit Kata Sandi?" },
-            { Keyword.PasswordDesc, "Apa kata sandi baru Anda?" },
+            { Keyword.EditIpAddress, "Edit Alamat IP?" },
+            { Keyword.EditIpAddressDesc, "Apa alamat IP baru Anda?" },
+            { Keyword.EditPassword, "Edit Kata Sandi?" },
+            { Keyword.EditPasswordDesc, "Apa kata sandi baru Anda?" },
             { Keyword.EditUsername, "Edit Nama Pengguna?" },
             { Keyword.EditUsernameDesc, "Apa nama pengguna baru Anda?" },
             { Keyword.Seconds, " detik" },
             { Keyword.TimerCountMinWarning, $"Hitungan timer Anda tidak boleh kurang dari " },
             { Keyword.TimerCountMaxWarning, $"Hitungan timer Anda tidak boleh lebih dari " },
+            { Keyword.HomePage, "Beranda" },
+            { Keyword.Logout, "Keluar" },
+            { Keyword.DriveInfo, "Informasi Drive" },
         };
     }
 }

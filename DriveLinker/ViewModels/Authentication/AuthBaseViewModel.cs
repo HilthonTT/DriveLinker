@@ -62,6 +62,15 @@ public partial class AuthBaseViewModel : ObservableObject
     [ObservableProperty]
     private string _saveLabel;
 
+    [ObservableProperty]
+    private string _homePageLabel;
+
+    [ObservableProperty]
+    private string _logoutLabel;
+
+    [ObservableProperty]
+    private string _settingsLabel;
+
     private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
@@ -89,6 +98,9 @@ public partial class AuthBaseViewModel : ObservableObject
         ClipboardLabel = keywords[Keyword.Copyclipboard];
         RegisterLabel = keywords[Keyword.Register];
         SaveLabel = keywords[Keyword.Save];
+        HomePageLabel = keywords[Keyword.HomePage];
+        LogoutLabel = keywords[Keyword.Logout];
+        SettingsLabel = keywords[Keyword.Settings];
     }
 
     [RelayCommand]

@@ -23,7 +23,7 @@ public class FrenchDictionary : IFrenchDictionary
 
     private static Dictionary<Keyword, string> GetDictionary()
     {
-        return new Dictionary<Keyword, string>()
+        return new()
         {
             { Keyword.Countdown, "Compte à rebours" },
             { Keyword.CreateADrive, "Créer un disque" },
@@ -65,7 +65,7 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.Error, "Erreur" },
             { Keyword.Ok, "OK" },
             { Keyword.LetterAndDriveNameTaken, "La lettre de lecteur et le nom du lecteur sont déjà utilisés." },
-            { Keyword.Letter, "La lettre de lecteur est déjà utilisée." },
+            { Keyword.LetterTaken, "La lettre de lecteur est déjà utilisée." },
             { Keyword.DriveNameTaken, "Le nom du lecteur est déjà utilisé." },
             { Keyword.LetterNotPopulated, "Vous n'avez pas rempli le champ de lettre." },
             { Keyword.EnterALetter, "Veuillez entrer une lettre." },
@@ -81,15 +81,18 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.EditLetterDesc, "Quelle est votre nouvelle lettre ?" },
             { Keyword.EditDriveName, "Modifier le nom du lecteur ?" },
             { Keyword.EditDriveNameDesc, "Quel est votre nouveau nom de lecteur ?" },
-            { Keyword.IpAddress, "Modifier l'adresse IP ?" },
-            { Keyword.IpAddressDesc, "Quelle est votre nouvelle adresse IP ?" },
-            { Keyword.Password, "Modifier le mot de passe ?" },
-            { Keyword.PasswordDesc, "Quel est votre nouveau mot de passe ?" },
+            { Keyword.EditIpAddress, "Modifier l'adresse IP ?" },
+            { Keyword.EditIpAddressDesc, "Quelle est votre nouvelle adresse IP ?" },
+            { Keyword.EditPassword, "Modifier le mot de passe ?" },
+            { Keyword.EditPasswordDesc, "Quel est votre nouveau mot de passe ?" },
             { Keyword.EditUsername, "Modifier le nom d'utilisateur ?" },
             { Keyword.EditUsernameDesc, "Quel est votre nouveau nom d'utilisateur ?" },
             { Keyword.Seconds, " secondes" },
             { Keyword.TimerCountMinWarning, $"Votre compte à rebours ne peut pas être inférieur à " },
             { Keyword.TimerCountMaxWarning, $"Votre compte à rebours ne peut pas être supérieur à " },
+            { Keyword.HomePage, "Accueil" },
+            { Keyword.Logout, "Déconnexion" },
+            { Keyword.DriveInfo, "Informations du Disque" },
         };
     }
 }
