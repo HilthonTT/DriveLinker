@@ -67,8 +67,9 @@ public enum Keyword
     Seconds,
     TimerCountMinWarning,
     TimerCountMaxWarning,
-
     HomePage,
     Logout,
     DriveInfo,
+    Stacktrace,
+    ErrorCount,
 }

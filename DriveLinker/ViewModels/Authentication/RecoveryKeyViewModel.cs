@@ -9,7 +9,8 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
         IRecoveryKeyGenerator recoveryKeyGenerator,
         ILanguageHelper languageHelper,
         IAccount account,
-        ITemporaryLanguageSelector languageSelector) : base(
+        ITemporaryLanguageSelector languageSelector,
+        ITimerTracker timerTracker) : base(
             languageDictionary,
             languageHelper,
             languageSelector)
@@ -17,9 +18,13 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
         _recoveryKeyGenerator = recoveryKeyGenerator;
         _account = account;
 
+        TimerTracker = (TimerTracker)timerTracker;
         IsToolbarItemsVisible = IsLoggedIn();
         AccountUsername = account.Username;
     }
+
+    [ObservableProperty]
+    private TimerTracker _timerTracker;
 
     [ObservableProperty]
     private List<string> _recoveryKeys;
@@ -60,6 +65,21 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
         {
             await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
+    }
+
+    [RelayCommand]
+    public void StopTimer()
+    {
+        if (TimerTracker.Timer is null)
+        {
+            return;
+        }
+
+        TimerTracker.Timer.Stop();
+        TimerTracker.Timer = null;
+
+        TimerTracker.IsCountdownVisible = false;
+        TimerTracker.SecondsRemaining = 0;
     }
 
     private bool IsLoggedIn()

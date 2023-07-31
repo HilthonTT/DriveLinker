@@ -13,7 +13,7 @@
             ColumnDefinitions="*,*">
             <Label
                 Grid.Column="0"
-                Text="Stack Trace" 
+                Text="{Binding StackTraceLabel}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
@@ -28,7 +28,6 @@
                 FontSize="Title"/>
         </Grid>
     </Shell.TitleView>
-
 
     <ContentPage.ToolbarItems>
         <ToolbarItem 
@@ -50,6 +49,12 @@
             Command="{Binding LogOutCommand}"/>
     </ContentPage.ToolbarItems>
 
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior 
+            EventName="Appearing" 
+            Command="{Binding InitializeDictionaryCommand}"/>
+    </ContentPage.Behaviors>
+
     <ScrollView>
         <VerticalStackLayout
             Spacing="30"
@@ -70,12 +75,30 @@
                         Orientation="Horizontal"   
                         VerticalOptions="CenterAndExpand">
                         <Label 
-                            Text="{Binding TimerTracker.SecondsRemaining, StringFormat='Countdown: {0}'}"
                             HorizontalOptions="CenterAndExpand" 
                             VerticalOptions="CenterAndExpand" 
                             FontSize="24"
                             TextColor="Black"
-                            TextTransform="Uppercase"/>
+                            TextTransform="Uppercase">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span 
+                                        Text="{Binding CountdownLabel, StringFormat='{0}: '}"
+                                        FontSize="24"
+                                        TextColor="Black"
+                                        TextTransform="Uppercase"
+                                        FontFamily="{StaticResource TekturFont}"/>
+                                    <Span 
+                                        Text=" "/>
+                                    <Span 
+                                        Text="{Binding TimerTracker.SecondsRemaining}"
+                                        FontSize="24"
+                                        TextColor="Black"
+                                        TextTransform="Uppercase"
+                                        FontFamily="{StaticResource TekturFont}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         <ImageButton 
                             Style="{StaticResource CloseButton}"
                             Command="{Binding StopTimerCommand}"/>
@@ -90,7 +113,7 @@
                         Style="{StaticResource AppIcon}"/>
                 </Frame>
                 <Label 
-                    Text="Stacktrace" 
+                    Text="{Binding StackTraceLabel}" 
                     HorizontalOptions="Center"
                     TextTransform="Uppercase"
                     FontSize="24"
@@ -102,11 +125,24 @@
                 <VerticalStackLayout 
                     Spacing="6" 
                     Padding="20,0">
-                    <Label 
-                        Text="{Binding ErrorCount, StringFormat='Error Count: {0}'}" 
-                        FontAttributes="Bold"
-                        TextTransform="Uppercase"
-                        FontSize="18"/>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span 
+                                    Text="{Binding ErrorCountLabel}"
+                                    FontAttributes="Bold"
+                                    TextTransform="Uppercase"
+                                    FontSize="18"
+                                    FontFamily="{StaticResource TekturFont}"/>
+                                <Span 
+                                    Text="{Binding ErrorCount}"
+                                    FontAttributes="Bold"
+                                    TextTransform="Uppercase"
+                                    FontSize="18"
+                                    FontFamily="{StaticResource TekturFont}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                     <CollectionView 
                         x:Name="DriveListings"
                         ItemsSource="{Binding ErrorMessages}"

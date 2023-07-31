@@ -93,6 +93,8 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.HomePage, "Accueil" },
             { Keyword.Logout, "Déconnexion" },
             { Keyword.DriveInfo, "Informations du Disque" },
+            { Keyword.Stacktrace, "Trace de la pile" },
+            { Keyword.ErrorCount, "Nombre d'erreurs : " },
         };
     }
 }

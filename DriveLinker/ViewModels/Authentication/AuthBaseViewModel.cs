@@ -71,6 +71,9 @@ public partial class AuthBaseViewModel : ObservableObject
     [ObservableProperty]
     private string _settingsLabel;
 
+    [ObservableProperty]
+    private string _countdownLabel;
+
     private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
@@ -101,6 +104,7 @@ public partial class AuthBaseViewModel : ObservableObject
         HomePageLabel = keywords[Keyword.HomePage];
         LogoutLabel = keywords[Keyword.Logout];
         SettingsLabel = keywords[Keyword.Settings];
+        CountdownLabel = keywords[Keyword.Countdown];
     }
 
     [RelayCommand]

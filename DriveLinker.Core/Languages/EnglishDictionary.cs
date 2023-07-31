@@ -94,6 +94,8 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.HomePage, "Home" },
             { Keyword.Logout, "Logout" },
             { Keyword.DriveInfo, "Drive Information" },
+            { Keyword.Stacktrace, "Stacktrace" },
+            { Keyword.ErrorCount, "Error Count: " },
         };
     }
 }

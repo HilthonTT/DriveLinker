@@ -19,7 +19,7 @@ public partial class LanguageViewModel : ObservableObject
 
     private void ChangeKeywordData()
     {
-        Countdown = _keywords[Keyword.Countdown];
+        CountdownLabel = _keywords[Keyword.Countdown];
         CreateDriveLabel = _keywords[Keyword.CreateADrive];
         SettingsLabel = _keywords[Keyword.Settings];
         SearchLabel = _keywords[Keyword.Search];
@@ -87,10 +87,12 @@ public partial class LanguageViewModel : ObservableObject
         HomePageLabel = _keywords[Keyword.HomePage];
         LogoutLabel = _keywords[Keyword.Logout];
         DriveInfoLabel = _keywords[Keyword.DriveInfo];
+        StackTraceLabel = _keywords[Keyword.Stacktrace];
+        ErrorCountLabel = _keywords[Keyword.ErrorCount];
     }
 
     [ObservableProperty]
-    private string _countdown;
+    private string _countdownLabel;
 
     [ObservableProperty]
     private string _createDriveLabel;
@@ -292,4 +294,10 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _driveInfoLabel;
+
+    [ObservableProperty]
+    private string _stackTraceLabel;
+
+    [ObservableProperty]
+    private string _errorCountLabel;
 }

@@ -81,7 +81,7 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.EditLetterDesc, "Was ist Ihr neuer Buchstabe?" },
             { Keyword.EditDriveName, "Laufwerkname bearbeiten?" },
             { Keyword.EditDriveNameDesc, "Was ist Ihr neuer Laufwerkname?" },
-            { Keyword.EditIpAddressDesc, "IP-Adresse bearbeiten?" },
+            { Keyword.EditIpAddress, "IP-Adresse bearbeiten?" },
             { Keyword.EditIpAddressDesc, "Was ist Ihre neue IP-Adresse?" },
             { Keyword.EditPassword, "Passwort bearbeiten?" },
             { Keyword.EditPasswordDesc, "Was ist Ihr neues Passwort?" },
@@ -93,6 +93,8 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.HomePage, "Startseite" },
             { Keyword.Logout, "Abmelden" },
             { Keyword.DriveInfo, "Laufwerkinformationen" },
+            { Keyword.Stacktrace, "Stapelverfolgung" },
+            { Keyword.ErrorCount, "Fehleranzahl: " },
         };
     }
 }

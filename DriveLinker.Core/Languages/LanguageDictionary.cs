@@ -35,11 +35,11 @@ public class LanguageDictionary : ILanguageDictionary
 
         if (settings?.Id is 0)
         {
-            language = settings.Language;
+            language = _languageSelector.SelectedLanguage; 
         }
         else
         {
-            language = _languageSelector.SelectedLanguage;
+            language = settings.Language;
         }
 
         return language switch

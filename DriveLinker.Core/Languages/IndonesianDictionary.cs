@@ -93,6 +93,8 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.HomePage, "Beranda" },
             { Keyword.Logout, "Keluar" },
             { Keyword.DriveInfo, "Informasi Drive" },
+            { Keyword.Stacktrace, "Jejak Tumpukan" },
+            { Keyword.ErrorCount, "Jumlah Kesalahan: " },
         };
     }
 }
