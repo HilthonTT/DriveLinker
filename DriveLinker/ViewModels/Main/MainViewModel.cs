@@ -122,7 +122,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task ToggleLinkAsync(Drive drive)
+    public async Task ToggleLinkAsync(Drive drive)
     {
         if (drive.Connected)
         {

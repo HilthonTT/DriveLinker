@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
         {
             if (BindingContext is MainViewModel mainViewModel)
             {
-                await mainViewModel.ToggleLinkCommand.ExecuteAsync(m.Drive);
+                await mainViewModel.ToggleLinkAsync(m.Drive);
             }
         });
     }
