@@ -13,7 +13,7 @@ Backup and recover your passwords using RecoveryKeys in case of lost credentials
 Installation
 To run DriveLinker, follow these steps:
 
-Clone the repository: git clone https://github.com/yourusername/DriveLinker.git
+Clone the repository: git clone https://github.com/HilthonTT/DriveLinker.git
 Open the project in C# .NET Maui development environment.
 Build and run the app on your Windows device.
 Usage
