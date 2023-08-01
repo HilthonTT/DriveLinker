@@ -25,10 +25,11 @@ public static class RegisterServices
 
     public static void ConfigureViewModels(this MauiAppBuilder builder)
     {
+        builder.Services.AddSingleton<MainViewModel>();
+
         builder.Services.AddTransient<StackTraceViewModel>();
         builder.Services.AddTransient<AuthBaseViewModel>();
         builder.Services.AddTransient<AuthViewModel>();
-        builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<CreateViewModel>();
         builder.Services.AddTransient<DriveViewModel>();

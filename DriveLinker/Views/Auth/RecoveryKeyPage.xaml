@@ -158,13 +158,18 @@
                     </CollectionView>
                 </Grid>
             </VerticalStackLayout>
-            <VerticalStackLayout
+            <HorizontalStackLayout
                 HorizontalOptions="Center">
                 <Button 
                     Text="{Binding ClipboardLabel}"
                     Style="{StaticResource Button}"
                     Command="{Binding CopyToClipboardCommand}"/>
-            </VerticalStackLayout>
+                <Border Margin="2"/>
+                <Button 
+                    Text="{Binding HomePageLabel}"
+                    Style="{StaticResource Button}"
+                    Command="{Binding LoadHomePageCommand}"/>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
