@@ -71,7 +71,8 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Style="{StaticResource ShowButton}"
-                                Command="{Binding ToggleShowPasswordCommand}"/>
+                                Command="{Binding ToggleShowPasswordCommand}"
+                                BackgroundColor="{Binding ButtonColor}"/>
                         </Grid>
                     </FlexLayout>
                     <Button 

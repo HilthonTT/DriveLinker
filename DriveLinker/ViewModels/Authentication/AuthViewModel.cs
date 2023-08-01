@@ -30,10 +30,22 @@ public partial class AuthViewModel : AuthBaseViewModel
     [ObservableProperty]
     private bool _dontShowPassword = true;
 
+    [ObservableProperty]
+    private Color _buttonColor = Gray;
+
     [RelayCommand]
     private void ToggleShowPassword()
     {
         DontShowPassword = !DontShowPassword;
+
+        if (DontShowPassword)
+        {
+            ButtonColor = Gray;
+        }
+        else
+        {
+            ButtonColor = White;
+        }
     }
 
     [RelayCommand]
@@ -50,21 +62,24 @@ public partial class AuthViewModel : AuthBaseViewModel
         {
             await Shell.Current.DisplayAlert(
                 "Wrong username!", "Your account's username doesn't exists.", "OK");
-        }
 
-        if (verifiedAccount?.IsCorrect is true)
+            Username = "";
+        }
+        else if (verifiedAccount?.IsCorrect is true)
         {
             AssignAccount(verifiedAccount);
             await LoadHomePage();
+
+            Username = "";
+            Password = "";
         }
         else
         {
             await Shell.Current.DisplayAlert(
                 "Wrong password!", "The password you've enter is wrong.", "OK");
-        }
 
-        Username = "";
-        Password = "";
+            Password = "";
+        }
     }
 
     [RelayCommand]

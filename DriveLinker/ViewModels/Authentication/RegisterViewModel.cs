@@ -31,10 +31,22 @@ public partial class RegisterViewModel : AuthBaseViewModel
     [ObservableProperty]
     private bool _dontShowPassword = true;
 
+    [ObservableProperty]
+    private Color _buttonColor = Gray;
+
     [RelayCommand]
     private void ToggleShowPassword()
     {
         DontShowPassword = !DontShowPassword;
+
+        if (DontShowPassword)
+        {
+            ButtonColor = Gray;
+        }
+        else
+        {
+            ButtonColor = White;
+        }
     }
 
     [RelayCommand]
@@ -56,8 +68,12 @@ public partial class RegisterViewModel : AuthBaseViewModel
         if (savePassword)
         {
             var account = await _accountService.CreateAccountAsync(new() { Username = Username });
+
+            _account.Id = account.Id;
+            _account.Username = account.Username;
+
             await _auth.ChangePasswordAsync(Username, Password);
-            await LoadRecoveryPageAsync(account);
+            await LoadRecoveryPageAsync();
         }
 
         Username = "";
@@ -84,13 +100,23 @@ public partial class RegisterViewModel : AuthBaseViewModel
         return false;
     }
 
-    private static async Task LoadRecoveryPageAsync(Account account)
+    private static async Task LoadRecoveryPageAsync()
     {
-        var parameters = new Dictionary<string, object>
-        {
-            { "Account", account },
-        };
+        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), true);
+    }
 
-        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), true, parameters);
+    [RelayCommand]
+    private static async Task LoadSettingsPage()
+    {
+        await Shell.Current.GoToAsync(nameof(SettingsPage), true);
+    }
+
+    [RelayCommand]
+    public async Task LogOut()
+    {
+        _account.Id = 0;
+        _account.Username = "";
+
+        await Shell.Current.Navigation.PopToRootAsync(true);
     }
 }

@@ -53,7 +53,6 @@
             IsVisible="{Binding IsToolbarItemsVisible}"/>
     </ContentPage.ToolbarItems>
 
-
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior
             EventName="Appearing"

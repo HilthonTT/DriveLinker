@@ -1,6 +1,9 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
 public partial class AuthBaseViewModel : ObservableObject
 {
+    public static readonly Color White = Color.FromArgb("#FFFFFF");
+    public static readonly Color Gray = Color.FromArgb("#808080");
+
     private const bool Animate = true;
     private readonly ILanguageDictionary _languageDictionary;
     private readonly ILanguageHelper _languageHelper;
@@ -86,9 +89,9 @@ public partial class AuthBaseViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void InitializeDictionary()
+    public async Task InitializeDictionary()
     {
-        var keywords = _languageDictionary.GetDictionaryWithEnum(_languageSelector.SelectedLanguage);
+        var keywords = await _languageDictionary.GetDictionaryAsync();
 
         UsernameLabel = keywords[Keyword.UserName];
         PasswordLabel = keywords[Keyword.Password];
@@ -123,5 +126,11 @@ public partial class AuthBaseViewModel : ObservableObject
     public static async Task LoadHomePage()
     {
         await Shell.Current.GoToAsync(nameof(MainPage), Animate);
+    }
+
+    [RelayCommand]
+    public static async Task LoadRecoveryPage()
+    {
+        await Shell.Current.GoToAsync(nameof(RecoveryKeyPage), Animate);
     }
 }

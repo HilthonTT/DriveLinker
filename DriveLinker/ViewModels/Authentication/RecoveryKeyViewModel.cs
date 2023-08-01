@@ -96,4 +96,25 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
 
         return true;
     }
+
+    [RelayCommand]
+    private async Task LoadHomePageAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(MainPage), true);
+    }
+
+    [RelayCommand]
+    private async Task LoadSettingsPageAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(SettingsPage), true);
+    }
+
+    [RelayCommand]
+    private async Task LogOut()
+    {
+        _account.Id = 0;
+        _account.Username = "";
+
+        await Shell.Current.Navigation.PopToRootAsync(true);
+    }
 }
