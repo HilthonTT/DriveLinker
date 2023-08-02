@@ -27,6 +27,9 @@ public static class RegisterServices
     {
         builder.Services.AddSingleton<MainViewModel>();
 
+        builder.Services.AddTransient<AccountViewModel>();
+        builder.Services.AddTransient<PasswordResetViewModel>();
+        builder.Services.AddTransient<UsernameResetViewModel>();
         builder.Services.AddTransient<StackTraceViewModel>();
         builder.Services.AddTransient<AuthBaseViewModel>();
         builder.Services.AddTransient<AuthViewModel>();
@@ -40,6 +43,9 @@ public static class RegisterServices
 
     public static void ConfigurePages(this MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<AccountPage>();
+        builder.Services.AddTransient<PasswordResetPage>();
+        builder.Services.AddTransient<UsernameResetPage>();
         builder.Services.AddTransient<StackTracePage>();
         builder.Services.AddTransient<AuthPage>();
         builder.Services.AddTransient<MainPage>();
@@ -72,5 +78,8 @@ public static class RegisterServices
         Routing.RegisterRoute(nameof(AuthPage), typeof(AuthPage));
         Routing.RegisterRoute(nameof(RecoveryKeyPage), typeof(RecoveryKeyPage));
         Routing.RegisterRoute(nameof(StackTracePage), typeof(StackTracePage));
+        Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+        Routing.RegisterRoute(nameof(PasswordResetPage), typeof(PasswordResetPage));
+        Routing.RegisterRoute(nameof(UsernameResetPage), typeof(UsernameResetPage));
     }
 }

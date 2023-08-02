@@ -29,3 +29,5 @@ global using DriveLinker.Views.Main;
 global using DriveLinker.Helpers.Interfaces;
 global using DriveLinker.Core.Models.Interfaces;
 global using DriveLinker.Models.Interfaces;
+global using DriveLinker.ViewModels.User;
+global using DriveLinker.Views.User;
