@@ -165,12 +165,14 @@
                                         <Span 
                                             Text="{Binding LetterLabel, StringFormat='{0}: '} "
                                             TextColor="LightGray"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         
                                         <Span 
                                             Text="{Binding Drive.Letter}"
                                             TextColor="White"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -188,11 +190,13 @@
                                         <Span 
                                             Text="{Binding DriveNameLabel, StringFormat='{0}: '} "
                                             TextColor="LightGray"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
                                             Text="{Binding Drive.DriveName}"
                                             TextColor="White"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -210,11 +214,13 @@
                                         <Span 
                                             Text="{Binding IpAddressLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
                                             Text="*************"
                                             TextColor="White"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -232,11 +238,13 @@
                                         <Span 
                                             Text="{Binding PasswordLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
                                             Text="*************"
                                             TextColor="White"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -254,11 +262,13 @@
                                         <Span 
                                             Text="{Binding UserNameLabel, StringFormat='{0}: '}"
                                             TextColor="LightGray"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
                                             Text="*************"
                                             TextColor="White"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -277,10 +287,12 @@
                                         <Span 
                                             Text="{Binding DateCreatedLabel, StringFormat='{0}: '}"
                                             FontSize="Title"
-                                            TextColor="LightGray"/>
+                                            TextColor="LightGray"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
                                             Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
-                                            FontSize="Title"/>
+                                            FontSize="Title"
+                                            FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>

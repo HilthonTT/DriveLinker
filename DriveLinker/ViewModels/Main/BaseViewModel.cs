@@ -77,6 +77,12 @@ public partial class BaseViewModel : LanguageViewModel
     }
 
     [RelayCommand]
+    public static async Task LoadAccountPage()
+    {
+        await Shell.Current.GoToAsync(nameof(AccountPage), Animate);
+    }
+
+    [RelayCommand]
     public async Task LogOut()
     {
         _account.Id = 0;

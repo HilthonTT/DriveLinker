@@ -25,7 +25,6 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
-
         <Grid
             ColumnDefinitions="*,Auto,*">
             <VerticalStackLayout

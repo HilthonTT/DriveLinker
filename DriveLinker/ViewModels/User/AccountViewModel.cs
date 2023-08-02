@@ -18,7 +18,7 @@ public partial class AccountViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    private Account _model;
+    private Account _model = new();
 
 
     [RelayCommand]

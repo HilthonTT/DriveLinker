@@ -51,6 +51,10 @@
             Order="Secondary"
             Command="{Binding LoadRecoveryPageCommand}"/>
         <ToolbarItem 
+            Text="Account"
+            Order="Secondary"
+            Command="{Binding LoadAccountPageCommand}"/>
+        <ToolbarItem 
             Text="{Binding LogoutLabel}"
             Order="Secondary"
             Command="{Binding LogOutCommand}"/>

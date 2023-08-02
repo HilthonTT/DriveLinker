@@ -65,6 +65,7 @@
 	  <None Remove="Resources\Images\network_icon.svg" />
 	  <None Remove="Resources\Images\question_icon.svg" />
 	  <None Remove="Resources\Images\tag_icon.svg" />
+	  <None Remove="Resources\Images\user_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
