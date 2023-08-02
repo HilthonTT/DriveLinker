@@ -10,4 +10,16 @@ public partial class UsernameResetViewModel : BaseViewModel
             timerTracker)
     {
     }
+
+    [ObservableProperty]
+    private string _currentPassword;
+
+    [ObservableProperty]
+    private string _newUsername;
+
+    [RelayCommand]
+    private async Task UpdateUsernameAsync()
+    {
+
+    }
 }

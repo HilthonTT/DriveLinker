@@ -69,7 +69,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     {
         string result = await PromptUserAsync(EditLetterLabel, LetterDescLabel);
 
-        if (string.IsNullOrWhiteSpace(result) is false && Drive.Letter.Length == 1)
+        if (string.IsNullOrWhiteSpace(result) is false && result.Length == 1)
         {
             Drive.Letter = result;
             await _driveService.UpdateDriveAsync(Drive);

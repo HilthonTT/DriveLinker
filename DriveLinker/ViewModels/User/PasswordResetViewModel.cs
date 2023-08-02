@@ -10,4 +10,19 @@ public partial class PasswordResetViewModel : BaseViewModel
             timerTracker)
     {
     }
+
+    [ObservableProperty]
+    private string _currentPassword;
+
+    [ObservableProperty]
+    private string _newPassword;
+
+    [ObservableProperty]
+    private string _recoveryKey;
+
+    [RelayCommand]
+    private async Task UpdatePasswordAsync()
+    {
+
+    }
 }

@@ -172,7 +172,8 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton 
-                                Style="{StaticResource EditButton}"/>
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding LoadUsernameResetPageCommand}"/>
                         </FlexLayout>
                         <BoxView 
                             Style="{StaticResource hr}"/>
@@ -195,7 +196,8 @@
                                 </Label.FormattedText>
                             </Label>
                             <ImageButton 
-                                Style="{StaticResource EditButton}"/>
+                                Style="{StaticResource EditButton}"
+                                Command="{Binding LoadPasswordResetPageCommand}"/>
                         </FlexLayout>
                         <FlexLayout Style="{StaticResource EditForm}">
                             <BoxView 
@@ -203,7 +205,8 @@
                                 Color="Transparent" />
                             <Button 
                                 Text="Delete Account" 
-                                Style="{StaticResource Button}"/>
+                                Style="{StaticResource Button}"
+                                Command="{Binding DeleteRequestCommand}"/>
                         </FlexLayout>
                     </VerticalStackLayout>
                 </Frame>
