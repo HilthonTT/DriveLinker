@@ -37,6 +37,18 @@ public class Authentication : IAuthentication
         return newHashedPassword;
     }
 
+    public async Task<string> ChangeUsernameAsync(string username, string newUsername)
+    {
+        string key = GetKey(username);
+        string hashedPassword = await SecureStorage.GetAsync(key);
+        SecureStorage.Remove(key);
+
+        string newKey = GetKey(newUsername);
+        await SecureStorage.SetAsync(newKey, hashedPassword);
+
+        return newUsername;
+    }
+
     public async Task<VerifiedAccount> VerifyPasswordAsync(string username, string password)
     {
         var account = await _accountService.GetAccountByUsernameAsync(username);

@@ -3,6 +3,7 @@
 public interface IAuthentication
 {
     Task<string> ChangePasswordAsync(string username, string newPassword);
+    Task<string> ChangeUsernameAsync(string username, string newUsername);
     Task<string> FetchPasswordAsync(string username);
     Task<string> ResetPasswordAsync(string username, string newPassword);
     Task<string> SetPasswordAsync(string username, string password);
