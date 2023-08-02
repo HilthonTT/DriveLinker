@@ -8,18 +8,21 @@ public class AccountService : IAccountService
     private readonly ISettingsService _settingsService;
     private readonly IDriveService _driveService;
     private readonly IPasswordGenerator _passwordGenerator;
+    private readonly IAccount _account;
     private SQLiteAsyncConnection _db;
 
     public AccountService(
         IMemoryCache cache,
         ISettingsService settingsService,
         IDriveService driveService,
-        IPasswordGenerator passwordGenerator)
+        IPasswordGenerator passwordGenerator,
+        IAccount account)
     {
         _cache = cache;
         _settingsService = settingsService;
         _driveService = driveService;
         _passwordGenerator = passwordGenerator;
+        _account = account;
     }
 
     private async Task InitializeDb()
@@ -75,32 +78,32 @@ public class AccountService : IAccountService
         return output;
     }
 
-    public async Task<List<Drive>> GetAccountDrivesAsync(int accountId)
+    public async Task<List<Drive>> GetAccountDrivesAsync()
     {
         await InitializeDb();
 
-        string key = $"{nameof(DriveService)}_{CacheNamePrefix}{accountId}";
+        string key = $"{nameof(DriveService)}_{CacheNamePrefix}{_account.Id}";
 
         var output = _cache.Get<List<Drive>>(key);
         if (output is null)
         {
-            output = await _driveService.GetAllAccountDrivesAsync(accountId);
+            output = await _driveService.GetAllAccountDrivesAsync(_account.Id);
             _cache.Set(key, output);
         }
 
         return output;
     }
 
-    public async Task<Settings> GetAccountSettingsService(int accountId)
+    public async Task<Settings> GetAccountSettingsAsync()
     {
         await InitializeDb();
 
-        string key = $"{nameof(SettingsService)}_{CacheNamePrefix}{accountId}";
+        string key = $"{nameof(SettingsService)}_{CacheNamePrefix}{_account.Id}";
 
         var output = _cache.Get<Settings>(key);
         if (output is null)
         {
-            output = await _settingsService.GetAccountSettingsAsync(accountId);
+            output = await _settingsService.GetAccountSettingsAsync(_account.Id);
             _cache.Set(key, output);
         }
 

@@ -89,9 +89,10 @@ public class Authentication : IAuthentication
         return newHashedPassword;
     }
 
-    public async Task<string> FetchPasswordAsync()
+    public async Task<string> FetchPasswordAsync(string username)
     {
-        string hashedPassword = await SecureStorage.GetAsync(Key);
+        string key = GetKey(username);
+        string hashedPassword = await SecureStorage.GetAsync(key);
 
         if (hashedPassword is null)
         {

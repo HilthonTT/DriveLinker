@@ -6,7 +6,7 @@ public interface IAccountService
     Task<int> DeleteAccountAsync(Account account);
     Task<Account> GetAccountAsync(int id);
     Task<Account> GetAccountByUsernameAsync(string username);
-    Task<List<Drive>> GetAccountDrivesAsync(int accountId);
-    Task<Settings> GetAccountSettingsService(int accountId);
+    Task<List<Drive>> GetAccountDrivesAsync();
+    Task<Settings> GetAccountSettingsAsync();
     Task<int> UpdateAccountAsync(Account account);
 }
