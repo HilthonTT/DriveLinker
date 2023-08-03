@@ -32,6 +32,15 @@ public class Authentication : IAuthentication
         return (Account)_account;
     }
 
+    public async Task DeleteAccountAsync()
+    {
+        string key = GetKey(_account.Username);
+        SecureStorage.Remove(key);
+
+        await _accountService.DeleteAccountAsync(GetAccount());
+        await Shell.Current.Navigation.PopToRootAsync(true);
+    }
+
     public async Task<string> ChangePasswordAsync(string username, string newPassword)
     {
         string key = GetKey(username);

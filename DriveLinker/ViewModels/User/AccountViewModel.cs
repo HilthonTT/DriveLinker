@@ -2,19 +2,16 @@
 public partial class AccountViewModel : BaseViewModel
 {
     private readonly IAuthentication _auth;
-    private readonly IAccountService _accountService;
 
     public AccountViewModel(
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
-        IAccountService accountService,
         ITimerTracker timerTracker) : base(
             languageDictionary,
             auth,
             timerTracker)
     {
         _auth = auth;
-        _accountService = accountService;
         Model.Id = _auth.GetAccount().Id;
         Model.Username = _auth.GetAccount().Username;
 
@@ -35,9 +32,7 @@ public partial class AccountViewModel : BaseViewModel
 
         if (isDelete)
         {
-            await _accountService.DeleteAccountAsync(_auth.GetAccount());
-
-            await Shell.Current.Navigation.PopToRootAsync(true);
+            await _auth.DeleteAccountAsync();
         }
     }
 
