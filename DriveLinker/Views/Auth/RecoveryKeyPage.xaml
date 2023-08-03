@@ -30,23 +30,19 @@
     </Shell.TitleView>
 
     <ContentPage.ToolbarItems>
-        <components:BindableToolbarItem  
+
+        <components:BindableToolbarItem   
             Text="{Binding HomePageLabel}"
             Order="Secondary"
             Priority="0"
             Command="{Binding LoadHomePageCommand}"
-            IsVisible="{Binding IsToolbarItemsVisible}" />
-        <components:BindableToolbarItem  
-            Text="{Binding SettingsLabel}"
-            Order="Secondary"
-            Command="{Binding LoadSettingsPageCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}"/>
-        <components:BindableToolbarItem  
-            Text="{Binding RecoveryKeyLabel}"
+        <components:BindableToolbarItem   
+            Text="{Binding AccountLabel}"
             Order="Secondary"
-            Command="{Binding LoadRecoveryPageCommand}"
+            Command="{Binding LoadAccountPageCommand}"
             IsVisible="{Binding IsToolbarItemsVisible}"/>
-        <components:BindableToolbarItem  
+        <components:BindableToolbarItem   
             Text="{Binding LogoutLabel}"
             Order="Secondary"
             Command="{Binding LogOutCommand}"
@@ -57,6 +53,9 @@
         <behaviors:EventToCommandBehavior
             EventName="Appearing"
             Command="{Binding GenerateRecoveryKeyCommand}"/>
+        <behaviors:EventToCommandBehavior 
+            EventName="Appearing" 
+            Command="{Binding InitializeDictionaryCommand}"/>
     </ContentPage.Behaviors>
 
     <ScrollView>

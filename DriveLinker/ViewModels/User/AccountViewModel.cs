@@ -17,10 +17,15 @@ public partial class AccountViewModel : BaseViewModel
         _accountService = accountService;
         Model.Id = _auth.GetAccount().Id;
         Model.Username = _auth.GetAccount().Username;
+
+        AccountButtonText = DeleteAccountLabel.TrimEnd('.');
     }
 
     [ObservableProperty]
     private Account _model = new();
+
+    [ObservableProperty]
+    private string _accountButtonText;
 
     [RelayCommand]
     private async Task DeleteRequestAsync()

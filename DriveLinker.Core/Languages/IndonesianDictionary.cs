@@ -109,6 +109,7 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.TextCopied, "Teks Disalin!" },
             { Keyword.TextCopiedDesc, "Teks telah disalin ke clipboard." },
             { Keyword.RegisterDesc, "Anda akan dikenal sebagai: " },
+            { Keyword.Account, "Akun" },
         };
     }
 }

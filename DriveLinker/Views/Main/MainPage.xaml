@@ -43,15 +43,7 @@
             Priority="0"
             Command="{Binding LoadHomePageCommand}"/>
         <ToolbarItem 
-            Text="{Binding SettingsLabel}"
-            Order="Secondary"
-            Command="{Binding LoadSettingsPageCommand}"/>
-        <ToolbarItem 
-            Text="{Binding RecoveryKeyLabel}"
-            Order="Secondary"
-            Command="{Binding LoadRecoveryPageCommand}"/>
-        <ToolbarItem 
-            Text="Account"
+            Text="{Binding AccountLabel}"
             Order="Secondary"
             Command="{Binding LoadAccountPageCommand}"/>
         <ToolbarItem 

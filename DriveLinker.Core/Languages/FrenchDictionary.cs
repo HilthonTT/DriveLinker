@@ -109,7 +109,7 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.TextCopied, "Texte copié !" },
             { Keyword.TextCopiedDesc, "Le texte a été copié dans le presse-papiers." },
             { Keyword.RegisterDesc, "Vous serez connu(e) sous le nom de : " },
-
+            { Keyword.Account, "Compte" },
         };
     }
 }

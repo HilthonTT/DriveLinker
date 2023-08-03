@@ -12,7 +12,7 @@
              ColumnDefinitions="*,*">
             <Label 
                 Grid.Column="0"
-                Text="Account" 
+                Text="{Binding AccountLabel}" 
                 Margin="10,0,0,0" 
                 HorizontalOptions="Start" 
                 VerticalOptions="Center"
@@ -35,13 +35,9 @@
             Priority="0"
             Command="{Binding LoadHomePageCommand}"/>
         <ToolbarItem 
-            Text="{Binding SettingsLabel}"
+            Text="{Binding AccountLabel}"
             Order="Secondary"
-            Command="{Binding LoadSettingsPageCommand}"/>
-        <ToolbarItem 
-            Text="{Binding RecoveryKeyLabel}"
-            Order="Secondary"
-            Command="{Binding LoadRecoveryPageCommand}"/>
+            Command="{Binding LoadAccountPageCommand}"/>
         <ToolbarItem 
             Text="{Binding LogoutLabel}"
             Order="Secondary"
@@ -200,11 +196,15 @@
                                 Command="{Binding LoadPasswordResetPageCommand}"/>
                         </FlexLayout>
                         <FlexLayout Style="{StaticResource EditForm}">
+                            <Button 
+                                Text="{Binding RecoveryKeyLabel}"
+                                Style="{StaticResource Button}"
+                                Command="{Binding LoadRecoveryPageCommand}"/>
                             <BoxView 
                                 WidthRequest="1" 
                                 Color="Transparent" />
                             <Button 
-                                Text="Delete Account" 
+                                Text="{Binding AccountButtonText}" 
                                 Style="{StaticResource Button}"
                                 Command="{Binding DeleteRequestCommand}"/>
                         </FlexLayout>

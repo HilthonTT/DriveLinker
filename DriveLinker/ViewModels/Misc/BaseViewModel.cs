@@ -1,11 +1,10 @@
-﻿namespace DriveLinker.ViewModels.Main;
+﻿namespace DriveLinker.ViewModels.Misc;
 public partial class BaseViewModel : LanguageViewModel
 {
     public static readonly Color White = Color.FromArgb("#FFFFFF");
     public static readonly Color Gray = Color.FromArgb("#808080");
 
     private const bool Animate = true;
-    private readonly IAccount _account;
     private readonly IAuthentication _auth;
 
     public BaseViewModel(

@@ -86,4 +86,5 @@ public enum Keyword
     TextCopied,
     TextCopiedDesc,
     RegisterDesc,
+    Account,
 }

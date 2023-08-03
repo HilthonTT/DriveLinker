@@ -35,13 +35,9 @@
             Priority="0"
             Command="{Binding LoadHomePageCommand}"/>
         <ToolbarItem 
-            Text="{Binding SettingsLabel}"
+            Text="{Binding AccountLabel}"
             Order="Secondary"
-            Command="{Binding LoadSettingsPageCommand}"/>
-        <ToolbarItem 
-            Text="{Binding RecoveryKeyLabel}"
-            Order="Secondary"
-            Command="{Binding LoadRecoveryPageCommand}"/>
+            Command="{Binding LoadAccountPageCommand}"/>
         <ToolbarItem 
             Text="{Binding LogoutLabel}"
             Order="Secondary"

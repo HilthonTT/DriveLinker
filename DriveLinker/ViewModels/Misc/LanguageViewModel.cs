@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels.Main;
+﻿namespace DriveLinker.ViewModels.Misc;
 public partial class LanguageViewModel : ObservableObject
 {
     private readonly ILanguageDictionary _language;
@@ -89,7 +89,6 @@ public partial class LanguageViewModel : ObservableObject
         DriveInfoLabel = _keywords[Keyword.DriveInfo];
         StackTraceLabel = _keywords[Keyword.Stacktrace];
         ErrorCountLabel = _keywords[Keyword.ErrorCount];
-
         DeleteAccountLabel = _keywords[Keyword.DeleteAccount];
         DeleteAccountWarningLabel = _keywords[Keyword.DeleteAccountWarning];
         CurrentPasswordLabel = _keywords[Keyword.CurrentPassword];
@@ -104,6 +103,7 @@ public partial class LanguageViewModel : ObservableObject
         TextCopiedLabel = _keywords[Keyword.TextCopied];
         TextCopiedDescLabel = _keywords[Keyword.TextCopiedDesc];
         RegisterDescLabel = _keywords[Keyword.RegisterDesc];
+        AccountLabel = _keywords[Keyword.Account];
     }
 
     [ObservableProperty]
@@ -357,4 +357,7 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _registerDescLabel;
+
+    [ObservableProperty]
+    private string _accountLabel;
 }

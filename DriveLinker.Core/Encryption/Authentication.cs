@@ -32,16 +32,6 @@ public class Authentication : IAuthentication
         return (Account)_account;
     }
 
-    public async Task<string> SetPasswordAsync(string username, string password)
-    {
-        string hashedPassword = await _encryption.ComputeSha512Hash(password);
-
-        string key = GetKey(username);
-        await SecureStorage.SetAsync(key, hashedPassword);
-
-        return hashedPassword;
-    }
-
     public async Task<string> ChangePasswordAsync(string username, string newPassword)
     {
         string key = GetKey(username);
@@ -96,41 +86,6 @@ public class Authentication : IAuthentication
         {
             return dirtyAccount;
         }
-    }
-
-    public async Task<string> ResetPasswordAsync(string username, string newPassword)
-    {
-        string key = GetKey(username);
-        SecureStorage.Remove(key);
-
-        string newHashedPassword = await _encryption.ComputeSha512Hash(newPassword);
-        await SecureStorage.SetAsync(key, newHashedPassword);
-
-        // Delete drives to not gain access to it.
-        var account = await _accountService.GetAccountByUsernameAsync(username);
-        if (account is not null)
-        {
-            var drives = await _driveService.GetAllAccountDrivesAsync(account.Id);
-            foreach (var drive in drives)
-            {
-                await _driveService.DeleteDriveAsync(drive);
-            }
-        }
-
-        return newHashedPassword;
-    }
-
-    public async Task<string> FetchPasswordAsync(string username)
-    {
-        string key = GetKey(username);
-        string hashedPassword = await SecureStorage.GetAsync(key);
-
-        if (hashedPassword is null)
-        {
-            return "";
-        }
-
-        return hashedPassword;
     }
 
     private static string GetKey(string username)

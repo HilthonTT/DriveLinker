@@ -1,4 +1,4 @@
-﻿namespace DriveLinker.ViewModels.Authentication;
+﻿namespace DriveLinker.ViewModels.Misc;
 public partial class AuthBaseViewModel : LanguageViewModel
 {
     public static readonly Color White = Color.FromArgb("#FFFFFF");

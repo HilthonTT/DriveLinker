@@ -109,6 +109,7 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.TextCopied, "Text kopiert!" },
             { Keyword.TextCopiedDesc, "Der Text wurde in die Zwischenablage kopiert." },
             { Keyword.RegisterDesc, "Du wirst bekannt sein als: " },
+            { Keyword.Account, "Konto" },
         };
     }
 }

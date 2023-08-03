@@ -95,7 +95,6 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.DriveInfo, "Drive Information" },
             { Keyword.Stacktrace, "Stacktrace" },
             { Keyword.ErrorCount, "Error Count: " },
-
             { Keyword.DeleteAccount, "Delete Account." },
             { Keyword.DeleteAccountWarning, "Are you sure you want to delete your account? This is irreversible." },
             { Keyword.CurrentPassword, "Current Password" },
@@ -110,6 +109,7 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.TextCopied, "Text Copied!" },
             { Keyword.TextCopiedDesc, "The text has been copied to the clipboard." },
             { Keyword.RegisterDesc, "You will be known as: " },
+            { Keyword.Account, "Account" },
         };
     }
 }
