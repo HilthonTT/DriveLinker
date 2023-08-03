@@ -15,16 +15,21 @@ public partial class PasswordResetViewModel : BaseViewModel
     {
         _auth = auth;
         _recoveryKeyGenerator = recoveryKeyGenerator;
-    }
 
-    [ObservableProperty]
-    private string _currentPassword;
+        PlaceHolderText = "Current Password";
+    }
 
     [ObservableProperty]
     private string _newPassword;
 
     [ObservableProperty]
-    private string _recoveryKey;
+    private string _currentPassword;
+
+    [ObservableProperty]
+    private string _textValue;
+
+    [ObservableProperty]
+    private string _placeHolderText;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotRecovery))]
@@ -37,6 +42,23 @@ public partial class PasswordResetViewModel : BaseViewModel
     private Color _buttonColor = Gray;
 
     public bool IsNotRecovery => !IsRecovery;
+
+    partial void OnIsRecoveryChanged(bool value)
+    {
+        ToggleRecoveryKey();
+    }
+
+    private void ToggleRecoveryKey()
+    {
+        if (IsRecovery)
+        {
+            PlaceHolderText = RecoveryKeyLabel;
+        }
+        else
+        {
+            PlaceHolderText = "Current Password";
+        }
+    }
 
     [RelayCommand]
     private void ToggleShowPassword()
@@ -68,14 +90,14 @@ public partial class PasswordResetViewModel : BaseViewModel
 
     private async Task ChangePasswordWithRecoveryAsync()
     {
-        if (string.IsNullOrWhiteSpace(RecoveryKey) || string.IsNullOrWhiteSpace(NewPassword))
+        if (string.IsNullOrWhiteSpace(TextValue) || string.IsNullOrWhiteSpace(NewPassword))
         {
             return;
         }
 
         var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_auth.GetAccount());
 
-        if (recoveryKeys.Contains(RecoveryKey) is false)
+        if (recoveryKeys.Contains(TextValue) is false)
         {
             await Shell.Current.DisplayAlert(ErrorLabel, "Wrong recovery key", OkLabel);
             return;

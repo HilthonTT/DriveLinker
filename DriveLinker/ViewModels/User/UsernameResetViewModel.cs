@@ -18,16 +18,18 @@ public partial class UsernameResetViewModel : BaseViewModel
         _auth = auth;
         _accountService = accountService;
         _recoveryKeyGenerator = recoveryKeyGenerator;
+
+        PlaceHolderText = "Current Password";
     }
 
     [ObservableProperty]
-    private string _currentPassword;
-
-    [ObservableProperty]
-    private string _recoveryKey;
-
-    [ObservableProperty]
     private string _newUsername;
+
+    [ObservableProperty]
+    private string _placeHolderText;
+
+    [ObservableProperty]
+    private string _textValue;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotRecovery))]
@@ -40,6 +42,24 @@ public partial class UsernameResetViewModel : BaseViewModel
     private Color _buttonColor = Gray;
 
     public bool IsNotRecovery => !IsRecovery;
+
+    partial void OnIsRecoveryChanged(bool value)
+    {
+        ToggleRecoveryKey();
+    }
+
+    private void ToggleRecoveryKey()
+    {
+        if (IsRecovery)
+        {
+            PlaceHolderText = RecoveryKeyLabel;
+        }
+        else
+        {
+            PlaceHolderText = "Current Password";
+        }
+    }
+
 
     [RelayCommand]
     private void ToggleShowPassword()
@@ -55,8 +75,7 @@ public partial class UsernameResetViewModel : BaseViewModel
             ButtonColor = White;
         }
     }
-
-
+    
     [RelayCommand]
     private async Task UpdateUsernameAsync()
     {
@@ -72,7 +91,7 @@ public partial class UsernameResetViewModel : BaseViewModel
 
     private async Task ChangeUsernameWithRecoveryKeyAsync()
     {
-        if (string.IsNullOrWhiteSpace(RecoveryKey) || string.IsNullOrWhiteSpace(NewUsername))
+        if (string.IsNullOrWhiteSpace(TextValue) || string.IsNullOrWhiteSpace(NewUsername))
         {
             return;
         }
@@ -83,19 +102,19 @@ public partial class UsernameResetViewModel : BaseViewModel
         }
 
         var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_auth.GetAccount());
-        if (recoveryKeys.Contains(RecoveryKey) is false)
+        if (recoveryKeys.Contains(TextValue) is false)
         {
             await Shell.Current.DisplayAlert(ErrorLabel, "Wrong recovery key.", OkLabel);
             return;
         }
 
         await _auth.ChangeUsernameAsync(_auth.GetAccount().Username, NewUsername);
-        await ClosePageAsync();
+        await LoadHomePage();
     }
 
     private async Task ChangeUsernameWithPasswordAsync()
     {
-        if (string.IsNullOrWhiteSpace(NewUsername) || string.IsNullOrWhiteSpace(CurrentPassword))
+        if (string.IsNullOrWhiteSpace(NewUsername) || string.IsNullOrWhiteSpace(TextValue))
         {
             return;
         }
@@ -105,7 +124,7 @@ public partial class UsernameResetViewModel : BaseViewModel
             return;
         }
 
-        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, CurrentPassword);
+        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, TextValue);
         if (verifiedAccount.IsCorrect is false)
         {
             await Shell.Current.DisplayAlert(ErrorLabel, "Wrong password.", OkLabel);
@@ -113,7 +132,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         }
 
         await _auth.ChangeUsernameAsync(_auth.GetAccount().Username, NewUsername);
-        await ClosePageAsync();
+        await LoadHomePage();
     }
 
     private async Task<bool> IsAccountTaken()

@@ -27,6 +27,26 @@
         </Grid>
     </Shell.TitleView>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="{Binding HomePageLabel}"
+            Order="Secondary"
+            Priority="0"
+            Command="{Binding LoadHomePageCommand}"/>
+        <ToolbarItem 
+            Text="{Binding SettingsLabel}"
+            Order="Secondary"
+            Command="{Binding LoadSettingsPageCommand}"/>
+        <ToolbarItem 
+            Text="{Binding RecoveryKeyLabel}"
+            Order="Secondary"
+            Command="{Binding LoadRecoveryPageCommand}"/>
+        <ToolbarItem 
+            Text="{Binding LogoutLabel}"
+            Order="Secondary"
+            Command="{Binding LogOutCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 
@@ -62,27 +82,17 @@
                         <Entry 
                             Grid.Row="0"
                             Grid.Column="0"
-                            Placeholder="Current Password"
+                            Placeholder="New Username"
                             HeightRequest="50"
-                            Text="{Binding CurrentPassword}"
-                            IsPassword="{Binding DontShowPassword}"
-                            IsVisible="{Binding IsNotRecovery}"
-                            Margin="0,0,0,10"/>
-                        <Entry 
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Placeholder="{Binding RecoveryKeyLabel}"
-                            HeightRequest="50"
-                            Text="{Binding RecoveryKey}"
-                            IsPassword="{Binding DontShowPassword}"
-                            IsVisible="{Binding IsRecovery}"
+                            Text="{Binding NewUsername}"
                             Margin="0,0,0,10"/>
                         <Entry 
                             Grid.Row="1"
                             Grid.Column="0"
-                            Placeholder="New Username"
+                            Placeholder="{Binding PlaceHolderText}"
                             HeightRequest="50"
-                            Text="{Binding NewUsername}"/>
+                            Text="{Binding TextValue}"
+                            IsPassword="{Binding DontShowPassword}"/>
                         <ImageButton 
                             Grid.Row="1"
                             Grid.Column="1"

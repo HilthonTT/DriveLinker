@@ -25,7 +25,7 @@ public static class RegisterServices
 
     public static void ConfigureViewModels(this MauiAppBuilder builder)
     {
-        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddTransient<MainViewModel>();
 
         builder.Services.AddTransient<AccountViewModel>();
         builder.Services.AddTransient<PasswordResetViewModel>();
