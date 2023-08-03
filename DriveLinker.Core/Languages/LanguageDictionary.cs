@@ -33,7 +33,7 @@ public class LanguageDictionary : ILanguageDictionary
 
         var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
 
-        if (settings?.Id is 0)
+        if (settings?.Id is 0 || _account.Id is 0)
         {
             language = _languageSelector.SelectedLanguage; 
         }

@@ -43,7 +43,7 @@ public partial class PasswordViewModel : AuthBaseViewModel
         if (account is null)
         {
             await Shell.Current.DisplayAlert(
-                "Error.", $"There is not such account with username: {Username}.", "OK");
+                WrongUsernameLabel, WrongUsernameDescLabel, OkLabel);
             return;
         }
 
@@ -59,7 +59,7 @@ public partial class PasswordViewModel : AuthBaseViewModel
         else
         {
             await Shell.Current.DisplayAlert(
-                "Error.", $"Invalid recovery key.", "OK");
+                WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
         }
 
         Username = "";

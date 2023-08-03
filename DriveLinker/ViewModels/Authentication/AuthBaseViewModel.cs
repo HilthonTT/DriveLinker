@@ -1,5 +1,5 @@
 ﻿namespace DriveLinker.ViewModels.Authentication;
-public partial class AuthBaseViewModel : ObservableObject
+public partial class AuthBaseViewModel : LanguageViewModel
 {
     public static readonly Color White = Color.FromArgb("#FFFFFF");
     public static readonly Color Gray = Color.FromArgb("#808080");
@@ -12,7 +12,7 @@ public partial class AuthBaseViewModel : ObservableObject
     public AuthBaseViewModel(
         ILanguageDictionary languageDictionary,
         ILanguageHelper languageHelper,
-        ITemporaryLanguageSelector languageSelector)
+        ITemporaryLanguageSelector languageSelector) : base(languageDictionary)
     {
         _languageDictionary = languageDictionary;
         _languageHelper = languageHelper;
@@ -32,51 +32,6 @@ public partial class AuthBaseViewModel : ObservableObject
     [ObservableProperty]
     private string _selectedLanguage;
 
-    [ObservableProperty]
-    private string _usernameLabel;
-
-    [ObservableProperty]
-    private string _passwordLabel;
-
-    [ObservableProperty]
-    private string _loginLabel;
-
-    [ObservableProperty]
-    private string _dontHaveAnAccountLabel;
-
-    [ObservableProperty]
-    private string _forgotPasswordLabel;
-
-    [ObservableProperty]
-    private string _recoveryKeyLabel;
-
-    [ObservableProperty]
-    private string _recoveryKeyDescLabel;
-
-    [ObservableProperty]
-    private string _recoveryKeyHelperText;
-
-    [ObservableProperty]
-    private string _clipboardLabel;
-
-    [ObservableProperty]
-    private string _registerLabel;
-
-    [ObservableProperty]
-    private string _saveLabel;
-
-    [ObservableProperty]
-    private string _homePageLabel;
-
-    [ObservableProperty]
-    private string _logoutLabel;
-
-    [ObservableProperty]
-    private string _settingsLabel;
-
-    [ObservableProperty]
-    private string _countdownLabel;
-
     private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
@@ -85,29 +40,7 @@ public partial class AuthBaseViewModel : ObservableObject
         var stringifiedLanguages = await _languageHelper.GetStringifiedLanguagesAsync(Languages);
         StringifiedLanguages = new(stringifiedLanguages);
 
-        SelectedLanguage = _languageHelper.GetLanguageString(Language.English);
-    }
-
-    [RelayCommand]
-    public async Task InitializeDictionary()
-    {
-        var keywords = await _languageDictionary.GetDictionaryAsync();
-
-        UsernameLabel = keywords[Keyword.UserName];
-        PasswordLabel = keywords[Keyword.Password];
-        LoginLabel = keywords[Keyword.Login];
-        DontHaveAnAccountLabel = keywords[Keyword.DontHaveAnAccount];
-        ForgotPasswordLabel = keywords[Keyword.ForgotMyPassword];
-        RecoveryKeyLabel = keywords[Keyword.RecoveryKey];
-        RecoveryKeyDescLabel = keywords[Keyword.RecoveryKeyDesc];
-        RecoveryKeyHelperText = keywords[Keyword.RecoveryKeyHelperText];
-        ClipboardLabel = keywords[Keyword.Copyclipboard];
-        RegisterLabel = keywords[Keyword.Register];
-        SaveLabel = keywords[Keyword.Save];
-        HomePageLabel = keywords[Keyword.HomePage];
-        LogoutLabel = keywords[Keyword.Logout];
-        SettingsLabel = keywords[Keyword.Settings];
-        CountdownLabel = keywords[Keyword.Countdown];
+        SelectedLanguage = _languageHelper.GetLanguageString(_languageSelector.SelectedLanguage);
     }
 
     [RelayCommand]

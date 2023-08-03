@@ -2,7 +2,6 @@
 public class EnglishDictionary : IEnglishDictionary
 {
     private const string CacheName = nameof(EnglishDictionary);
-    private const string CacheNameInput = CacheName + "_Input";
     private readonly IMemoryCache _cache;
 
     public EnglishDictionary(IMemoryCache cache)
@@ -96,6 +95,21 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.DriveInfo, "Drive Information" },
             { Keyword.Stacktrace, "Stacktrace" },
             { Keyword.ErrorCount, "Error Count: " },
+
+            { Keyword.DeleteAccount, "Delete Account." },
+            { Keyword.DeleteAccountWarning, "Are you sure you want to delete your account? This is irreversible." },
+            { Keyword.CurrentPassword, "Current Password" },
+            { Keyword.WrongRecoveryKey, "Invalid recovery key!" },
+            { Keyword.WrongRecoveryKeyDesc, "The recovery key you've enter is wrong!" },
+            { Keyword.UsernameTaken, "An account with this username already exists." },
+            { Keyword.UsernameDoesntExist, "Your account's username doesn't exists." },
+            { Keyword.WrongUsername, "Invalid username!" },
+            { Keyword.WrongUsernameDesc, "Your account's username doesn't exists." },
+            { Keyword.WrongPassword, "Invalid password!" },
+            { Keyword.WrongPasswordDesc, "The password you've enter is wrong." },
+            { Keyword.TextCopied, "Text Copied!" },
+            { Keyword.TextCopiedDesc, "The text has been copied to the clipboard." },
+            { Keyword.RegisterDesc, "You will be known as: " },
         };
     }
 }

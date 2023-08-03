@@ -89,6 +89,21 @@ public partial class LanguageViewModel : ObservableObject
         DriveInfoLabel = _keywords[Keyword.DriveInfo];
         StackTraceLabel = _keywords[Keyword.Stacktrace];
         ErrorCountLabel = _keywords[Keyword.ErrorCount];
+
+        DeleteAccountLabel = _keywords[Keyword.DeleteAccount];
+        DeleteAccountWarningLabel = _keywords[Keyword.DeleteAccountWarning];
+        CurrentPasswordLabel = _keywords[Keyword.CurrentPassword];
+        WrongRecoveryKeyLabel = _keywords[Keyword.WrongRecoveryKey];
+        WrongRecoveryKeyDescLabel = _keywords[Keyword.WrongRecoveryKeyDesc];
+        UsernameTakenLabel = _keywords[Keyword.UsernameTaken];
+        UsernameDoesntExistLabel = _keywords[Keyword.UsernameDoesntExist];
+        WrongUsernameLabel = _keywords[Keyword.WrongUsername];
+        WrongUsernameDescLabel = _keywords[Keyword.WrongUsernameDesc];
+        WrongPasswordLabel = _keywords[Keyword.WrongPassword];
+        WrongPasswordDescLabel = _keywords[Keyword.WrongPasswordDesc];
+        TextCopiedLabel = _keywords[Keyword.TextCopied];
+        TextCopiedDescLabel = _keywords[Keyword.TextCopiedDesc];
+        RegisterDescLabel = _keywords[Keyword.RegisterDesc];
     }
 
     [ObservableProperty]
@@ -300,4 +315,46 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _errorCountLabel;
+
+    [ObservableProperty]
+    private string _deleteAccountLabel;
+
+    [ObservableProperty]
+    private string _deleteAccountWarningLabel;
+
+    [ObservableProperty]
+    private string _currentPasswordLabel;
+
+    [ObservableProperty]
+    private string _wrongRecoveryKeyLabel;
+
+    [ObservableProperty]
+    private string _wrongRecoveryKeyDescLabel;
+
+    [ObservableProperty]
+    private string _usernameTakenLabel;
+
+    [ObservableProperty]
+    private string _usernameDoesntExistLabel;
+
+    [ObservableProperty]
+    private string _wrongUsernameLabel;
+
+    [ObservableProperty]
+    private string _wrongUsernameDescLabel;
+
+    [ObservableProperty]
+    private string _wrongPasswordLabel;
+
+    [ObservableProperty]
+    private string _wrongPasswordDescLabel;
+
+    [ObservableProperty]
+    private string _textCopiedLabel;
+
+    [ObservableProperty]
+    private string _textCopiedDescLabel;
+
+    [ObservableProperty]
+    private string _registerDescLabel;
 }

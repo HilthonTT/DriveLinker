@@ -95,6 +95,20 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.DriveInfo, "Informasi Drive" },
             { Keyword.Stacktrace, "Jejak Tumpukan" },
             { Keyword.ErrorCount, "Jumlah Kesalahan: " },
+            { Keyword.DeleteAccount, "Hapus Akun." },
+            { Keyword.DeleteAccountWarning, "Apakah Anda yakin ingin menghapus akun Anda? Tindakan ini tidak dapat diurungkan." },
+            { Keyword.CurrentPassword, "Kata Sandi Saat Ini" },
+            { Keyword.WrongRecoveryKey, "Kunci pemulihan tidak valid!" },
+            { Keyword.WrongRecoveryKeyDesc, "Kunci pemulihan yang Anda masukkan salah!" },
+            { Keyword.UsernameTaken, "Akun dengan nama pengguna ini sudah ada." },
+            { Keyword.UsernameDoesntExist, "Nama pengguna akun Anda tidak ada." },
+            { Keyword.WrongUsername, "Nama pengguna tidak valid!" },
+            { Keyword.WrongUsernameDesc, "Nama pengguna akun Anda tidak ada." },
+            { Keyword.WrongPassword, "Kata sandi salah!" },
+            { Keyword.WrongPasswordDesc, "Kata sandi yang Anda masukkan salah." },
+            { Keyword.TextCopied, "Teks Disalin!" },
+            { Keyword.TextCopiedDesc, "Teks telah disalin ke clipboard." },
+            { Keyword.RegisterDesc, "Anda akan dikenal sebagai: " },
         };
     }
 }

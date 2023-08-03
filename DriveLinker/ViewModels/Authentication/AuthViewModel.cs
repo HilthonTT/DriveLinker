@@ -61,7 +61,7 @@ public partial class AuthViewModel : AuthBaseViewModel
         if (verifiedAccount.Account is null)
         {
             await Shell.Current.DisplayAlert(
-                "Wrong username!", "Your account's username doesn't exists.", "OK");
+                WrongUsernameLabel, WrongUsernameDescLabel, OkLabel);
 
             Username = "";
         }
@@ -76,7 +76,7 @@ public partial class AuthViewModel : AuthBaseViewModel
         else
         {
             await Shell.Current.DisplayAlert(
-                "Wrong password!", "The password you've enter is wrong.", "OK");
+                WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
 
             Password = "";
         }

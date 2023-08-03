@@ -59,11 +59,11 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
 
             await Clipboard.SetTextAsync(keysText);
 
-            await Shell.Current.DisplayAlert("Text Copied", "The text has been copied to the clipboard.", "OK");
+            await Shell.Current.DisplayAlert(TextCopiedLabel, TextCopiedDescLabel, OkLabel);
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlert(ErrorLabel, ex.Message, OkLabel);
         }
     }
 

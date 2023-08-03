@@ -26,7 +26,7 @@ public partial class AccountViewModel : BaseViewModel
     private async Task DeleteRequestAsync()
     {
         bool isDelete = await Shell.Current.DisplayAlert(
-            "Delete Account", "Are you sure you want to delete your account? This is irreversible", YesLabel, NoLabel);
+            DeleteAccountLabel, DeleteAccountWarningLabel, YesLabel, NoLabel);
 
         if (isDelete)
         {

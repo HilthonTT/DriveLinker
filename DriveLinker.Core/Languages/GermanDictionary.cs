@@ -95,6 +95,20 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.DriveInfo, "Laufwerkinformationen" },
             { Keyword.Stacktrace, "Stapelverfolgung" },
             { Keyword.ErrorCount, "Fehleranzahl: " },
+            { Keyword.DeleteAccount, "Konto löschen." },
+            { Keyword.DeleteAccountWarning, "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden." },
+            { Keyword.CurrentPassword, "Aktuelles Passwort" },
+            { Keyword.WrongRecoveryKey, "Ungültiger Wiederherstellungsschlüssel!" },
+            { Keyword.WrongRecoveryKeyDesc, "Der eingegebene Wiederherstellungsschlüssel ist falsch!" },
+            { Keyword.UsernameTaken, "Ein Konto mit diesem Benutzernamen existiert bereits." },
+            { Keyword.UsernameDoesntExist, "Ihr Benutzername existiert nicht." },
+            { Keyword.WrongUsername, "Ungültiger Benutzername!" },
+            { Keyword.WrongUsernameDesc, "Ihr Benutzername existiert nicht." },
+            { Keyword.WrongPassword, "Ungültiges Passwort!" },
+            { Keyword.WrongPasswordDesc, "Das eingegebene Passwort ist falsch." },
+            { Keyword.TextCopied, "Text kopiert!" },
+            { Keyword.TextCopiedDesc, "Der Text wurde in die Zwischenablage kopiert." },
+            { Keyword.RegisterDesc, "Du wirst bekannt sein als: " },
         };
     }
 }

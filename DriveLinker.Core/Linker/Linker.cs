@@ -1,6 +1,4 @@
-﻿using DriveLinker.Core.Models.Interfaces;
-
-namespace DriveLinker.Core.Linker;
+﻿namespace DriveLinker.Core.Linker;
 public class Linker : ILinker
 {
     private const string Green = "#00FF00";

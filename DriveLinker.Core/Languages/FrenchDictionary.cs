@@ -95,6 +95,21 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.DriveInfo, "Informations du Disque" },
             { Keyword.Stacktrace, "Trace de la pile" },
             { Keyword.ErrorCount, "Nombre d'erreurs : " },
+            { Keyword.DeleteAccount, "Supprimer le compte." },
+            { Keyword.DeleteAccountWarning, "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible." },
+            { Keyword.CurrentPassword, "Mot de passe actuel" },
+            { Keyword.WrongRecoveryKey, "Clé de récupération invalide !" },
+            { Keyword.WrongRecoveryKeyDesc, "La clé de récupération que vous avez saisie est incorrecte !" },
+            { Keyword.UsernameTaken, "Un compte avec ce nom d'utilisateur existe déjà." },
+            { Keyword.UsernameDoesntExist, "Le nom d'utilisateur de votre compte n'existe pas." },
+            { Keyword.WrongUsername, "Nom d'utilisateur invalide !" },
+            { Keyword.WrongUsernameDesc, "Le nom d'utilisateur de votre compte n'existe pas." },
+            { Keyword.WrongPassword, "Mot de passe incorrect !" },
+            { Keyword.WrongPasswordDesc, "Le mot de passe que vous avez saisi est incorrect." },
+            { Keyword.TextCopied, "Texte copié !" },
+            { Keyword.TextCopiedDesc, "Le texte a été copié dans le presse-papiers." },
+            { Keyword.RegisterDesc, "Vous serez connu(e) sous le nom de : " },
+
         };
     }
 }

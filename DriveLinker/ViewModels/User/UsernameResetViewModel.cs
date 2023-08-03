@@ -19,7 +19,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         _accountService = accountService;
         _recoveryKeyGenerator = recoveryKeyGenerator;
 
-        PlaceHolderText = "Current Password";
+        PlaceHolderText = CurrentPasswordLabel;
     }
 
     [ObservableProperty]
@@ -56,7 +56,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         }
         else
         {
-            PlaceHolderText = "Current Password";
+            PlaceHolderText = CurrentPasswordLabel;
         }
     }
 
@@ -104,7 +104,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_auth.GetAccount());
         if (recoveryKeys.Contains(TextValue) is false)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, "Wrong recovery key.", OkLabel);
+            await Shell.Current.DisplayAlert(WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
             return;
         }
 
@@ -127,7 +127,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, TextValue);
         if (verifiedAccount.IsCorrect is false)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, "Wrong password.", OkLabel);
+            await Shell.Current.DisplayAlert(WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
             return;
         }
 
@@ -140,7 +140,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         var account = await _accountService.GetAccountByUsernameAsync(NewUsername);
         if (account is not null)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, "Username already taken.", OkLabel);
+            await Shell.Current.DisplayAlert(ErrorCountLabel, UsernameTakenLabel, OkLabel);
             return true;
         }
 

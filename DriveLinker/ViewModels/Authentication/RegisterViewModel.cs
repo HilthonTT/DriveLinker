@@ -60,12 +60,12 @@ public partial class RegisterViewModel : AuthBaseViewModel
         if (await AccountExistsAsync())
         {
             await Shell.Current.DisplayAlert(
-                "Error.", "An account with this username already exists.", "OK");
+                ErrorLabel, UsernameTakenLabel, OkLabel);
             return;
         }
 
-        bool savePassword = await DisplaySavePassword();
-        if (savePassword)
+        bool isRegister = await DisplayRegister();
+        if (isRegister)
         {
             var account = await _accountService.CreateAccountAsync(new() { Username = Username });
 
@@ -80,10 +80,10 @@ public partial class RegisterViewModel : AuthBaseViewModel
         Password = "";
     }
 
-    private async Task<bool> DisplaySavePassword()
+    private async Task<bool> DisplayRegister()
     {
         bool savePassword = await Shell.Current.DisplayAlert(
-            "Save Password?", $"Your password is {Password}, would you like to save it?", "Save", "Cancel");
+            $"{RegisterLabel}?", $"{RegisterDescLabel}{Username}", YesLabel, NoLabel);
 
         return savePassword;
     }

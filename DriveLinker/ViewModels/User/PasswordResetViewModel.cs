@@ -16,7 +16,7 @@ public partial class PasswordResetViewModel : BaseViewModel
         _auth = auth;
         _recoveryKeyGenerator = recoveryKeyGenerator;
 
-        PlaceHolderText = "Current Password";
+        PlaceHolderText = CurrentPasswordLabel;
     }
 
     [ObservableProperty]
@@ -56,7 +56,7 @@ public partial class PasswordResetViewModel : BaseViewModel
         }
         else
         {
-            PlaceHolderText = "Current Password";
+            PlaceHolderText = CurrentPasswordLabel;
         }
     }
 
@@ -99,7 +99,7 @@ public partial class PasswordResetViewModel : BaseViewModel
 
         if (recoveryKeys.Contains(TextValue) is false)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, "Wrong recovery key", OkLabel);
+            await Shell.Current.DisplayAlert(WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
             return;
         }
 
@@ -118,7 +118,7 @@ public partial class PasswordResetViewModel : BaseViewModel
 
         if (verifiedAccount.IsCorrect is false)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, "Wrong password.", OkLabel);
+            await Shell.Current.DisplayAlert(WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
             return;
         }
 
