@@ -62,6 +62,9 @@ public class Authentication : IAuthentication
         string newKey = GetKey(newUsername);
         await SecureStorage.SetAsync(newKey, hashedPassword);
 
+        _account.Username = newUsername;
+        await _accountService.UpdateAccountAsync((Account)_account);
+
         return newUsername;
     }
 

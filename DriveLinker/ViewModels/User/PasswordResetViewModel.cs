@@ -27,8 +27,32 @@ public partial class PasswordResetViewModel : BaseViewModel
     private string _recoveryKey;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotRecovery))]
     private bool _isRecovery;
-   
+
+    [ObservableProperty]
+    private bool _dontShowPassword = true;
+
+    [ObservableProperty]
+    private Color _buttonColor = Gray;
+
+    public bool IsNotRecovery => !IsRecovery;
+
+    [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        DontShowPassword = !DontShowPassword;
+
+        if (DontShowPassword)
+        {
+            ButtonColor = Gray;
+        }
+        else
+        {
+            ButtonColor = White;
+        }
+    }
+
     [RelayCommand]
     private async Task UpdatePasswordAsync()
     {
@@ -58,6 +82,7 @@ public partial class PasswordResetViewModel : BaseViewModel
         }
 
         await _auth.ChangePasswordAsync(_auth.GetAccount().Username, NewPassword);
+        await ClosePageAsync();
     }
 
     private async Task ChangePasswordWithPasswordAsync()

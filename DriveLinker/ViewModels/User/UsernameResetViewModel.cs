@@ -30,8 +30,32 @@ public partial class UsernameResetViewModel : BaseViewModel
     private string _newUsername;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotRecovery))]
     private bool _isRecovery;
-    
+
+    [ObservableProperty]
+    private bool _dontShowPassword = true;
+
+    [ObservableProperty]
+    private Color _buttonColor = Gray;
+
+    public bool IsNotRecovery => !IsRecovery;
+
+    [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        DontShowPassword = !DontShowPassword;
+
+        if (DontShowPassword)
+        {
+            ButtonColor = Gray;
+        }
+        else
+        {
+            ButtonColor = White;
+        }
+    }
+
 
     [RelayCommand]
     private async Task UpdateUsernameAsync()
