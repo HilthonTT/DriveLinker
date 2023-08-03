@@ -111,10 +111,10 @@ public partial class AuthBaseViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void ChangeLanguage()
+    private async Task ChangeLanguage()
     {
         _languageSelector.SelectedLanguage = _languageHelper.GetLanguage(SelectedLanguage);
-        InitializeDictionary();
+        await InitializeDictionary();
     }
 
     [RelayCommand]

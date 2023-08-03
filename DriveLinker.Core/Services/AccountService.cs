@@ -82,32 +82,14 @@ public class AccountService : IAccountService
     {
         await InitializeDb();
 
-        string key = $"{nameof(DriveService)}_{CacheNamePrefix}{_account.Id}";
-
-        var output = _cache.Get<List<Drive>>(key);
-        if (output is null)
-        {
-            output = await _driveService.GetAllAccountDrivesAsync(_account.Id);
-            _cache.Set(key, output);
-        }
-
-        return output;
+        return await _driveService.GetAllAccountDrivesAsync(_account.Id);
     }
 
     public async Task<Settings> GetAccountSettingsAsync()
     {
         await InitializeDb();
 
-        string key = $"{nameof(SettingsService)}_{CacheNamePrefix}{_account.Id}";
-
-        var output = _cache.Get<Settings>(key);
-        if (output is null)
-        {
-            output = await _settingsService.GetAccountSettingsAsync(_account.Id);
-            _cache.Set(key, output);
-        }
-
-        return output;
+        return await _settingsService.GetAccountSettingsAsync(_account.Id);
     }
 
     public async Task<Account> CreateAccountAsync(Account account)

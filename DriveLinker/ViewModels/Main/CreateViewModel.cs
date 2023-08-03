@@ -2,20 +2,20 @@
 public partial class CreateViewModel : BaseViewModel
 {
     private readonly IDriveService _driveService;
-    private readonly IAccount _account;
+    private readonly IAuthentication _auth;
 
     public CreateViewModel(
         IDriveService driveService,
         ILanguageDictionary languageDictionary,
-        IAccount account,
+        IAuthentication auth,
         ITimerTracker timerTracker)
         : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
         _driveService = driveService;
-        _account = account;
+        _auth = auth;
     }
 
     [ObservableProperty] 
@@ -50,7 +50,7 @@ public partial class CreateViewModel : BaseViewModel
             DriveName = Model.DriveName,
             Password = Model.Password,
             UserName = Model.UserName,
-            AccountId = _account.Id,
+            AccountId = _auth.GetAccount().Id,
         };
 
         await _driveService.CreateDriveAsync(newDrive);
@@ -80,7 +80,7 @@ public partial class CreateViewModel : BaseViewModel
 
     private async Task<bool> IsDriveTakenAsync()
     {
-        var output = await _driveService.GetAllAccountDrivesAsync(_account.Id);
+        var output = await _driveService.GetAllAccountDrivesAsync(_auth.GetAccount().Id);
         bool isLetterTaken = false;
         bool isDriveNameTaken = false;
 

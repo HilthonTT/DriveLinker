@@ -3,16 +3,17 @@ public partial class BaseViewModel : LanguageViewModel
 {
     private const bool Animate = true;
     private readonly IAccount _account;
+    private readonly IAuthentication _auth;
 
     public BaseViewModel(
         ILanguageDictionary languageDictionary,
-        IAccount account,
+        IAuthentication auth,
         ITimerTracker timerTracker)
         : base(languageDictionary)
     {
-        _account = account;
+        _auth = auth;
         TimerTracker = (TimerTracker)timerTracker;
-        AccountUsername = account.Username;
+        AccountUsername = _auth.GetAccount().Username;
     }
 
     [ObservableProperty]
@@ -85,10 +86,7 @@ public partial class BaseViewModel : LanguageViewModel
     [RelayCommand]
     public async Task LogOut()
     {
-        _account.Id = 0;
-        _account.Username = "";
-
-        await Shell.Current.Navigation.PopToRootAsync(Animate);
+        await _auth.LogoutAsync();
     }
 
     [RelayCommand]

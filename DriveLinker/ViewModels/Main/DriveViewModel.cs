@@ -10,11 +10,11 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         IEncryption encryption,
         IMemoryCache cache, 
         ILanguageDictionary languageDictionary,
-        IAccount account,
+        IAuthentication auth,
         ITimerTracker timerTracker)
         : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
         _driveService = driveService;

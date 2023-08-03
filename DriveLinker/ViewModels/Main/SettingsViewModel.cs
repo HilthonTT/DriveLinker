@@ -4,29 +4,27 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly static Color Green = Color.FromArgb("#00FF00");
     private readonly static Color Black = Color.FromArgb("#000000");
 
-    private readonly ISettingsService _settingsService;
+    private readonly ISettingsService _settingService;
     private readonly ILanguageDictionary _languageDictionary;
     private readonly ILanguageHelper _languageHelper;
-    private readonly IAccount _account;
+    private readonly IAuthentication _auth;
 
     public SettingsViewModel(
-        ISettingsService settingsService,
+        ISettingsService settingService,
         ILanguageDictionary languageDictionary,
         ILanguageHelper languageHelper,
-        IAccount account,
-        ITimerTracker timerTracker)
+        ITimerTracker timerTracker,
+        IAuthentication auth)
         : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
-        _settingsService = settingsService;
+        _settingService = settingService;
         _languageDictionary = languageDictionary;
         _languageHelper = languageHelper;
-        _account = account;
+        _auth = auth;
 
-        MainSettingsColor = Green;
-        ExtraSettingsColor = Black;
         LoadLanguages();
     }
 
@@ -41,10 +39,10 @@ public partial class SettingsViewModel : BaseViewModel
     private Settings _settings;
 
     [ObservableProperty]
-    private Color _mainSettingsColor;
+    private Color _mainSettingsColor = Green;
 
     [ObservableProperty]
-    private Color _extraSettingsColor;
+    private Color _extraSettingsColor = Black;
 
     [ObservableProperty]
     private string _selectedLanguage;
@@ -60,7 +58,7 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadSettingsAsync()
     {
-        Settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
+        Settings = await _settingService.GetAccountSettingsAsync(_auth.GetAccount().Id);
         SelectedLanguage = _languageHelper.GetLanguageString(Settings.Language);
     }
 
@@ -85,10 +83,10 @@ public partial class SettingsViewModel : BaseViewModel
         }
 
 
-        Settings.AccountId = _account.Id;
+        Settings.AccountId = _auth.GetAccount().Id;
         Settings.Language = _languageHelper.GetLanguage(SelectedLanguage);
 
-        await _settingsService.SetSettingsAsync(Settings);
+        await _settingService.SetSettingsAsync(Settings);
         await ClosePageAsync();
     }
 }

@@ -1,22 +1,22 @@
 ﻿namespace DriveLinker.ViewModels.User;
 public partial class AccountViewModel : BaseViewModel
 {
-    private readonly IAccount _account;
+    private readonly IAuthentication _auth;
     private readonly IAccountService _accountService;
 
     public AccountViewModel(
         ILanguageDictionary languageDictionary,
-        IAccount account,
+        IAuthentication auth,
         IAccountService accountService,
         ITimerTracker timerTracker) : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
-        _account = account;
+        _auth = auth;
         _accountService = accountService;
-        Model.Id = _account.Id;
-        Model.Username = _account.Username;
+        Model.Id = _auth.GetAccount().Id;
+        Model.Username = _auth.GetAccount().Username;
     }
 
     [ObservableProperty]
@@ -30,7 +30,7 @@ public partial class AccountViewModel : BaseViewModel
 
         if (isDelete)
         {
-            await _accountService.DeleteAccountAsync((Account)_account);
+            await _accountService.DeleteAccountAsync(_auth.GetAccount());
 
             await Shell.Current.Navigation.PopToRootAsync(true);
         }

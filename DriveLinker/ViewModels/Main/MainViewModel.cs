@@ -3,28 +3,23 @@ public partial class MainViewModel : BaseViewModel
 {
     private readonly ILinker _linker;
     private readonly IWindowsHelper _windowsHelper;
-    private readonly ISettingsService _settingsService;
-    private readonly IDriveService _driveService;
-    private readonly IAccount _account;
+    private readonly IAccountService _accountService;
 
     public MainViewModel(
         ILinker linker,
         IWindowsHelper windowsHelper,
         ILanguageDictionary languageDictionary,
-        ISettingsService settingsService,
-        IDriveService driveService,
+        IAccountService accountService,
         ITimerTracker timerTracker,
-        IAccount account)
+        IAuthentication auth)
         : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
         _linker = linker;
         _windowsHelper = windowsHelper;
-        _settingsService = settingsService;
-        _driveService = driveService;
-        _account = account;
+        _accountService = accountService;
         SetUpTimerAsync();
     }
 
@@ -69,8 +64,8 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadDrivesAsync()
     {
-        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
-        var drives = await _driveService.GetAllAccountDrivesAsync(_account.Id);
+        var settings = await _accountService.GetAccountSettingsAsync();
+        var drives = await _accountService.GetAccountDrivesAsync();
 
         Parallel.ForEach(drives, (d) => _linker.IsDriveConnected(d));
         Drives = new(drives);
@@ -134,7 +129,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task PerformSearchAsync(string query)
     {
-        var output = await _driveService.GetAllAccountDrivesAsync(_account.Id);
+        var output = await _accountService.GetAccountDrivesAsync();
 
         if (string.IsNullOrWhiteSpace(query) is false)
         {
@@ -185,7 +180,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetUpTimerAsync()
     {
-        var settings = await _settingsService.GetAccountSettingsAsync(_account.Id);
+        var settings = await _accountService.GetAccountSettingsAsync();
 
         if (settings?.AutoMinimize is true)
         {

@@ -2,18 +2,34 @@
 public class Authentication : IAuthentication
 {
     private const string Key = nameof(Authentication);
+    private readonly IAccount _account;
     private readonly IEncryption _encryption;
     private readonly IDriveService _driveService;
     private readonly IAccountService _accountService;
 
     public Authentication(
+        IAccount account,
         IEncryption encryption,
         IDriveService driveService,
         IAccountService accountService)
     {
+        _account = account;
         _encryption = encryption;
         _driveService = driveService;
         _accountService = accountService;
+    }
+
+    public async Task LogoutAsync()
+    {
+        _account.Id = 0;
+        _account.Username = "";
+
+        await Shell.Current.Navigation.PopToRootAsync(true);
+    }
+
+    public Account GetAccount()
+    {
+        return (Account)_account;
     }
 
     public async Task<string> SetPasswordAsync(string username, string password)

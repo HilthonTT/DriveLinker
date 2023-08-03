@@ -2,21 +2,18 @@
 public partial class PasswordResetViewModel : BaseViewModel
 {
     private readonly IAuthentication _auth;
-    private readonly IAccount _account;
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
 
     public PasswordResetViewModel(
         ILanguageDictionary languageDictionary,
-        IAccount account,
         ITimerTracker timerTracker,
         IRecoveryKeyGenerator recoveryKeyGenerator,
         IAuthentication auth) : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
         _auth = auth;
-        _account = account;
         _recoveryKeyGenerator = recoveryKeyGenerator;
     }
 
@@ -52,7 +49,7 @@ public partial class PasswordResetViewModel : BaseViewModel
             return;
         }
 
-        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync((Account)_account);
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_auth.GetAccount());
 
         if (recoveryKeys.Contains(RecoveryKey) is false)
         {
@@ -60,7 +57,7 @@ public partial class PasswordResetViewModel : BaseViewModel
             return;
         }
 
-        await _auth.ChangePasswordAsync(_account.Username, NewPassword);
+        await _auth.ChangePasswordAsync(_auth.GetAccount().Username, NewPassword);
     }
 
     private async Task ChangePasswordWithPasswordAsync()
@@ -70,7 +67,7 @@ public partial class PasswordResetViewModel : BaseViewModel
             return;
         }
 
-        var verifiedAccount = await _auth.VerifyPasswordAsync(_account.Username, CurrentPassword);
+        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, CurrentPassword);
 
         if (verifiedAccount.IsCorrect is false)
         {
@@ -78,7 +75,7 @@ public partial class PasswordResetViewModel : BaseViewModel
             return;
         }
 
-        await _auth.ChangePasswordAsync(_account.Username, NewPassword);
+        await _auth.ChangePasswordAsync(_auth.GetAccount().Username, NewPassword);
         await ClosePageAsync();
     }
 }

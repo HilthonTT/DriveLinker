@@ -1,23 +1,20 @@
 ﻿namespace DriveLinker.ViewModels.User;
 public partial class UsernameResetViewModel : BaseViewModel
 {
-    private readonly IAccount _account;
     private readonly IAuthentication _auth;
     private readonly IAccountService _accountService;
     private readonly IRecoveryKeyGenerator _recoveryKeyGenerator;
 
     public UsernameResetViewModel(
         ILanguageDictionary languageDictionary,
-        IAccount account,
         ITimerTracker timerTracker,
         IAuthentication auth,
         IAccountService accountService,
         IRecoveryKeyGenerator recoveryKeyGenerator) : base(
             languageDictionary,
-            account,
+            auth,
             timerTracker)
     {
-        _account = account;
         _auth = auth;
         _accountService = accountService;
         _recoveryKeyGenerator = recoveryKeyGenerator;
@@ -61,14 +58,14 @@ public partial class UsernameResetViewModel : BaseViewModel
             return;
         }
 
-        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync((Account)_account);
+        var recoveryKeys = await _recoveryKeyGenerator.GetRecoveryKeysAsync(_auth.GetAccount());
         if (recoveryKeys.Contains(RecoveryKey) is false)
         {
             await Shell.Current.DisplayAlert(ErrorLabel, "Wrong recovery key.", OkLabel);
             return;
         }
 
-        await _auth.ChangeUsernameAsync(_account.Username, NewUsername);
+        await _auth.ChangeUsernameAsync(_auth.GetAccount().Username, NewUsername);
         await ClosePageAsync();
     }
 
@@ -84,14 +81,14 @@ public partial class UsernameResetViewModel : BaseViewModel
             return;
         }
 
-        var verifiedAccount = await _auth.VerifyPasswordAsync(_account.Username, CurrentPassword);
+        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, CurrentPassword);
         if (verifiedAccount.IsCorrect is false)
         {
             await Shell.Current.DisplayAlert(ErrorLabel, "Wrong password.", OkLabel);
             return;
         }
 
-        await _auth.ChangeUsernameAsync(_account.Username, NewUsername);
+        await _auth.ChangeUsernameAsync(_auth.GetAccount().Username, NewUsername);
         await ClosePageAsync();
     }
 
