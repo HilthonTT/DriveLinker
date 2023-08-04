@@ -7,6 +7,7 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly ISettingsService _settingService;
     private readonly ILanguageDictionary _languageDictionary;
     private readonly ILanguageHelper _languageHelper;
+    private readonly IWindowsHelper _windowsHelper;
     private readonly IAuthentication _auth;
 
     public SettingsViewModel(
@@ -14,6 +15,7 @@ public partial class SettingsViewModel : BaseViewModel
         ILanguageDictionary languageDictionary,
         ILanguageHelper languageHelper,
         ITimerTracker timerTracker,
+        IWindowsHelper windowsHelper,
         IAuthentication auth)
         : base(
             languageDictionary,
@@ -23,9 +25,11 @@ public partial class SettingsViewModel : BaseViewModel
         _settingService = settingService;
         _languageDictionary = languageDictionary;
         _languageHelper = languageHelper;
+        _windowsHelper = windowsHelper;
         _auth = auth;
 
         LoadLanguages();
+        LoadSetOnStartupValue();
     }
 
     [ObservableProperty]
@@ -47,12 +51,32 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private string _selectedLanguage;
 
+    [ObservableProperty]
+    private bool _isSetOnStartup;
+
+    partial void OnIsSetOnStartupChanged(bool value)
+    {
+        if (IsSetOnStartup)
+        {
+            _windowsHelper.ToggleStartup(true);
+        }
+        else
+        {
+            _windowsHelper.ToggleStartup(false);
+        }
+    }
+
     private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
         Languages = new(languages);
 
         StringifiedLanguages = await _languageHelper.GetStringifiedLanguagesAsync(Languages);
+    }
+
+    private void LoadSetOnStartupValue()
+    {
+        IsSetOnStartup = _windowsHelper.ISValueNull();
     }
 
     [RelayCommand]

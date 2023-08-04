@@ -151,7 +151,7 @@
                                 <VerticalStackLayout>
                                     <Grid 
                                         ColumnDefinitions="Auto,*,Auto"
-                                        RowDefinitions="Auto,Auto,Auto,Auto">
+                                        RowDefinitions="Auto,Auto,Auto,Auto,Auto">
                                         <Label 
                                             Text="{Binding AutoLinkDrivesLabel}"
                                             HorizontalOptions="Start"
@@ -164,7 +164,6 @@
                                             HorizontalOptions="End"
                                             OnColor="Green" 
                                             IsToggled="{Binding Settings.AutoLink}"/>
-
                                         <Label 
                                             Text="{Binding AutoMinimizeLabel}"
                                             HorizontalOptions="Start"
@@ -177,27 +176,41 @@
                                             HorizontalOptions="End"
                                             OnColor="Green" 
                                             IsToggled="{Binding Settings.AutoMinimize}"/>
+
                                         <Label 
-                                            Text="{Binding LanguageLabel}"
+                                            Text="Set on Startup"
                                             HorizontalOptions="Start"
                                             Grid.Column="0"
                                             Grid.Row="2"
                                             FontSize="18"/>
-                                        <Picker 
+                                        <Switch 
                                             Grid.Column="2"
                                             Grid.Row="2"
+                                            HorizontalOptions="End"
+                                            OnColor="Green" 
+                                            IsToggled="{Binding IsSetOnStartup}"/>
+
+                                        <Label 
+                                            Text="{Binding LanguageLabel}"
+                                            HorizontalOptions="Start"
+                                            Grid.Column="0"
+                                            Grid.Row="3"
+                                            FontSize="18"/>
+                                        <Picker 
+                                            Grid.Column="2"
+                                            Grid.Row="3"
                                             WidthRequest="250"
                                             SelectedItem="{Binding SelectedLanguage}"
                                             ItemsSource="{Binding StringifiedLanguages}" />
                                         <Label 
-                                            Grid.Row="3"
+                                            Grid.Row="4"
                                             Grid.Column="0"
                                             Text="Timer Count in seconds"
                                             HorizontalOptions="Start"
                                             Margin="0,10,0,0"
                                             FontSize="18"/>
                                         <Entry 
-                                            Grid.Row="3"
+                                            Grid.Row="4"
                                             Grid.Column="2"
                                             WidthRequest="250"
                                             Text="{Binding Settings.TimerCount}"
