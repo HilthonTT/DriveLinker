@@ -1,4 +1,6 @@
-﻿namespace DriveLinker;
+﻿using Microsoft.Maui.Controls.Compatibility.Hosting;
+
+namespace DriveLinker;
 
 public static class MauiProgram
 {
@@ -21,7 +23,7 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		builder.ConfigureViewModels();
+        builder.ConfigureViewModels();
 		builder.ConfigurePages();
 		builder.ConfigureServices();
 		builder.ConfigureLanguages();

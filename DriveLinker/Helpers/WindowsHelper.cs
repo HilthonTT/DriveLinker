@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using PInvoke;
+﻿using PInvoke;
 using System.Diagnostics;
 using IWshRuntimeLibrary;
 
@@ -20,10 +19,26 @@ public partial class WindowsHelper : IWindowsHelper
 #endif
     }
 
-    private static RegistryKey GetRegistryKey()
+
+    public void CenterWindow()
     {
-        return Registry.CurrentUser.OpenSubKey
-             ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+#if WINDOWS
+        var mauiWindow = Application.Current.Windows[0];
+        var nativeWindow = mauiWindow.Handler.PlatformView;
+        IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+
+        var screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
+        var screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+
+        User32.GetWindowRect(windowHandle, out RECT windowRect);
+        int windowWidth = windowRect.right - windowRect.left;
+        int windowHeight = windowRect.bottom - windowRect.top;
+
+        int x = (screenWidth - windowWidth) / 2;
+        int y = (screenHeight - windowHeight) / 2;
+
+        User32.SetWindowPos(windowHandle, IntPtr.Zero, x, y, 0, 0, User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOZORDER);
+#endif
     }
 
     public void ToggleStartup(bool isChecked)
