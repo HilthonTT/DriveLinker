@@ -8,9 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
-            <Color x:Key="CardBackground">White</Color>
+            </ResourceDictionary.MergedDictionaries><Color x:Key="CardBackground">White</Color>
             <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
             <x:String x:Key="TekturFont">TekturRegular</x:String>
@@ -23,6 +21,7 @@
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
                 <Setter Property="ClearButtonVisibility" Value="WhileEditing"/>
                 <Setter Property="Keyboard" Value="Text"/>
+                <Setter Property="HeightRequest" Value="50"/>
             </Style>
 
             <Style TargetType="Picker">
@@ -31,6 +30,7 @@
 
             <Style TargetType="SearchBar">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+                <Setter Property="HeightRequest" Value="50"/>
             </Style>
 
             <Style x:Key="CardView" TargetType="Frame">

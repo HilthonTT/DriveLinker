@@ -155,46 +155,61 @@
                                     HorizontalOptions="End"/>
                             </FlexLayout>
                         </VerticalStackLayout>
-                        <Label 
-                            Text="{Binding LetterLabel}"
-                            FontSize="16"
-                            FontAttributes="Bold"/>
-                        <Entry 
-                            Placeholder="{Binding LetterDescLabel}"
-                            Text="{Binding Model.Letter}"/>
-                        <Label 
-                            Text="{Binding IpAddressLabel}"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            Margin="0,10,0,0"/>
-                        <Entry 
-                            Placeholder="{Binding IpAddressDescLabel}"
-                            Text="{Binding Model.IpAddress}"/>
-                        <Label 
-                            Text="{Binding DriveNameLabel}"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            Margin="0,10,0,0"/>
-                        <Entry 
-                            Placeholder="{Binding DriveNameDescLabel}"
-                            Text="{Binding Model.DriveName}"/>
-                        <Label 
-                            Text="{Binding PasswordLabel}"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            Margin="0,10,0,0"/>
-                        <Entry 
-                            Placeholder="{Binding PasswordDescLabel}"
-                            IsPassword="True"
-                            Text="{Binding Model.Password}"/>
-                        <Label 
-                            Text="{Binding UserNameLabel}"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            Margin="0,10,0,0"/>
-                        <Entry 
-                            Placeholder="{Binding UserNameDescLabel}"
-                            Text="{Binding Model.UserName}"/>
+                        <VerticalStackLayout
+                            Margin="10">
+                            <Label 
+                                Text="{Binding LetterLabel}"
+                                FontSize="16"
+                                FontAttributes="Bold"/>
+                            <Entry 
+                                Placeholder="{Binding LetterDescLabel}"
+                                Text="{Binding Model.Letter}"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout
+                            Margin="10">
+                            <Label 
+                                Text="{Binding IpAddressLabel}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Margin="0,10,0,0"/>
+                            <Entry 
+                                Placeholder="{Binding IpAddressDescLabel}"
+                                Text="{Binding Model.IpAddress}"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout
+                            Margin="10">
+                            <Label 
+                                Text="{Binding DriveNameLabel}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Margin="0,10,0,0"/>
+                            <Entry 
+                                Placeholder="{Binding DriveNameDescLabel}"
+                                Text="{Binding Model.DriveName}"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout
+                            Margin="10">
+                            <Label 
+                                Text="{Binding PasswordLabel}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Margin="0,10,0,0"/>
+                            <Entry 
+                                Placeholder="{Binding PasswordDescLabel}"
+                                IsPassword="True"
+                                Text="{Binding Model.Password}"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout
+                            Margin="10">
+                            <Label 
+                                Text="{Binding UserNameLabel}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Margin="0,10,0,0"/>
+                            <Entry 
+                                Placeholder="{Binding UserNameDescLabel}"
+                                Text="{Binding Model.UserName}"/>
+                        </VerticalStackLayout>
                         <Button 
                             Text="{Binding CreateLabel}" 
                             Margin="0,20,0,10"

@@ -7,8 +7,7 @@
              xmlns:helpers="clr-namespace:DriveLinker.Helpers"
              x:DataType="viewModels:MainViewModel"
              x:Class="DriveLinker.Views.Main.MainPage"
-             Title="Drive Linker"
-             x:Name="mainPage">
+             Title="Drive Linker">
     <Shell.TitleView>
         <Grid
             ColumnDefinitions="*,*">
