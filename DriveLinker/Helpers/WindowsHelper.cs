@@ -67,7 +67,7 @@ public partial class WindowsHelper : IWindowsHelper
         System.IO.File.Delete(shortcutPath);
     }
 
-    public bool ISValueNull()
+    public bool GetCheckedValue()
     {
         string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         string shortcutPath = Path.Combine(startupFolder, $"{AppName}.lnk");

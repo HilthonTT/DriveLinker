@@ -28,8 +28,8 @@ public partial class SettingsViewModel : BaseViewModel
         _windowsHelper = windowsHelper;
         _auth = auth;
 
+        IsSetOnStartup = _windowsHelper.GetCheckedValue();
         LoadLanguages();
-        LoadSetOnStartupValue();
     }
 
     [ObservableProperty]
@@ -72,11 +72,6 @@ public partial class SettingsViewModel : BaseViewModel
         Languages = new(languages);
 
         StringifiedLanguages = await _languageHelper.GetStringifiedLanguagesAsync(Languages);
-    }
-
-    private void LoadSetOnStartupValue()
-    {
-        IsSetOnStartup = _windowsHelper.ISValueNull();
     }
 
     [RelayCommand]

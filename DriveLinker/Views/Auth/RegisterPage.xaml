@@ -77,7 +77,7 @@
                     <Button 
                         Style="{StaticResource Button}"
                         Command="{Binding RegisterCommand}"
-                        Text="Register"
+                        Text="{Binding RegisterLabel}"
                         Margin="0,20,0,0"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
@@ -89,7 +89,7 @@
                     <HorizontalStackLayout
                         VerticalOptions="Center">
                         <Label 
-                            Text="Language"
+                            Text="{Binding LanguageLabel}"
                             FontSize="18"/>
                         <BoxView 
                             Margin="5"/>
@@ -98,10 +98,6 @@
                             ItemsSource="{Binding StringifiedLanguages}"
                             SelectedItem="{Binding SelectedLanguage}"/>
                     </HorizontalStackLayout>
-                    <Button 
-                        Text="{Binding SaveLabel}"
-                        Style="{StaticResource Button}"
-                        Command="{Binding ChangeLanguageCommand}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Grid>

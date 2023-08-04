@@ -32,6 +32,11 @@ public partial class AuthBaseViewModel : LanguageViewModel
     [ObservableProperty]
     private string _selectedLanguage;
 
+    async partial void OnSelectedLanguageChanged(string value)
+    {
+        await ChangeLanguage();
+    }
+
     private async Task LoadLanguages()
     {
         var languages = _languageDictionary.GetLanguages();
@@ -43,10 +48,10 @@ public partial class AuthBaseViewModel : LanguageViewModel
         SelectedLanguage = _languageHelper.GetLanguageString(_languageSelector.SelectedLanguage);
     }
 
-    [RelayCommand]
     private async Task ChangeLanguage()
     {
         _languageSelector.SelectedLanguage = _languageHelper.GetLanguage(SelectedLanguage);
+        SelectedLanguage = _languageHelper.GetLanguageString(_languageSelector.SelectedLanguage);
         await InitializeDictionary();
     }
 

@@ -2,7 +2,7 @@
 
 public interface IWindowsHelper
 {
-    bool ISValueNull();
+    bool GetCheckedValue();
     void MinimizeWindow();
     void ToggleStartup(bool isChecked);
 }
