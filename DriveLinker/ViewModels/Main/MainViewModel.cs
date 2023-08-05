@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace DriveLinker.ViewModels.Main;
+﻿namespace DriveLinker.ViewModels.Main;
 public partial class MainViewModel : BaseViewModel
 {
     private readonly ILinker _linker;
@@ -22,6 +20,7 @@ public partial class MainViewModel : BaseViewModel
         _linker = linker;
         _windowsHelper = windowsHelper;
         _accountService = accountService;
+
         SetUpTimerAsync();
     }
 
@@ -84,54 +83,79 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task LinkAllDrivesAsync()
     {
-        if (Drives?.Count <= 0 || IsBusy)
+        try
         {
-            return;
+            if (Drives?.Count <= 0 || IsBusy)
+            {
+                return;
+            }
+
+            var nonConnectedDrives = Drives.Where(d => d.Connected == false).ToList();
+
+            IsBusy = true;
+            foreach (var drive in nonConnectedDrives)
+            {
+                await _linker.ConnectDriveAsync(drive);
+                RecalculateProgress();
+            }
         }
-
-        var nonConnectedDrives = Drives.Where(d => d.Connected == false).ToList();
-
-        IsBusy = true;
-        foreach (var drive in nonConnectedDrives)
+        catch (Exception ex)
         {
-            await _linker.ConnectDriveAsync(drive);
-            RecalculateProgress();
+            await DisplayErrorAsync(ex.Message);
         }
-
-        IsBusy = false;
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
     private async Task UnlinkAllDrivesAsync()
     {
-        if (Drives?.Count <= 0 || IsBusy) 
-        { 
-            return; 
-        }
-
-        IsBusy = true;
-
-        var connectedDrives = Drives.Where(d => d.Connected).ToList();
-
-        foreach (var drive in connectedDrives)
+        try
         {
-            await _linker.DisconnectDriveAsync(drive);
-            RecalculateProgress();
-        }
+            if (Drives?.Count <= 0 || IsBusy)
+            {
+                return;
+            }
 
-        IsBusy = false;
+            IsBusy = true;
+
+            var connectedDrives = Drives.Where(d => d.Connected).ToList();
+
+            foreach (var drive in connectedDrives)
+            {
+                await _linker.DisconnectDriveAsync(drive);
+                RecalculateProgress();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayErrorAsync(ex.Message);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
     public async Task ToggleLinkAsync(Drive drive)
     {
-        if (drive.Connected)
+        try
         {
-            await _linker.DisconnectDriveAsync(drive);
+            if (drive.Connected)
+            {
+                await _linker.DisconnectDriveAsync(drive);
+            }
+            else
+            {
+                await _linker.ConnectDriveAsync(drive);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await _linker.ConnectDriveAsync(drive);
+            await DisplayErrorAsync(ex.Message);
         }
     }
 
@@ -195,6 +219,11 @@ public partial class MainViewModel : BaseViewModel
 
             await _accountService.DeleteAllAccountDrivesAsync();
         }
+    }
+
+    private async Task DisplayErrorAsync(string error)
+    {
+        await Shell.Current.DisplayAlert(ErrorLabel, error, OkLabel);
     }
 
     private static int CalculateMatchingScore(Drive drive, string query)
