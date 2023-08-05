@@ -122,18 +122,24 @@
             <Grid
                 ColumnDefinitions="*"
                 Padding="15,0,15,0">
-                <Frame
-                    Style="{StaticResource CardView}"
-                    Padding="15">
+                <FlexLayout 
+                    JustifyContent="SpaceBetween">
                     <HorizontalStackLayout>
                         <CheckBox 
                             IsChecked="{Binding ClearEssentials}"/>
                         <Label 
                             Text="{Binding ClearOnlyLetterDriveNameLabel}"
+                            FontSize="18"
                             TextTransform="Uppercase"
                             VerticalOptions="Center"/>
                     </HorizontalStackLayout>
-                </Frame>
+                    <HorizontalStackLayout>
+                        <Button 
+                            Text="Import Drives"
+                            Style="{StaticResource Button}"
+                            Command="{Binding ImportDrivesCommand}"/>
+                    </HorizontalStackLayout>
+                </FlexLayout>
             </Grid>
             <Grid 
                 ColumnDefinitions="*"
@@ -150,6 +156,7 @@
                                 Style="{StaticResource EditForm}">
                                 <BoxView />
                                 <ImageButton
+                                    IsEnabled="{Binding IsExitButtonEnabled}"
                                     Command="{Binding ClosePageCommand}"
                                     Style="{StaticResource CloseButton}"
                                     HorizontalOptions="End"/>
@@ -159,7 +166,7 @@
                             Margin="10">
                             <Label 
                                 Text="{Binding LetterLabel}"
-                                FontSize="16"
+                                FontSize="18"
                                 FontAttributes="Bold"/>
                             <Entry 
                                 Placeholder="{Binding LetterDescLabel}"
@@ -169,7 +176,7 @@
                             Margin="10">
                             <Label 
                                 Text="{Binding IpAddressLabel}"
-                                FontSize="16"
+                                FontSize="18"
                                 FontAttributes="Bold"
                                 Margin="0,10,0,0"/>
                             <Entry 
@@ -180,7 +187,7 @@
                             Margin="10">
                             <Label 
                                 Text="{Binding DriveNameLabel}"
-                                FontSize="16"
+                                FontSize="18"
                                 FontAttributes="Bold"
                                 Margin="0,10,0,0"/>
                             <Entry 
@@ -191,7 +198,7 @@
                             Margin="10">
                             <Label 
                                 Text="{Binding PasswordLabel}"
-                                FontSize="16"
+                                FontSize="18"
                                 FontAttributes="Bold"
                                 Margin="0,10,0,0"/>
                             <Entry 
@@ -203,7 +210,7 @@
                             Margin="10">
                             <Label 
                                 Text="{Binding UserNameLabel}"
-                                FontSize="16"
+                                FontSize="18"
                                 FontAttributes="Bold"
                                 Margin="0,10,0,0"/>
                             <Entry 

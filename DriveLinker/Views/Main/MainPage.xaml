@@ -242,16 +242,33 @@
                         FontAttributes="Bold"
                         TextTransform="Uppercase"
                         FontSize="18"/>
-                    <HorizontalStackLayout Spacing="8">
-                        <Button 
-                            Text="{Binding LinkDrivesLabel}"
-                            Command="{Binding LinkAllDrivesCommand}"
-                            Style="{StaticResource Button}"/>
-                        <Button 
-                            Text="{Binding UnlinkDrivesLabel}"
-                            Command="{Binding UnlinkAllDrivesCommand}"
-                            Style="{StaticResource Button}"/>
-                    </HorizontalStackLayout>
+                    <FlexLayout 
+                        JustifyContent="SpaceBetween">
+                        <HorizontalStackLayout
+                            Spacing="8">
+                            <Button 
+                                Text="{Binding LinkDrivesLabel}"
+                                Command="{Binding LinkAllDrivesCommand}"
+                                Style="{StaticResource Button}"/>
+                            <Button 
+                                Text="{Binding UnlinkDrivesLabel}"
+                                Command="{Binding UnlinkAllDrivesCommand}"
+                                Style="{StaticResource Button}"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout 
+                            Spacing="8">
+                            <Button 
+                                Text="Export Drives"
+                                Command="{Binding ExportDrivesCommand}"
+                                Style="{StaticResource Button}"/>
+                            <Button 
+                                Text="Delete Drives"
+                                Command="{Binding DeleteAllDrivesCommand}"
+                                Style="{StaticResource Button}"
+                                BackgroundColor="DarkRed"/>
+                        </HorizontalStackLayout>
+                    </FlexLayout>
                     <CollectionView 
                         x:Name="DriveListings"
                         ItemsSource="{Binding Drives}"

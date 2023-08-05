@@ -124,6 +124,17 @@ public class AccountService : IAccountService
         return await _db.DeleteAsync(account);
     }
 
+    public async Task DeleteAllAccountDrivesAsync()
+    {
+        await InitializeDb();
+        var drives = await _driveService.GetAllAccountDrivesAsync(_account.Id);
+
+        foreach(var drive in drives)
+        {
+            await _driveService.DeleteDriveAsync(drive);
+        }
+    }
+
     private async Task<string> FetchPasswordAsync()
     {
         var password = await _passwordGenerator.FetchPasswordAsync();

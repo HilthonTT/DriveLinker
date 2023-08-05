@@ -2,10 +2,12 @@
 public partial class CreateViewModel : BaseViewModel
 {
     private readonly IDriveService _driveService;
+    private readonly IAccountService _accountService;
     private readonly IAuthentication _auth;
 
     public CreateViewModel(
         IDriveService driveService,
+        IAccountService accountService,
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         ITimerTracker timerTracker)
@@ -15,6 +17,7 @@ public partial class CreateViewModel : BaseViewModel
             timerTracker)
     {
         _driveService = driveService;
+        _accountService = accountService;
         _auth = auth;
     }
 
@@ -24,6 +27,8 @@ public partial class CreateViewModel : BaseViewModel
     [ObservableProperty]
     private bool _clearEssentials = false;
 
+    [ObservableProperty]
+    private bool _isExitButtonEnabled = true;
 
     [RelayCommand]
     private async Task CreateDriveAsync()
@@ -43,6 +48,7 @@ public partial class CreateViewModel : BaseViewModel
             return;
         }
 
+        IsBusy = true;
         var newDrive = new Drive()
         {
             Letter = Model.Letter,
@@ -56,6 +62,73 @@ public partial class CreateViewModel : BaseViewModel
         await _driveService.CreateDriveAsync(newDrive);
 
         await FlushCreatePageAsync();
+
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task ImportDrivesAsync()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsExitButtonEnabled = false;
+        IsBusy = true;
+
+        var options = GetPickOptions();
+        var result = await FilePicker.Default.PickAsync(options);
+        if (result is null)
+        {
+            ResetValues();
+            return;
+        }
+
+        if (result.FileName.EndsWith("json", StringComparison.OrdinalIgnoreCase))
+        {
+            string jsonifiedDrives = await File.ReadAllTextAsync(result.FullPath);
+            var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
+
+            bool answer = await Shell.Current.DisplayAlert(
+                "Import file?", "Importing this file will delete all of your current drives.", YesLabel, NoLabel);
+
+            if (answer)
+            {
+                await _accountService.DeleteAllAccountDrivesAsync();
+                await _driveService.CreateAllDrivesAsync(drives);
+
+                await FlushCreatePageAsync();
+            }
+            else
+            {
+                ResetValues();
+            }
+        }
+
+        ResetValues();
+    }
+
+    private static PickOptions GetPickOptions()
+    {
+        string fileType = ".json";
+        var customFileType = new FilePickerFileType(
+            new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.iOS, new[] { fileType } },
+                { DevicePlatform.Android, new[] { fileType } },
+                { DevicePlatform.WinUI, new[] { fileType } },
+                { DevicePlatform.Tizen, new[] { fileType } },
+                { DevicePlatform.macOS, new[] { fileType } },
+            });
+
+        var options = new PickOptions()
+        {
+            PickerTitle = "Select the import file.",
+            FileTypes = customFileType,
+        };
+
+        return options;
     }
 
     private async Task FlushCreatePageAsync()
@@ -70,6 +143,12 @@ public partial class CreateViewModel : BaseViewModel
             Model = new();
             await ClosePageAsync();
         }
+    }
+
+    private void ResetValues()
+    {
+        IsBusy = false;
+        IsExitButtonEnabled = true;
     }
 
     private static async Task OpenSnackbarAsync(string text)

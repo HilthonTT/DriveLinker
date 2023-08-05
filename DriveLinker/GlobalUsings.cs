@@ -29,3 +29,5 @@ global using DriveLinker.Models.Interfaces;
 global using DriveLinker.ViewModels.User;
 global using DriveLinker.Views.User;
 global using DriveLinker.ViewModels.Misc;
+global using System.Text.Json;
+global using CommunityToolkit.Maui.Storage;

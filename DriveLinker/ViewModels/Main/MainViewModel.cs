@@ -1,4 +1,6 @@
-﻿namespace DriveLinker.ViewModels.Main;
+﻿using System.Text.Json.Serialization;
+
+namespace DriveLinker.ViewModels.Main;
 public partial class MainViewModel : BaseViewModel
 {
     private readonly ILinker _linker;
@@ -82,27 +84,32 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task LinkAllDrivesAsync()
     {
-        if (Drives?.Count <= 0)
+        if (Drives?.Count <= 0 || IsBusy)
         {
             return;
         }
 
         var nonConnectedDrives = Drives.Where(d => d.Connected == false).ToList();
 
+        IsBusy = true;
         foreach (var drive in nonConnectedDrives)
         {
             await _linker.ConnectDriveAsync(drive);
             RecalculateProgress();
         }
+
+        IsBusy = false;
     }
 
     [RelayCommand]
     private async Task UnlinkAllDrivesAsync()
     {
-        if (Drives?.Count <= 0) 
+        if (Drives?.Count <= 0 || IsBusy) 
         { 
             return; 
         }
+
+        IsBusy = true;
 
         var connectedDrives = Drives.Where(d => d.Connected).ToList();
 
@@ -111,6 +118,8 @@ public partial class MainViewModel : BaseViewModel
             await _linker.DisconnectDriveAsync(drive);
             RecalculateProgress();
         }
+
+        IsBusy = false;
     }
 
     [RelayCommand]
@@ -146,6 +155,45 @@ public partial class MainViewModel : BaseViewModel
         else
         {
             Drives = output.ToObservableCollection();
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportDrivesAsync()
+    {
+        var drives = await _accountService.GetAccountDrivesAsync();
+        var cleanedDrives = new List<Drive>();
+
+        // DriveInfo causing errors for serializing
+        foreach (var drive in drives)
+        {
+            drive.DriveInfo = null;
+            cleanedDrives.Add(drive);
+        }
+
+        string jsonifiedDrives = JsonSerializer.Serialize(cleanedDrives);
+
+        var result = await FolderPicker.Default.PickAsync(new());
+        if (result.IsSuccessful)
+        {
+            string filePath = Path.Combine(result.Folder.Path, "import_drives_file.json");
+
+            await File.WriteAllTextAsync(filePath, jsonifiedDrives);
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteAllDrivesAsync()
+    {
+        bool answer = await Shell.Current.DisplayAlert(
+            "Delete all drives?", "Deleting all the drives is irreversible.", YesLabel, NoLabel);
+
+        if (answer)
+        {
+            Drives.Clear();
+            Drives = new();
+
+            await _accountService.DeleteAllAccountDrivesAsync();
         }
     }
 
