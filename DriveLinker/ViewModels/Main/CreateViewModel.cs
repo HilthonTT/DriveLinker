@@ -69,44 +69,53 @@ public partial class CreateViewModel : BaseViewModel
     [RelayCommand]
     private async Task ImportDrivesAsync()
     {
-        if (IsBusy)
+        try
         {
-            return;
-        }
-
-        IsExitButtonEnabled = false;
-        IsBusy = true;
-
-        var options = GetPickOptions();
-        var result = await FilePicker.Default.PickAsync(options);
-        if (result is null)
-        {
-            ResetValues();
-            return;
-        }
-
-        if (result.FileName.EndsWith("json", StringComparison.OrdinalIgnoreCase))
-        {
-            string jsonifiedDrives = await File.ReadAllTextAsync(result.FullPath);
-            var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
-
-            bool answer = await Shell.Current.DisplayAlert(
-                ImportFileLabel, ImportFileDescLabel, YesLabel, NoLabel);
-
-            if (answer)
+            if (IsBusy)
             {
-                await _accountService.DeleteAllAccountDrivesAsync();
-                await _driveService.CreateAllDrivesAsync(drives);
-
-                await FlushCreatePageAsync();
+                return;
             }
-            else
+
+            IsExitButtonEnabled = false;
+            IsBusy = true;
+
+            var options = GetPickOptions();
+            var result = await FilePicker.Default.PickAsync(options);
+            if (result is null)
             {
                 ResetValues();
+                return;
+            }
+
+            if (result.FileName.EndsWith("json", StringComparison.OrdinalIgnoreCase))
+            {
+                string jsonifiedDrives = await File.ReadAllTextAsync(result.FullPath);
+                var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
+
+                bool answer = await Shell.Current.DisplayAlert(
+                    ImportFileLabel, ImportFileDescLabel, YesLabel, NoLabel);
+
+                if (answer)
+                {
+                    await _accountService.DeleteAllAccountDrivesAsync();
+                    await _driveService.CreateAllDrivesAsync(drives);
+
+                    await FlushCreatePageAsync();
+                }
+                else
+                {
+                    ResetValues();
+                }
             }
         }
-
-        ResetValues();
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert(ErrorLabel, ex.Message, OkLabel);
+        }
+        finally
+        {
+            ResetValues();
+        }
     }
 
     private PickOptions GetPickOptions()
