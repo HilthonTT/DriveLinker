@@ -105,6 +105,21 @@ public class DriveService : IDriveService
         return await _db.UpdateAsync(drive);
     }
 
+    public async Task<int> UpdateAllDrivesAsync(List<Drive> drives)
+    {
+        await InitializeDb();
+        RemoveCache(drives[0].AccountId);
+        var encryptedDrives = new List<Drive>();
+
+        foreach (var drive in drives)
+        {
+            var encryptedDrive = await EncryptDrive(drive);
+            encryptedDrives.Add(encryptedDrive);
+        }
+
+        return await _db.UpdateAllAsync(encryptedDrives, true);
+    }
+
     public async Task<int> DeleteDriveAsync(Drive drive)
     {
         await InitializeDb();

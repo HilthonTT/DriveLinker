@@ -115,11 +115,7 @@ public class AccountService : IAccountService
         var settings = await _settingsService.GetAccountSettingsAsync(account.Id);
         await _settingsService.DeleteSettingsAsync(settings);
 
-        var drives = await _driveService.GetAllAccountDrivesAsync(account.Id);
-        foreach (var drive in drives)
-        {
-            await _driveService.DeleteDriveAsync(drive);
-        }
+        await DeleteAllAccountDrivesAsync();
 
         return await _db.DeleteAsync(account);
     }
@@ -127,12 +123,33 @@ public class AccountService : IAccountService
     public async Task DeleteAllAccountDrivesAsync()
     {
         await InitializeDb();
-        var drives = await _driveService.GetAllAccountDrivesAsync(_account.Id);
+        var drives = await GetAccountDrivesAsync();
 
-        foreach(var drive in drives)
+        foreach (var drive in drives)
         {
             await _driveService.DeleteDriveAsync(drive);
         }
+    }
+
+    public async Task<int> UpdateAllAccountDrivesAsync(
+        string username,
+        string password,
+        string ipAddress)
+    {
+        await InitializeDb();
+        var drives = await GetAccountDrivesAsync();
+        var updatedDrives = new List<Drive>();
+        
+        foreach (var drive in drives)
+        {
+            drive.UserName = username;
+            drive.Password = password;
+            drive.IpAddress = ipAddress;
+
+            updatedDrives.Add(drive);
+        }
+
+        return await _driveService.UpdateAllDrivesAsync(updatedDrives);
     }
 
     private async Task<string> FetchPasswordAsync()

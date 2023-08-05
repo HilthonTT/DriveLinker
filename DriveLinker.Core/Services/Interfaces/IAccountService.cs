@@ -10,4 +10,5 @@ public interface IAccountService
     Task<List<Drive>> GetAccountDrivesAsync();
     Task<Settings> GetAccountSettingsAsync();
     Task<int> UpdateAccountAsync(Account account);
+    Task<int> UpdateAllAccountDrivesAsync(string username, string password, string ipAddress);
 }

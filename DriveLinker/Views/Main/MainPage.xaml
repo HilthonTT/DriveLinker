@@ -263,6 +263,10 @@
                                 Command="{Binding ExportDrivesCommand}"
                                 Style="{StaticResource Button}"/>
                             <Button 
+                                Text="Update All Drives"
+                                Command="{Binding LoadUpdatePageCommand}"
+                                Style="{StaticResource Button}"/>
+                            <Button 
                                 Text="Delete Drives"
                                 Command="{Binding DeleteAllDrivesCommand}"
                                 Style="{StaticResource Button}"

@@ -86,6 +86,12 @@ public partial class BaseViewModel : LanguageViewModel
     }
 
     [RelayCommand]
+    public static async Task LoadUpdatePage()
+    {
+        await Shell.Current.GoToAsync(nameof(UpdatePage), Animate);
+    }
+
+    [RelayCommand]
     public async Task LogOut()
     {
         await _auth.LogoutAsync();
