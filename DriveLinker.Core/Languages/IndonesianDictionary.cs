@@ -110,6 +110,15 @@ public class IndonesianDictionary : IIndonesianDictionary
             { Keyword.TextCopiedDesc, "Teks telah disalin ke clipboard." },
             { Keyword.RegisterDesc, "Anda akan dikenal sebagai: " },
             { Keyword.Account, "Akun" },
+            { Keyword.ExportDrives, "Ekspor Drive" },
+            { Keyword.UpdateDrives, "Perbarui Drive" },
+            { Keyword.DeleteDrives, "Hapus Drive" },
+            { Keyword.Update, "Perbarui" },
+            { Keyword.DeleteAllDrives, "Hapus Semua Drive?" },
+            { Keyword.DeleteAllDrivesDesc, "Menghapus semua drive tidak dapat dikembalikan." },
+            { Keyword.ImportFile, "Impor Berkas?" },
+            { Keyword.ImportFileDesc, "Mengimpor berkas akan menghapus semua drive Anda." },
+            { Keyword.ImportDrives, "Impor Drive" },
         };
     }
 }

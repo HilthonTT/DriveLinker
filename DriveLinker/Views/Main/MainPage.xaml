@@ -259,15 +259,15 @@
                         <HorizontalStackLayout 
                             Spacing="8">
                             <Button 
-                                Text="Export Drives"
+                                Text="{Binding ExportDrivesLabel}"
                                 Command="{Binding ExportDrivesCommand}"
                                 Style="{StaticResource Button}"/>
                             <Button 
-                                Text="Update All Drives"
+                                Text="{Binding UpdateDrivesLabel}"
                                 Command="{Binding LoadUpdatePageCommand}"
                                 Style="{StaticResource Button}"/>
                             <Button 
-                                Text="Delete Drives"
+                                Text="{Binding DeleteDrivesLabel}"
                                 Command="{Binding DeleteAllDrivesCommand}"
                                 Style="{StaticResource Button}"
                                 BackgroundColor="DarkRed"/>

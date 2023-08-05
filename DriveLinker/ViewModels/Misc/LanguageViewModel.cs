@@ -104,6 +104,15 @@ public partial class LanguageViewModel : ObservableObject
         TextCopiedDescLabel = _keywords[Keyword.TextCopiedDesc];
         RegisterDescLabel = _keywords[Keyword.RegisterDesc];
         AccountLabel = _keywords[Keyword.Account];
+        ExportDrivesLabel = _keywords[Keyword.ExportDrives];
+        UpdateDrivesLabel = _keywords[Keyword.UpdateDrives];
+        DeleteDrivesLabel = _keywords[Keyword.DeleteDrives];
+        UpdateLabel = _keywords[Keyword.Update];
+        DeleteAllDrivesLabel = _keywords[Keyword.DeleteAllDrives];
+        DeleteAllDrivesDescLabel = _keywords[Keyword.DeleteAllDrivesDesc];
+        ImportFileLabel = _keywords[Keyword.ImportFile];
+        ImportFileDescLabel = _keywords[Keyword.ImportFileDesc];
+        ImportDrivesLabel = _keywords[Keyword.ImportDrives];
     }
 
     [ObservableProperty]
@@ -360,4 +369,31 @@ public partial class LanguageViewModel : ObservableObject
 
     [ObservableProperty]
     private string _accountLabel;
+
+    [ObservableProperty]
+    private string _exportDrivesLabel;
+
+    [ObservableProperty]
+    private string _updateDrivesLabel;
+
+    [ObservableProperty]
+    private string _deleteDrivesLabel;
+
+    [ObservableProperty]
+    private string _importDrivesLabel;
+
+    [ObservableProperty]
+    private string _updateLabel;
+
+    [ObservableProperty]
+    private string _deleteAllDrivesLabel;
+
+    [ObservableProperty]
+    private string _deleteAllDrivesDescLabel;
+
+    [ObservableProperty]
+    private string _importFileLabel;
+
+    [ObservableProperty]
+    private string _importFileDescLabel;
 }

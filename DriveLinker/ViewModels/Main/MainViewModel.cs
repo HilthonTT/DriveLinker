@@ -210,7 +210,7 @@ public partial class MainViewModel : BaseViewModel
     private async Task DeleteAllDrivesAsync()
     {
         bool answer = await Shell.Current.DisplayAlert(
-            "Delete all drives?", "Deleting all the drives is irreversible.", YesLabel, NoLabel);
+            DeleteAllDrivesLabel, DeleteAllDrivesDescLabel, YesLabel, NoLabel);
 
         if (answer)
         {

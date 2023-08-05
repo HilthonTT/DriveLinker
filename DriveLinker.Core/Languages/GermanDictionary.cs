@@ -110,6 +110,15 @@ public class GermanDictionary : IGermanDictionary
             { Keyword.TextCopiedDesc, "Der Text wurde in die Zwischenablage kopiert." },
             { Keyword.RegisterDesc, "Du wirst bekannt sein als: " },
             { Keyword.Account, "Konto" },
+            { Keyword.ExportDrives, "Laufwerke exportieren" },
+            { Keyword.UpdateDrives, "Laufwerke aktualisieren" },
+            { Keyword.DeleteDrives, "Laufwerke löschen" },
+            { Keyword.Update, "Aktualisieren" },
+            { Keyword.DeleteAllDrives, "Alle Laufwerke löschen?" },
+            { Keyword.DeleteAllDrivesDesc, "Das Löschen aller Laufwerke ist nicht rückgängig zu machen." },
+            { Keyword.ImportFile, "Datei importieren?" },
+            { Keyword.ImportFileDesc, "Das Importieren der Datei löscht alle Ihre Laufwerke." },
+            { Keyword.ImportDrives, "Laufwerke importieren" },
         };
     }
 }

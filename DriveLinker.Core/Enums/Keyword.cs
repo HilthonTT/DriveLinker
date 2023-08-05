@@ -87,4 +87,16 @@ public enum Keyword
     TextCopiedDesc,
     RegisterDesc,
     Account,
+    
+    ExportDrives,
+    UpdateDrives,
+    DeleteDrives,
+    ImportDrives,
+
+    Update,
+    DeleteAllDrives,
+    DeleteAllDrivesDesc,
+
+    ImportFile,
+    ImportFileDesc,
 }

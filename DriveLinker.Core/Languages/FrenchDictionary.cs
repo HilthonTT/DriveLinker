@@ -110,6 +110,15 @@ public class FrenchDictionary : IFrenchDictionary
             { Keyword.TextCopiedDesc, "Le texte a été copié dans le presse-papiers." },
             { Keyword.RegisterDesc, "Vous serez connu(e) sous le nom de : " },
             { Keyword.Account, "Compte" },
+            { Keyword.ExportDrives, "Exporter les Disques" },
+            { Keyword.UpdateDrives, "Mettre à Jour les Disques" },
+            { Keyword.DeleteDrives, "Supprimer les Disques" },
+            { Keyword.Update, "Mettre à Jour" },
+            { Keyword.DeleteAllDrives, "Supprimer Tous les Disques?" },
+            { Keyword.DeleteAllDrivesDesc, "La suppression de tous les disques est irréversible." },
+            { Keyword.ImportFile, "Importer le Fichier?" },
+            { Keyword.ImportFileDesc, "L'importation du fichier supprimera tous vos disques." },
+            { Keyword.ImportDrives, "Importer les Disques" },
         };
     }
 }

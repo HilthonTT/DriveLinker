@@ -135,7 +135,7 @@
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
                         <Button 
-                            Text="Import Drives"
+                            Text="{Binding ImportDrivesLabel}"
                             Style="{StaticResource Button}"
                             Command="{Binding ImportDrivesCommand}"/>
                     </HorizontalStackLayout>

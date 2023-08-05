@@ -91,7 +91,7 @@ public partial class CreateViewModel : BaseViewModel
             var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
 
             bool answer = await Shell.Current.DisplayAlert(
-                "Import file?", "Importing this file will delete all of your current drives.", YesLabel, NoLabel);
+                ImportFileLabel, ImportFileDescLabel, YesLabel, NoLabel);
 
             if (answer)
             {
@@ -109,7 +109,7 @@ public partial class CreateViewModel : BaseViewModel
         ResetValues();
     }
 
-    private static PickOptions GetPickOptions()
+    private PickOptions GetPickOptions()
     {
         string fileType = ".json";
         var customFileType = new FilePickerFileType(
@@ -124,7 +124,7 @@ public partial class CreateViewModel : BaseViewModel
 
         var options = new PickOptions()
         {
-            PickerTitle = "Select the import file.",
+            PickerTitle = ImportFileLabel,
             FileTypes = customFileType,
         };
 

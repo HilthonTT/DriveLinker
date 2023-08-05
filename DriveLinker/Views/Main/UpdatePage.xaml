@@ -99,7 +99,7 @@
                 <Grid 
                     ColumnDefinitions="*,Auto">
                     <Label 
-                        Text="Update All Drives" 
+                        Text="{Binding UpdateDrivesLabel}" 
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
                         TextTransform="Uppercase"

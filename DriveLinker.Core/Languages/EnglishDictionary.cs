@@ -110,6 +110,15 @@ public class EnglishDictionary : IEnglishDictionary
             { Keyword.TextCopiedDesc, "The text has been copied to the clipboard." },
             { Keyword.RegisterDesc, "You will be known as: " },
             { Keyword.Account, "Account" },
+            { Keyword.ExportDrives, "Export Drives" },
+            { Keyword.UpdateDrives, "Update Drives" },
+            { Keyword.DeleteDrives, "Delete Drives" },
+            { Keyword.ImportDrives, "Import Drives" },
+            { Keyword.Update, "Update" },
+            { Keyword.DeleteAllDrives, "Delete All Drives?" },
+            { Keyword.DeleteAllDrivesDesc, "Deleting all the drives is irreversible." },
+            { Keyword.ImportFile, "Import File?" },
+            { Keyword.ImportFileDesc, "Importing the file will delete all of your drives." },
         };
     }
 }
