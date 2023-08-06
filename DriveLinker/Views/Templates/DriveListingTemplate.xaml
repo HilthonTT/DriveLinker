@@ -101,7 +101,7 @@
                                     <Image 
                                         Source="info_icon.png"></Image>
                                 </Border>
-                                <Label Text="{Binding DriveInfo.DriveFormat, StringFormat='Format: {0}'}" 
+                                <Label Text="{Binding DriveFormat, StringFormat='Format: {0}'}" 
                                    TextColor="White" 
                                    FontSize="18" 
                                    FontAttributes="Bold" 
@@ -124,7 +124,7 @@
                                         Source="network_icon.png" ></Image>
                                 </Border>
                                 <Label 
-                                   Text="{Binding DriveInfo.DriveType, StringFormat='Type: {0}'}" 
+                                   Text="{Binding DriveType, StringFormat='Type: {0}'}" 
                                    TextColor="White" 
                                    FontSize="18" 
                                    FontAttributes="Bold" 

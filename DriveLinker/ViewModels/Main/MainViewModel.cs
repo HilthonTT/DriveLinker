@@ -62,13 +62,40 @@ public partial class MainViewModel : BaseViewModel
         Progress = connectedDrivesCount / Drives.Count;
     }
 
+    private static void CheckDriveType(Drive drive, List<DriveInfo> driveInfos)
+    {
+        if (string.IsNullOrWhiteSpace(drive.DriveType) || 
+            string.IsNullOrWhiteSpace(drive.DriveFormat))
+        {
+            var driveInfo = GetDriveInfo(drive, driveInfos);
+            drive.DriveType = driveInfo?.DriveType.ToString() ?? "N/A";
+            drive.DriveFormat = driveInfo?.DriveFormat ?? "N/A";
+        }
+    }
+
+    private static DriveInfo GetDriveInfo(Drive drive, List<DriveInfo> driveInfos)
+    {
+        var driveInfo = driveInfos.FirstOrDefault(d => d.VolumeLabel
+            .Contains(drive.DriveName, StringComparison.InvariantCultureIgnoreCase) &&
+            d.RootDirectory.Name.Contains(drive.Letter, StringComparison.InvariantCultureIgnoreCase));
+
+        return driveInfo;
+    }
+
+    private void CheckDriveStatus(Drive drive, List<DriveInfo> driveInfos)
+    {
+        CheckDriveType(drive, driveInfos);
+        _linker.IsDriveConnected(drive);
+    }
+
     [RelayCommand]
     private async Task LoadDrivesAsync()
     {
+        var driveInfos = DriveInfo.GetDrives().ToList();
         var settings = await _accountService.GetAccountSettingsAsync();
         var drives = await _accountService.GetAccountDrivesAsync();
 
-        Parallel.ForEach(drives, (d) => _linker.IsDriveConnected(d));
+        Parallel.ForEach(drives, (d) => CheckDriveStatus(d, driveInfos));
         Drives = new(drives);
         RecalculateProgress();
         DrivesLoaded();
@@ -186,16 +213,8 @@ public partial class MainViewModel : BaseViewModel
     private async Task ExportDrivesAsync()
     {
         var drives = await _accountService.GetAccountDrivesAsync();
-        var cleanedDrives = new List<Drive>();
 
-        // DriveInfo causing errors for serializing
-        foreach (var drive in drives)
-        {
-            drive.DriveInfo = null;
-            cleanedDrives.Add(drive);
-        }
-
-        string jsonifiedDrives = JsonSerializer.Serialize(cleanedDrives);
+        string jsonifiedDrives = JsonSerializer.Serialize(drives);
 
         var result = await FolderPicker.Default.PickAsync(new());
         if (result.IsSuccessful)

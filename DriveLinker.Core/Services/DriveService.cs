@@ -4,7 +4,6 @@ public class DriveService : IDriveService
     private const string CacheName = nameof(DriveService);
     private const string CacheNamePrefix = $"{CacheName}_";
     private const string DbName = "Drive.db4";
-    private readonly List<DriveInfo> _driveInfos = DriveInfo.GetDrives().ToList();
     private readonly IMemoryCache _cache;
     private readonly IEncryption _encryption;
     private readonly IPasswordGenerator _passwordGenerator;
@@ -149,18 +148,7 @@ public class DriveService : IDriveService
         drive.IpAddress = await _encryption.AesDecryptAsync(drive.IpAddress, key, iv);
         drive.UserName = await _encryption.AesDecryptAsync(drive.UserName, key, iv);
 
-        drive.DriveInfo = GetDriveInfo(drive);
-
         return drive;
-    }
-
-    private DriveInfo GetDriveInfo(Drive drive)
-    {
-        var driveInfo = _driveInfos.FirstOrDefault(d => d.VolumeLabel
-            .Contains(drive.DriveName, StringComparison.InvariantCultureIgnoreCase) && 
-            d.RootDirectory.Name.Contains(drive.Letter, StringComparison.InvariantCultureIgnoreCase));
-
-        return driveInfo;
     }
 
     private async Task<string> FetchPasswordAsync()

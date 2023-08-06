@@ -1,4 +1,6 @@
-﻿namespace DriveLinker.Core.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace DriveLinker.Core.Models;
 public partial class Drive : ObservableObject
 {
     [PrimaryKey, AutoIncrement]
@@ -23,9 +25,11 @@ public partial class Drive : ObservableObject
     private string _userName;
 
     [ObservableProperty]
+    [JsonIgnore]
     private string _key;
 
     [ObservableProperty]
+    [JsonIgnore]
     private string _iv;
 
     [ObservableProperty]
@@ -33,14 +37,21 @@ public partial class Drive : ObservableObject
     private string _buttonColor = "#FF0000";
 
     [ObservableProperty]
+    [JsonIgnore]
+    private string _driveType;
+
+    [ObservableProperty]
+    [JsonIgnore]
+    private string _driveFormat;
+
+    [ObservableProperty]
     private DateTime _dateCreated = DateTime.Now;
 
     [Ignore]
+    [JsonIgnore]
     public Color DriveButtonColorAsColor => Color.FromArgb(ButtonColor);
 
     [Ignore]
+    [JsonIgnore]
     public bool Connected { get; set; }
-
-    [Ignore]
-    public DriveInfo DriveInfo { get; set; }
 }
