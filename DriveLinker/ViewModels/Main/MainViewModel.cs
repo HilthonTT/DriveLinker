@@ -4,6 +4,7 @@ public partial class MainViewModel : BaseViewModel
     private readonly ILinker _linker;
     private readonly IWindowsHelper _windowsHelper;
     private readonly IAccountService _accountService;
+    private readonly IMemoryCache _cache;
 
     public MainViewModel(
         ILinker linker,
@@ -11,7 +12,8 @@ public partial class MainViewModel : BaseViewModel
         ILanguageDictionary languageDictionary,
         IAccountService accountService,
         ITimerTracker timerTracker,
-        IAuthentication auth)
+        IAuthentication auth,
+        IMemoryCache cache)
         : base(
             languageDictionary,
             auth,
@@ -20,7 +22,7 @@ public partial class MainViewModel : BaseViewModel
         _linker = linker;
         _windowsHelper = windowsHelper;
         _accountService = accountService;
-
+        _cache = cache;
         SetUpTimerAsync();
     }
 
@@ -276,6 +278,18 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task SetUpTimerAsync()
     {
+        string key = "IsFirstTime";
+
+        string output = _cache.Get<string>(key);
+
+        if (string.IsNullOrWhiteSpace(output) is false)
+        {
+            return;
+        }
+
+        output = "NotFirstTime";
+        _cache.Set(key, output);
+
         var settings = await _accountService.GetAccountSettingsAsync();
 
         if (settings?.AutoMinimize is true)

@@ -80,15 +80,11 @@ public class AccountService : IAccountService
 
     public async Task<List<Drive>> GetAccountDrivesAsync()
     {
-        await InitializeDb();
-
         return await _driveService.GetAllAccountDrivesAsync(_account.Id);
     }
 
     public async Task<Settings> GetAccountSettingsAsync()
     {
-        await InitializeDb();
-
         return await _settingsService.GetAccountSettingsAsync(_account.Id);
     }
 

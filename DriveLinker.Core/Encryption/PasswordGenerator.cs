@@ -3,17 +3,28 @@ public class PasswordGenerator : IPasswordGenerator
 {
     private const string Key = nameof(PasswordGenerator);
     private const string ValidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+    private readonly IMemoryCache _cache;
+
+    public PasswordGenerator(IMemoryCache cache)
+    {
+        _cache = cache;
+    }
 
     public async Task<string> FetchPasswordAsync()
     {
-        string password = await SecureStorage.GetAsync(Key);
-        if (string.IsNullOrWhiteSpace(password))
+        string output = _cache.Get<string>(Key);
+        if (output is null)
         {
-            password = await GeneratePassword();
-            return password;
+            output = await SecureStorage.GetAsync(Key);
+            if (string.IsNullOrWhiteSpace(output))
+            {
+                output = await GeneratePassword();
+            }
+
+            _cache.Set(Key, output);
         }
 
-        return password;
+        return output;
     }
 
     private static async Task<string> GeneratePassword()
