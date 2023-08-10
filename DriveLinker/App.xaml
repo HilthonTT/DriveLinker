@@ -9,12 +9,23 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries><Color x:Key="CardBackground">White</Color>
+
+            <Color x:Key="Primary">#282828</Color>
+
+            <Color x:Key="LightBackground">#FaF9F8</Color>
+            <Color x:Key="DarkBackground">Black</Color>
+
             <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
             <x:String x:Key="TekturFont">TekturRegular</x:String>
 
             <Style TargetType="Label">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+            </Style>
+
+            <Style TargetType="Switch">
+                <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
             </Style>
 
             <Style TargetType="Entry">
@@ -23,16 +34,20 @@
                 <Setter Property="Keyboard" Value="Text"/>
                 <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
             </Style>
 
             <Style TargetType="Picker">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
             </Style>
 
             <Style TargetType="SearchBar">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
                 <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
             </Style>
 
             <Style x:Key="CardView" TargetType="Frame">
@@ -66,8 +81,8 @@
             <Style x:Key="AuthButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="BorderColor" Value="Transparent"/>
-                <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
             </Style>
 
             <Style x:Key="EditForm" TargetType="FlexLayout">

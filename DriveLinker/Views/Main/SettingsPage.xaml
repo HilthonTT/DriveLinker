@@ -29,7 +29,7 @@
     </Shell.TitleView>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem 
+        <ToolbarItem
             Text="{Binding HomePageLabel}"
             Order="Secondary"
             Priority="0"
