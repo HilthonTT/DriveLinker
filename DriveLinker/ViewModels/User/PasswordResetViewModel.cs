@@ -23,9 +23,6 @@ public partial class PasswordResetViewModel : BaseViewModel
     private string _newPassword;
 
     [ObservableProperty]
-    private string _currentPassword;
-
-    [ObservableProperty]
     private string _textValue;
 
     [ObservableProperty]
@@ -109,12 +106,12 @@ public partial class PasswordResetViewModel : BaseViewModel
 
     private async Task ChangePasswordWithPasswordAsync()
     {
-        if (string.IsNullOrWhiteSpace(CurrentPassword) || string.IsNullOrWhiteSpace(NewPassword))
+        if (string.IsNullOrWhiteSpace(TextValue) || string.IsNullOrWhiteSpace(NewPassword))
         {
             return;
         }
 
-        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, CurrentPassword);
+        var verifiedAccount = await _auth.VerifyPasswordAsync(_auth.GetAccount().Username, TextValue);
 
         if (verifiedAccount.IsCorrect is false)
         {

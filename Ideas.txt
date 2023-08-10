@@ -2,4 +2,10 @@
 
 IDEAS
 -----
-- Implement password/username reset
+
+
+BUGS TO FIX
+------------
+
+- Fix light theme mod issue: Text not changing colors.
+- Fix Password Reset Issue.
