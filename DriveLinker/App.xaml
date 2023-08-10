@@ -8,16 +8,27 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries><Color x:Key="CardBackground">White</Color>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Color x:Key="CardBackground">White</Color>
 
             <Color x:Key="Primary">#282828</Color>
 
             <Color x:Key="LightBackground">#FaF9F8</Color>
             <Color x:Key="DarkBackground">Black</Color>
 
+            <Color x:Key="Black">Black</Color>
+            <Color x:Key="White">White</Color>
+
             <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
             <x:String x:Key="TekturFont">TekturRegular</x:String>
+
+            <Style ApplyToDerivedTypes="True" TargetType="NavigationPage">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DarkBackground}, Dark={StaticResource LightBackground}}" />
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"/>
+                <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+            </Style>
 
             <Style TargetType="Label">
                 <Setter Property="FontFamily" Value="{StaticResource TekturFont}"/>
