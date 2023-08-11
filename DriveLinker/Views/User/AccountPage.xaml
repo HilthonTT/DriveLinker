@@ -155,13 +155,13 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding UserNameLabel, StringFormat='{0}: '} "
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
-
+                                        <Span Text=" "/>
                                         <Span 
                                             Text="{Binding AccountUsername}"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -180,12 +180,13 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding PasswordLabel, StringFormat='{0}: '}"
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
+                                        <Span Text=" "/>
                                         <Span 
                                             Text="*******************"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>

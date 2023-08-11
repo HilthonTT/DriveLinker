@@ -55,7 +55,6 @@
                             </Border>
                             <Label 
                                 Text="{Binding DriveName}" 
-                                TextColor="White" 
                                 FontSize="18" 
                                 FontAttributes="Bold" 
                                 VerticalOptions="Center"></Label>

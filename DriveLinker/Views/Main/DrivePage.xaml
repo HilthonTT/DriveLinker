@@ -160,13 +160,14 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding LetterLabel, StringFormat='{0}: '} "
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
-                                        
+                                        <Span 
+                                            Text=" "/>
                                         <Span 
                                             Text="{Binding Drive.Letter}"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -185,12 +186,14 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding DriveNameLabel, StringFormat='{0}: '} "
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
+                                            Text=" "/>
+                                        <Span 
                                             Text="{Binding Drive.DriveName}"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -209,12 +212,14 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding IpAddressLabel, StringFormat='{0}: '}"
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
+                                            Text=" "/>
+                                        <Span 
                                             Text="*************"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -233,12 +238,14 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding PasswordLabel, StringFormat='{0}: '}"
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
+                                            Text=" "/>
+                                        <Span 
                                             Text="*************"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -257,12 +264,14 @@
                                     <FormattedString>
                                         <Span 
                                             Text="{Binding UserNameLabel, StringFormat='{0}: '}"
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                         <Span 
+                                            Text=" "/>
+                                        <Span 
                                             Text="*************"
-                                            TextColor="White"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontSize="Title"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
@@ -283,11 +292,14 @@
                                         <Span 
                                             Text="{Binding DateCreatedLabel, StringFormat='{0}: '}"
                                             FontSize="Title"
-                                            TextColor="LightGray"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource LightGray}}"
                                             FontFamily="{StaticResource TekturFont}"/>
+                                        <Span 
+                                            Text=" "/>
                                         <Span 
                                             Text="{Binding Drive.DateCreated, StringFormat='{0:dd/MMMM/yyyy}'}"
                                             FontSize="Title"
+                                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                                             FontFamily="{StaticResource TekturFont}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
