@@ -57,7 +57,7 @@
             Command="{Binding LoadDrivesCommand}"/>
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 
-            Command="{Binding AutoLinkDrivesCommand}"/>
+            Command="{Binding LoadDrivesCommand}"/>
         <behaviors:EventToCommandBehavior 
             EventName="Appearing" 
             Command="{Binding InitializeDictionaryCommand}"/>

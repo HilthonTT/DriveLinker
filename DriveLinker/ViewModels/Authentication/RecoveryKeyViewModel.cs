@@ -110,6 +110,12 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
     }
 
     [RelayCommand]
+    private async Task LoadAccountPageAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(AccountPage), true);
+    }
+
+    [RelayCommand]
     private async Task LogOut()
     {
         _account.Id = 0;
