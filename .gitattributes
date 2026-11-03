@@ -1,0 +1,25 @@
+# Normalise line endings in the repository; check out with the platform default.
+* text=auto
+
+# Windows-centric files keep CRLF on checkout.
+*.sln     text eol=crlf
+*.slnx    text eol=crlf
+*.csproj  text eol=crlf
+*.props   text eol=crlf
+*.targets text eol=crlf
+*.cs      text eol=crlf
+*.xaml    text eol=crlf
+*.ps1     text eol=crlf
+
+# Shell scripts and YAML must stay LF.
+*.sh      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+
+# Binary assets.
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.ttf  binary
+*.pfx  binary
+*.msix binary

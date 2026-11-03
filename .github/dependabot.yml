@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      maui:
+        patterns: ["Microsoft.Maui.*", "CommunityToolkit.*"]
+      microsoft-extensions:
+        patterns: ["Microsoft.Extensions.*"]
+      sqlite:
+        patterns: ["sqlite-net-*", "SQLitePCLRaw.*"]
+      tests:
+        patterns: ["xunit*", "Microsoft.NET.Test.Sdk"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
