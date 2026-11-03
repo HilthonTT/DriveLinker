@@ -22,8 +22,8 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
         _cache = cache;
     }
 
-    [ObservableProperty] 
-    private Drive _drive;
+    [ObservableProperty]
+    public partial Drive Drive { get; set; }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
@@ -54,7 +54,7 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
     [RelayCommand]
     private async Task DeleteRequestAsync()
     {
-        bool isDelete = await Shell.Current.DisplayAlert( 
+        bool isDelete = await Shell.Current.DisplayAlertAsync( 
             DeleteDriveLabel, DeleteDriveWarningLabel, YesLabel, NoLabel);
 
         if (isDelete)

@@ -10,42 +10,42 @@ public partial class Drive : ObservableObject
     public int AccountId { get; set; }
 
     [ObservableProperty]
-    private string _letter;
+    public partial string Letter { get; set; }
 
     [ObservableProperty]
-    private string _ipAddress;
+    public partial string IpAddress { get; set; }
 
     [ObservableProperty]
-    private string _driveName;
+    public partial string DriveName { get; set; }
 
     [ObservableProperty]
-    private string _password;
+    public partial string Password { get; set; }
 
     [ObservableProperty]
-    private string _userName;
-
-    [ObservableProperty]
-    [JsonIgnore]
-    private string _key;
+    public partial string UserName { get; set; }
 
     [ObservableProperty]
     [JsonIgnore]
-    private string _iv;
+    public partial string Key { get; set; }
+
+    [ObservableProperty]
+    [JsonIgnore]
+    public partial string Iv { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DriveButtonColorAsColor))]
-    private string _buttonColor = "#FF0000";
+    public partial string ButtonColor { get; set; } = "#FF0000";
 
     [ObservableProperty]
     [JsonIgnore]
-    private string _driveType;
+    public partial string DriveType { get; set; }
 
     [ObservableProperty]
     [JsonIgnore]
-    private string _driveFormat;
+    public partial string DriveFormat { get; set; }
 
     [ObservableProperty]
-    private DateTime _dateCreated = DateTime.Now;
+    public partial DateTime DateCreated { get; set; } = DateTime.Now;
 
     [Ignore]
     [JsonIgnore]

@@ -8,14 +8,14 @@ public partial class Settings : ObservableObject
     public int AccountId { get; set; }
 
     [ObservableProperty]
-    private bool _autoLink = true;
+    public partial bool AutoLink { get; set; } = true;
 
     [ObservableProperty]
-    private bool _autoMinimize = false;
+    public partial bool AutoMinimize { get; set; } = false;
 
     [ObservableProperty]
-    private int _timerCount = 15;
+    public partial int TimerCount { get; set; } = 15;
 
     [ObservableProperty]
-    private Language _language = Language.English;
+    public partial Language Language { get; set; } = Language.English;
 }

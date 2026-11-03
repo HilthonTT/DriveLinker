@@ -1,43 +1,46 @@
-﻿using PInvoke;
-using System.Diagnostics;
-using IWshRuntimeLibrary;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DriveLinker.Helpers;
+
+/// <summary>
+/// Windows-specific window management and "start with Windows" support.
+/// </summary>
 public partial class WindowsHelper : IWindowsHelper
 {
     private const string AppName = "DriveLinker";
-    private const string Key = $"{nameof(WindowsHelper)}_IsChecked";
 
     public void MinimizeWindow()
     {
 #if WINDOWS
-            var mauiWindow = Application.Current.Windows[0];
-            var nativeWindow = mauiWindow.Handler.PlatformView;
-            IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
-
-            User32.ShowWindow(windowHandle, User32.WindowShowStyle.SW_MINIMIZE);
+        IntPtr windowHandle = GetMainWindowHandle();
+        if (windowHandle != IntPtr.Zero)
+        {
+            NativeMethods.ShowWindow(windowHandle, NativeMethods.SW_MINIMIZE);
+        }
 #endif
     }
-
 
     public void CenterWindow()
     {
 #if WINDOWS
-        var mauiWindow = Application.Current.Windows[0];
-        var nativeWindow = mauiWindow.Handler.PlatformView;
-        IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+        IntPtr windowHandle = GetMainWindowHandle();
+        if (windowHandle == IntPtr.Zero || !NativeMethods.GetWindowRect(windowHandle, out var windowRect))
+        {
+            return;
+        }
 
-        var screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
-        var screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+        int screenWidth = NativeMethods.GetSystemMetrics(NativeMethods.SM_CXSCREEN);
+        int screenHeight = NativeMethods.GetSystemMetrics(NativeMethods.SM_CYSCREEN);
 
-        User32.GetWindowRect(windowHandle, out RECT windowRect);
-        int windowWidth = windowRect.right - windowRect.left;
-        int windowHeight = windowRect.bottom - windowRect.top;
+        int windowWidth = windowRect.Right - windowRect.Left;
+        int windowHeight = windowRect.Bottom - windowRect.Top;
 
         int x = (screenWidth - windowWidth) / 2;
         int y = (screenHeight - windowHeight) / 2;
 
-        User32.SetWindowPos(windowHandle, IntPtr.Zero, x, y, 0, 0, User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOZORDER);
+        NativeMethods.SetWindowPos(windowHandle, IntPtr.Zero, x, y, 0, 0,
+            NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOZORDER);
 #endif
     }
 
@@ -58,42 +61,90 @@ public partial class WindowsHelper : IWindowsHelper
         }
     }
 
+    public bool GetCheckedValue()
+    {
+        return File.Exists(GetShortcutPath());
+    }
+
     private static void CreateShortcut()
     {
-        string executablePath = Process.GetCurrentProcess().MainModule.FileName;
-        string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+        string shortcutPath = GetShortcutPath();
+        if (File.Exists(shortcutPath))
+        {
+            return;
+        }
 
-        string shortcutPath = Path.Combine(startupFolder, $"{AppName}.lnk");
+        string executablePath = Environment.ProcessPath ?? Process.GetCurrentProcess().MainModule!.FileName;
 
-        dynamic shell = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell"));
+        // Late-bound WScript.Shell keeps the build free of a COMReference, which the
+        // `dotnet` CLI (and therefore CI) cannot resolve.
+        Type shellType = Type.GetTypeFromProgID("WScript.Shell")
+            ?? throw new PlatformNotSupportedException("WScript.Shell is not available.");
 
-        var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
-        shortcut.TargetPath = executablePath;
-        shortcut.WorkingDirectory = Path.GetDirectoryName(executablePath);
-        shortcut.Description = "DriveLinker startup shortcut.";
-        shortcut.Save();
+        dynamic shell = Activator.CreateInstance(shellType)!;
+        try
+        {
+            dynamic shortcut = shell.CreateShortcut(shortcutPath);
+            shortcut.TargetPath = executablePath;
+            shortcut.WorkingDirectory = Path.GetDirectoryName(executablePath);
+            shortcut.Description = "DriveLinker startup shortcut.";
+            shortcut.Save();
+        }
+        finally
+        {
+            Marshal.FinalReleaseComObject(shell);
+        }
     }
 
     private static void DeleteShortcut()
     {
-        string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        string shortcutPath = Path.Combine(startupFolder, $"{AppName}.lnk");
-
-        System.IO.File.Delete(shortcutPath);
+        File.Delete(GetShortcutPath());
     }
 
-    public bool GetCheckedValue()
+    private static string GetShortcutPath()
     {
         string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        string shortcutPath = Path.Combine(startupFolder, $"{AppName}.lnk");
-
-        if (System.IO.File.Exists(shortcutPath) is false)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return Path.Combine(startupFolder, $"{AppName}.lnk");
     }
+
+#if WINDOWS
+    private static IntPtr GetMainWindowHandle()
+    {
+        var nativeWindow = Application.Current?.Windows.FirstOrDefault()?.Handler?.PlatformView;
+        return nativeWindow is null ? IntPtr.Zero : WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+    }
+
+    private static class NativeMethods
+    {
+        public const int SW_MINIMIZE = 6;
+        public const int SM_CXSCREEN = 0;
+        public const int SM_CYSCREEN = 1;
+        public const uint SWP_NOSIZE = 0x0001;
+        public const uint SWP_NOZORDER = 0x0004;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(int nIndex);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+    }
+#endif
 }

@@ -174,7 +174,7 @@
                     x:Name="SearchBar"
                     Placeholder="{Binding SearchLabel}"
                     SearchCommand="{Binding PerformSearchCommand}"
-                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
+                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}, x:DataType=SearchBar}"/>
             </VerticalStackLayout>
             <VerticalStackLayout 
                 Grid.Row="1"          

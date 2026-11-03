@@ -7,20 +7,20 @@ public partial class LanguageHelper : ObservableObject, ILanguageHelper
     {
         _languageDictionary = languageDictionary;
 
-        InitializeDictionary();
+        InitializeDictionary().FireAndForget();
     }
 
     [ObservableProperty]
-    private string _englishLabel;
+    public partial string EnglishLabel { get; set; }
 
     [ObservableProperty]
-    private string _frenchLabel;
+    public partial string FrenchLabel { get; set; }
 
     [ObservableProperty]
-    private string _germanLabel;
+    public partial string GermanLabel { get; set; }
 
     [ObservableProperty]
-    private string _indonesianLabel;
+    public partial string IndonesianLabel { get; set; }
 
     private async Task InitializeDictionary()
     {

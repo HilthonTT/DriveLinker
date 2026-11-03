@@ -19,15 +19,15 @@ public partial class AccountViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    private Account _model = new();
+    public partial Account Model { get; set; } = new();
 
     [ObservableProperty]
-    private string _accountButtonText;
+    public partial string AccountButtonText { get; set; }
 
     [RelayCommand]
     private async Task DeleteRequestAsync()
     {
-        bool isDelete = await Shell.Current.DisplayAlert(
+        bool isDelete = await Shell.Current.DisplayAlertAsync(
             DeleteAccountLabel, DeleteAccountWarningLabel, YesLabel, NoLabel);
 
         if (isDelete)

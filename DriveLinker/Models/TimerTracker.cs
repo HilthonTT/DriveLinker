@@ -2,10 +2,10 @@
 public partial class TimerTracker : ObservableObject, ITimerTracker
 {
     [ObservableProperty]
-    private bool _isCountdownVisible;
+    public partial bool IsCountdownVisible { get; set; }
 
     [ObservableProperty]
-    private int _secondsRemaining;
+    public partial int SecondsRemaining { get; set; }
 
     public CountdownTimer Timer { get; set; } 
 }

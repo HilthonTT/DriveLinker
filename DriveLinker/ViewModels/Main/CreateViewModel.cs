@@ -21,14 +21,14 @@ public partial class CreateViewModel : BaseViewModel
         _auth = auth;
     }
 
-    [ObservableProperty] 
-    private CreateDriveModel _model = new();
+    [ObservableProperty]
+    public partial CreateDriveModel Model { get; set; } = new();
 
     [ObservableProperty]
-    private bool _clearEssentials = false;
+    public partial bool ClearEssentials { get; set; } = false;
 
     [ObservableProperty]
-    private bool _isExitButtonEnabled = true;
+    public partial bool IsExitButtonEnabled { get; set; } = true;
 
     [RelayCommand]
     private async Task CreateDriveAsync()
@@ -92,7 +92,7 @@ public partial class CreateViewModel : BaseViewModel
                 string jsonifiedDrives = await File.ReadAllTextAsync(result.FullPath);
                 var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
 
-                bool answer = await Shell.Current.DisplayAlert(
+                bool answer = await Shell.Current.DisplayAlertAsync(
                     ImportFileLabel, ImportFileDescLabel, YesLabel, NoLabel);
 
                 if (answer)
@@ -110,7 +110,7 @@ public partial class CreateViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, ex.Message, OkLabel);
+            await Shell.Current.DisplayAlertAsync(ErrorLabel, ex.Message, OkLabel);
         }
         finally
         {
@@ -163,7 +163,7 @@ public partial class CreateViewModel : BaseViewModel
     private static async Task OpenSnackbarAsync(string text)
     {
         text = text.ToUpper();
-        await Shell.Current.DisplayAlert("Error!", text, "Ok");
+        await Shell.Current.DisplayAlertAsync("Error!", text, "Ok");
     }
 
     private async Task<bool> IsDriveTakenAsync()

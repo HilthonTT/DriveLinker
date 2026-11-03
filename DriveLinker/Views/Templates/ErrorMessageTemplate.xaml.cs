@@ -13,7 +13,7 @@ public partial class ErrorMessageTemplate : ContentView
 		{
 			await Clipboard.SetTextAsync(message);
 
-            await Shell.Current.DisplayAlert("Text Copied", "The text has been copied to the clipboard.", "OK");
+            await Shell.Current.DisplayAlertAsync("Text Copied", "The text has been copied to the clipboard.", "OK");
         }
 	}
 }

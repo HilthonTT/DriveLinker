@@ -2,5 +2,5 @@
 public partial class TemporaryLanguageSelector : ObservableObject, ITemporaryLanguageSelector
 {
     [ObservableProperty]
-    private Language _selectedLanguage = Language.English;
+    public partial Language SelectedLanguage { get; set; } = Language.English;
 }

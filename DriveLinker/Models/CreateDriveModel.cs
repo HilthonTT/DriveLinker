@@ -3,19 +3,19 @@
 public partial class CreateDriveModel : ObservableObject
 {
     [ObservableProperty]
-    private string _letter;
+    public partial string Letter { get; set; }
 
     [ObservableProperty]
-    private string _ipAddress;
+    public partial string IpAddress { get; set; }
 
     [ObservableProperty]
-    private string _driveName;
+    public partial string DriveName { get; set; }
 
     [ObservableProperty]
-    private string _password;
+    public partial string Password { get; set; }
 
     [ObservableProperty]
-    private string _userName;
+    public partial string UserName { get; set; }
 
     public CreateDriveModel()
     {

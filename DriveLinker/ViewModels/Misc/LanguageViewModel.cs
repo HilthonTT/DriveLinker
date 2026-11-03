@@ -7,7 +7,7 @@ public partial class LanguageViewModel : ObservableObject
     public LanguageViewModel(ILanguageDictionary language)
     {
         _language = language;
-        InitializeDictionary();   
+        InitializeDictionary().FireAndForget();
     }
 
     [RelayCommand]
@@ -116,284 +116,284 @@ public partial class LanguageViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private string _countdownLabel;
+    public partial string CountdownLabel { get; set; }
 
     [ObservableProperty]
-    private string _createDriveLabel;
+    public partial string CreateDriveLabel { get; set; }
 
     [ObservableProperty]
-    private string _settingsLabel;
+    public partial string SettingsLabel { get; set; }
 
     [ObservableProperty]
-    private string _searchLabel;
+    public partial string SearchLabel { get; set; }
 
     [ObservableProperty]
-    private string _recentlyAddedLabel;
+    public partial string RecentlyAddedLabel { get; set; }
 
     [ObservableProperty]
-    private string _driveListingLabel;
+    public partial string DriveListingLabel { get; set; }
 
     [ObservableProperty]
-    private string _linkDrivesLabel;
+    public partial string LinkDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _unlinkDrivesLabel;
+    public partial string UnlinkDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _letterLabel;
+    public partial string LetterLabel { get; set; }
 
     [ObservableProperty]
-    private string _letterDescLabel;
+    public partial string LetterDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _ipAddressLabel;
+    public partial string IpAddressLabel { get; set; }
 
     [ObservableProperty]
-    private string _ipAddressDescLabel;
+    public partial string IpAddressDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _driveNameLabel;
+    public partial string DriveNameLabel { get; set; }
 
     [ObservableProperty]
-    private string _driveNameDescLabel;
+    public partial string DriveNameDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _passwordLabel;
+    public partial string PasswordLabel { get; set; }
 
     [ObservableProperty]
-    private string _passwordDescLabel;
+    public partial string PasswordDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _userNameLabel;
+    public partial string UserNameLabel { get; set; }
 
     [ObservableProperty]
-    private string _userNameDescLabel;
+    public partial string UserNameDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _dateCreatedLabel;
+    public partial string DateCreatedLabel { get; set; }
 
     [ObservableProperty]
-    private string _createLabel;
+    public partial string CreateLabel { get; set; }
 
     [ObservableProperty]
-    private string _autoLinkDrivesLabel;
+    public partial string AutoLinkDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _autoMinimizeLabel;
+    public partial string AutoMinimizeLabel { get; set; }
 
     [ObservableProperty]
-    private string _clearOnlyLetterDriveNameLabel;
+    public partial string ClearOnlyLetterDriveNameLabel { get; set; }
 
     [ObservableProperty]
-    private string _saveLabel;
+    public partial string SaveLabel { get; set; }
 
     [ObservableProperty]
-    private string _languageLabel;
+    public partial string LanguageLabel { get; set; }
 
     [ObservableProperty]
-    private string _englishLabel;
+    public partial string EnglishLabel { get; set; }
 
     [ObservableProperty]
-    private string _frenchLabel;
+    public partial string FrenchLabel { get; set; }
 
     [ObservableProperty]
-    private string _germanLabel;
+    public partial string GermanLabel { get; set; }
 
     [ObservableProperty]
-    private string _indonesianLabel;
+    public partial string IndonesianLabel { get; set; }
 
     [ObservableProperty]
-    private string _dontHaveAnAccountLabel;
+    public partial string DontHaveAnAccountLabel { get; set; }
 
     [ObservableProperty]
-    private string _forgotPasswordLabel;
+    public partial string ForgotPasswordLabel { get; set; }
 
     [ObservableProperty]
-    private string _loginLabel;
+    public partial string LoginLabel { get; set; }
 
     [ObservableProperty]
-    private string _recoveryKeyLabel;
+    public partial string RecoveryKeyLabel { get; set; }
 
     [ObservableProperty]
-    private string _recoveryKeyDescLabel;
+    public partial string RecoveryKeyDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _recoveryKeyHelperText;
+    public partial string RecoveryKeyHelperText { get; set; }
 
     [ObservableProperty]
-    private string _clipboardLabel;
+    public partial string ClipboardLabel { get; set; }
 
     [ObservableProperty]
-    private string _registerLabel;
+    public partial string RegisterLabel { get; set; }
 
     [ObservableProperty]
-    private string _letterNotPopulatedLabel;
+    public partial string LetterNotPopulatedLabel { get; set; }
 
     [ObservableProperty]
-    private string _enterALetterLabel;
+    public partial string EnterALetterLabel { get; set; }
 
     [ObservableProperty]
-    private string _ipAddressNotPopulated;
+    public partial string IpAddressNotPopulated { get; set; }
 
     [ObservableProperty]
-    private string _driveNameNotPopulated;
+    public partial string DriveNameNotPopulated { get; set; }
 
     [ObservableProperty]
-    private string _passwordNotPopulated;
+    public partial string PasswordNotPopulated { get; set; }
 
     [ObservableProperty]
-    private string _usernameNotPopulated;
+    public partial string UsernameNotPopulated { get; set; }
 
     [ObservableProperty]
-    private string _errorLabel;
+    public partial string ErrorLabel { get; set; }
 
     [ObservableProperty]
-    private string _okLabel;
+    public partial string OkLabel { get; set; }
 
     [ObservableProperty]
-    private string _letterAndDriveNameTakenLabel;
+    public partial string LetterAndDriveNameTakenLabel { get; set; }
 
     [ObservableProperty]
-    private string _letterTakenLabel;
+    public partial string LetterTakenLabel { get; set; }
 
     [ObservableProperty]
-    private string _driveNameTakenLabel;
+    public partial string DriveNameTakenLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteDriveLabel;
+    public partial string DeleteDriveLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteDriveWarningLabel;
+    public partial string DeleteDriveWarningLabel { get; set; }
 
     [ObservableProperty]
-    private string _yesLabel;
+    public partial string YesLabel { get; set; }
 
     [ObservableProperty]
-    private string _noLabel;
+    public partial string NoLabel { get; set; }
 
     [ObservableProperty]
-    private string _editLetterLabel;
+    public partial string EditLetterLabel { get; set; }
 
     [ObservableProperty]
-    private string _editLetterDescLabel;
+    public partial string EditLetterDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _editDriveNameLabel;
+    public partial string EditDriveNameLabel { get; set; }
 
     [ObservableProperty]
-    private string _editDriveNameDescLabel;
+    public partial string EditDriveNameDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _editIpAddressLabel;
+    public partial string EditIpAddressLabel { get; set; }
 
     [ObservableProperty]
-    private string _editIpAddressDescLabel;
+    public partial string EditIpAddressDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _editPasswordLabel;
+    public partial string EditPasswordLabel { get; set; }
 
     [ObservableProperty]
-    private string _editPasswordDescLabel;
+    public partial string EditPasswordDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _editUsernameLabel;
+    public partial string EditUsernameLabel { get; set; }
 
     [ObservableProperty]
-    private string _editUserNameDescLabel;
+    public partial string EditUserNameDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _secondsLabel;
+    public partial string SecondsLabel { get; set; }
 
     [ObservableProperty]
-    private string _timerCountMinWarningLabel;
+    public partial string TimerCountMinWarningLabel { get; set; }
 
     [ObservableProperty]
-    private string _timerCountMaxWarningLabel;
+    public partial string TimerCountMaxWarningLabel { get; set; }
 
     [ObservableProperty]
-    private string _homePageLabel;
+    public partial string HomePageLabel { get; set; }
 
     [ObservableProperty]
-    private string _logoutLabel;
+    public partial string LogoutLabel { get; set; }
 
     [ObservableProperty]
-    private string _driveInfoLabel;
+    public partial string DriveInfoLabel { get; set; }
 
     [ObservableProperty]
-    private string _stackTraceLabel;
+    public partial string StackTraceLabel { get; set; }
 
     [ObservableProperty]
-    private string _errorCountLabel;
+    public partial string ErrorCountLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteAccountLabel;
+    public partial string DeleteAccountLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteAccountWarningLabel;
+    public partial string DeleteAccountWarningLabel { get; set; }
 
     [ObservableProperty]
-    private string _currentPasswordLabel;
+    public partial string CurrentPasswordLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongRecoveryKeyLabel;
+    public partial string WrongRecoveryKeyLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongRecoveryKeyDescLabel;
+    public partial string WrongRecoveryKeyDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _usernameTakenLabel;
+    public partial string UsernameTakenLabel { get; set; }
 
     [ObservableProperty]
-    private string _usernameDoesntExistLabel;
+    public partial string UsernameDoesntExistLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongUsernameLabel;
+    public partial string WrongUsernameLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongUsernameDescLabel;
+    public partial string WrongUsernameDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongPasswordLabel;
+    public partial string WrongPasswordLabel { get; set; }
 
     [ObservableProperty]
-    private string _wrongPasswordDescLabel;
+    public partial string WrongPasswordDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _textCopiedLabel;
+    public partial string TextCopiedLabel { get; set; }
 
     [ObservableProperty]
-    private string _textCopiedDescLabel;
+    public partial string TextCopiedDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _registerDescLabel;
+    public partial string RegisterDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _accountLabel;
+    public partial string AccountLabel { get; set; }
 
     [ObservableProperty]
-    private string _exportDrivesLabel;
+    public partial string ExportDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _updateDrivesLabel;
+    public partial string UpdateDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteDrivesLabel;
+    public partial string DeleteDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _importDrivesLabel;
+    public partial string ImportDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _updateLabel;
+    public partial string UpdateLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteAllDrivesLabel;
+    public partial string DeleteAllDrivesLabel { get; set; }
 
     [ObservableProperty]
-    private string _deleteAllDrivesDescLabel;
+    public partial string DeleteAllDrivesDescLabel { get; set; }
 
     [ObservableProperty]
-    private string _importFileLabel;
+    public partial string ImportFileLabel { get; set; }
 
     [ObservableProperty]
-    private string _importFileDescLabel;
+    public partial string ImportFileDescLabel { get; set; }
 }

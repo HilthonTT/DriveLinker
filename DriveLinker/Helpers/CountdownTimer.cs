@@ -10,7 +10,7 @@ public partial class CountdownTimer : ObservableObject
     public event EventHandler CountdownFinished;
 
     [ObservableProperty]
-    private int _secondsRemaining = 0;
+    public partial int SecondsRemaining { get; set; } = 0;
 
     public CountdownTimer(int initialSeconds)
     {

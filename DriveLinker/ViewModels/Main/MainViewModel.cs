@@ -23,27 +23,27 @@ public partial class MainViewModel : BaseViewModel
         _windowsHelper = windowsHelper;
         _accountService = accountService;
         _cache = cache;
-        SetUpTimerAsync();
+        SetUpTimerAsync().FireAndForget();
     }
 
     [ObservableProperty]
-    private bool _isDrivesLoaded = false;
+    public partial bool IsDrivesLoaded { get; set; } = false;
 
     [ObservableProperty]
-    private bool _isLoading = true;
+    public partial bool IsLoading { get; set; } = true;
     
     [ObservableProperty]
-    private bool _isNotAlreadyConnected = true;
+    public partial bool IsNotAlreadyConnected { get; set; } = true;
 
     [ObservableProperty]
-    private double _progress = 0;
+    public partial double Progress { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(RecentlyAddedDrives))]
-    private ObservableCollection<Drive> _drives = new();
+    public partial ObservableCollection<Drive> Drives { get; set; } = new();
 
     [ObservableProperty]
-    private List<string> _searchResults;
+    public partial List<string> SearchResults { get; set; }
 
     public ObservableCollection<Drive> RecentlyAddedDrives => Drives
         .OrderByDescending(d => d.DateCreated)
@@ -230,7 +230,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteAllDrivesAsync()
     {
-        bool answer = await Shell.Current.DisplayAlert(
+        bool answer = await Shell.Current.DisplayAlertAsync(
             DeleteAllDrivesLabel, DeleteAllDrivesDescLabel, YesLabel, NoLabel);
 
         if (answer)
@@ -244,7 +244,7 @@ public partial class MainViewModel : BaseViewModel
 
     private async Task DisplayErrorAsync(string error)
     {
-        await Shell.Current.DisplayAlert(ErrorLabel, error, OkLabel);
+        await Shell.Current.DisplayAlertAsync(ErrorLabel, error, OkLabel);
     }
 
     private static int CalculateMatchingScore(Drive drive, string query)

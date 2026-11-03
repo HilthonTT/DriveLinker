@@ -2,5 +2,5 @@
 public partial class StackTrace : ObservableObject, IStackTrace
 {
     [ObservableProperty]
-    private List<string> _errorMessages = new();
+    public partial List<string> ErrorMessages { get; set; } = new();
 }

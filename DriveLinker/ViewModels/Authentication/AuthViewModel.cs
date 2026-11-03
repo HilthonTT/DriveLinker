@@ -22,16 +22,16 @@ public partial class AuthViewModel : AuthBaseViewModel
     }
 
     [ObservableProperty]
-    private string _password;
+    public partial string Password { get; set; }
 
     [ObservableProperty]
-    private string _username;
+    public partial string Username { get; set; }
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    public partial bool DontShowPassword { get; set; } = true;
 
     [ObservableProperty]
-    private Color _buttonColor = Gray;
+    public partial Color ButtonColor { get; set; } = Gray;
 
     [RelayCommand]
     private void ToggleShowPassword()
@@ -60,7 +60,7 @@ public partial class AuthViewModel : AuthBaseViewModel
 
         if (verifiedAccount.Account is null)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 WrongUsernameLabel, WrongUsernameDescLabel, OkLabel);
 
             Username = "";
@@ -75,7 +75,7 @@ public partial class AuthViewModel : AuthBaseViewModel
         }
         else
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
 
             Password = "";

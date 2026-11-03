@@ -20,23 +20,23 @@ public partial class PasswordResetViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    private string _newPassword;
+    public partial string NewPassword { get; set; }
 
     [ObservableProperty]
-    private string _textValue;
+    public partial string TextValue { get; set; }
 
     [ObservableProperty]
-    private string _placeHolderText;
+    public partial string PlaceHolderText { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotRecovery))]
-    private bool _isRecovery;
+    public partial bool IsRecovery { get; set; }
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    public partial bool DontShowPassword { get; set; } = true;
 
     [ObservableProperty]
-    private Color _buttonColor = Gray;
+    public partial Color ButtonColor { get; set; } = Gray;
 
     public bool IsNotRecovery => !IsRecovery;
 
@@ -96,7 +96,7 @@ public partial class PasswordResetViewModel : BaseViewModel
 
         if (recoveryKeys.Contains(TextValue) is false)
         {
-            await Shell.Current.DisplayAlert(WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
+            await Shell.Current.DisplayAlertAsync(WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
             return;
         }
 
@@ -115,7 +115,7 @@ public partial class PasswordResetViewModel : BaseViewModel
 
         if (verifiedAccount.IsCorrect is false)
         {
-            await Shell.Current.DisplayAlert(WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
+            await Shell.Current.DisplayAlertAsync(WrongPasswordLabel, WrongPasswordDescLabel, OkLabel);
             return;
         }
 

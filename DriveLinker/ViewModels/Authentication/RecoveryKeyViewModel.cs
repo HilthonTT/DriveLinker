@@ -24,16 +24,16 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
     }
 
     [ObservableProperty]
-    private TimerTracker _timerTracker;
+    public partial TimerTracker TimerTracker { get; set; }
 
     [ObservableProperty]
-    private List<string> _recoveryKeys;
+    public partial List<string> RecoveryKeys { get; set; }
 
     [ObservableProperty]
-    private bool _isToolbarItemsVisible;
+    public partial bool IsToolbarItemsVisible { get; set; }
 
     [ObservableProperty]
-    private string _accountUsername;
+    public partial string AccountUsername { get; set; }
 
     [RelayCommand]
     private async Task GenerateRecoveryKeyAsync()
@@ -59,11 +59,11 @@ public partial class RecoveryKeyViewModel : AuthBaseViewModel
 
             await Clipboard.SetTextAsync(keysText);
 
-            await Shell.Current.DisplayAlert(TextCopiedLabel, TextCopiedDescLabel, OkLabel);
+            await Shell.Current.DisplayAlertAsync(TextCopiedLabel, TextCopiedDescLabel, OkLabel);
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert(ErrorLabel, ex.Message, OkLabel);
+            await Shell.Current.DisplayAlertAsync(ErrorLabel, ex.Message, OkLabel);
         }
     }
 

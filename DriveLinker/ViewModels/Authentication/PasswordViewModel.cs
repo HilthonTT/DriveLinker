@@ -23,13 +23,13 @@ public partial class PasswordViewModel : AuthBaseViewModel
     }
 
     [ObservableProperty]
-    private string _username;
+    public partial string Username { get; set; }
 
     [ObservableProperty]
-    private string _recoveryKey;
+    public partial string RecoveryKey { get; set; }
 
     [ObservableProperty]
-    private List<string> _recoveryKeys;
+    public partial List<string> RecoveryKeys { get; set; }
 
     [RelayCommand]
     private async Task VerifyRecoveryKeyAsync()
@@ -42,7 +42,7 @@ public partial class PasswordViewModel : AuthBaseViewModel
         var account = await _accountService.GetAccountByUsernameAsync(Username);
         if (account is null)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 WrongUsernameLabel, WrongUsernameDescLabel, OkLabel);
             return;
         }
@@ -58,7 +58,7 @@ public partial class PasswordViewModel : AuthBaseViewModel
         }
         else
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 WrongRecoveryKeyLabel, WrongRecoveryKeyDescLabel, OkLabel);
         }
 

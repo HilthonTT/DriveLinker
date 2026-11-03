@@ -19,16 +19,16 @@ public partial class BaseViewModel : LanguageViewModel
     }
 
     [ObservableProperty]
-    private TimerTracker _timerTracker;
-
-    [ObservableProperty] 
-    private bool _isBusy;
+    public partial TimerTracker TimerTracker { get; set; }
 
     [ObservableProperty]
-    private string _accountUsername;
+    public partial bool IsBusy { get; set; }
 
     [ObservableProperty]
-    private Drive _selectedDrive = new();
+    public partial string AccountUsername { get; set; }
+
+    [ObservableProperty]
+    public partial Drive SelectedDrive { get; set; } = new();
 
     [RelayCommand]
     public static async Task ClosePageAsync()

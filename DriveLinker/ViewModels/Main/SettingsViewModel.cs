@@ -29,30 +29,30 @@ public partial class SettingsViewModel : BaseViewModel
         _auth = auth;
 
         IsSetOnStartup = _windowsHelper.GetCheckedValue();
-        LoadLanguages();
+        LoadLanguages().FireAndForget();
     }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(StringifiedLanguages))]
-    private ObservableCollection<Language> _languages;
+    public partial ObservableCollection<Language> Languages { get; set; }
 
     [ObservableProperty]
-    private List<string> _stringifiedLanguages;
+    public partial List<string> StringifiedLanguages { get; set; }
 
     [ObservableProperty]
-    private Settings _settings;
+    public partial Settings Settings { get; set; }
 
     [ObservableProperty]
-    private Color _mainSettingsColor = Green;
+    public partial Color MainSettingsColor { get; set; } = Green;
 
     [ObservableProperty]
-    private Color _extraSettingsColor = Black;
+    public partial Color ExtraSettingsColor { get; set; } = Black;
 
     [ObservableProperty]
-    private string _selectedLanguage;
+    public partial string SelectedLanguage { get; set; }
 
     [ObservableProperty]
-    private bool _isSetOnStartup;
+    public partial bool IsSetOnStartup { get; set; }
 
     partial void OnIsSetOnStartupChanged(bool value)
     {
@@ -89,14 +89,14 @@ public partial class SettingsViewModel : BaseViewModel
 
         if (Settings.TimerCount < minSeconds)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 ErrorLabel, TimerCountMinWarningLabel + minSeconds + SecondsLabel, OkLabel);
             return;
         }
 
         if (Settings.TimerCount > maxSeconds)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 ErrorLabel, TimerCountMaxWarningLabel + maxSeconds + SecondsLabel, OkLabel);
             return;
         }

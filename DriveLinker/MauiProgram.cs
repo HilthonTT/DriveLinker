@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls.Compatibility.Hosting;
-
-namespace DriveLinker;
+﻿namespace DriveLinker;
 
 public static class MauiProgram
 {

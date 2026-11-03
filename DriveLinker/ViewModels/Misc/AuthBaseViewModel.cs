@@ -18,19 +18,19 @@ public partial class AuthBaseViewModel : LanguageViewModel
         _languageHelper = languageHelper;
         _languageSelector = languageSelector;
 
-        InitializeDictionary();
-        LoadLanguages();
+        InitializeDictionary().FireAndForget();
+        LoadLanguages().FireAndForget();
     }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(StringifiedLanguages))]
-    private ObservableCollection<Language> _languages;
+    public partial ObservableCollection<Language> Languages { get; set; }
 
     [ObservableProperty]
-    private ObservableCollection<string> _stringifiedLanguages;
+    public partial ObservableCollection<string> StringifiedLanguages { get; set; }
 
     [ObservableProperty]
-    private string _selectedLanguage;
+    public partial string SelectedLanguage { get; set; }
 
     async partial void OnSelectedLanguageChanged(string value)
     {

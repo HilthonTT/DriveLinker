@@ -20,7 +20,7 @@ public partial class StackTraceViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ErrorCount))]
-    private ObservableCollection<string> _errorMessages;
+    public partial ObservableCollection<string> ErrorMessages { get; set; }
 
     public int ErrorCount => ErrorMessages.Count;
 }

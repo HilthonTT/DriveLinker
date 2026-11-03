@@ -1,0 +1,25 @@
+<Project>
+
+  <!-- Central Package Management: every NuGet version lives here. Project files reference packages without a Version. -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="App">
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.120" />
+    <PackageVersion Include="CommunityToolkit.Maui" Version="15.0.1" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.14" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.14" />
+    <PackageVersion Include="sqlite-net-sqlcipher" Version="1.9.172" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
+  </ItemGroup>
+
+  <ItemGroup Label="Tests">
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageVersion Include="xunit.v3" Version="4.0.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
+  </ItemGroup>
+
+</Project>

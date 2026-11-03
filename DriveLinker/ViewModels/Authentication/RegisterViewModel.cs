@@ -23,16 +23,16 @@ public partial class RegisterViewModel : AuthBaseViewModel
     }
 
     [ObservableProperty]
-    private string _password;
+    public partial string Password { get; set; }
 
     [ObservableProperty]
-    private string _username;
+    public partial string Username { get; set; }
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    public partial bool DontShowPassword { get; set; } = true;
 
     [ObservableProperty]
-    private Color _buttonColor = Gray;
+    public partial Color ButtonColor { get; set; } = Gray;
 
     [RelayCommand]
     private void ToggleShowPassword()
@@ -59,7 +59,7 @@ public partial class RegisterViewModel : AuthBaseViewModel
 
         if (await AccountExistsAsync())
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 ErrorLabel, UsernameTakenLabel, OkLabel);
             return;
         }
@@ -82,7 +82,7 @@ public partial class RegisterViewModel : AuthBaseViewModel
 
     private async Task<bool> DisplayRegister()
     {
-        bool savePassword = await Shell.Current.DisplayAlert(
+        bool savePassword = await Shell.Current.DisplayAlertAsync(
             $"{RegisterLabel}?", $"{RegisterDescLabel}{Username}", YesLabel, NoLabel);
 
         return savePassword;

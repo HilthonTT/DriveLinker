@@ -1,0 +1,29 @@
+<Project>
+
+  <!-- Settings shared by every project in the repository. -->
+  <PropertyGroup>
+    <DriveLinkerTargetFramework>net10.0-windows10.0.19041.0</DriveLinkerTargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+
+    <Authors>HilthonTT</Authors>
+    <Product>DriveLinker</Product>
+    <RepositoryUrl>https://github.com/HilthonTT/DriveLinker</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- Fail restore on known-vulnerable packages (direct and transitive). -->
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+
+  <!-- GitHub Actions sets CI=true. Keep CI builds reproducible and warning-free. -->
+  <PropertyGroup Condition="'$(CI)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- A newly published advisory should not break unrelated builds; Dependabot handles those. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+  </PropertyGroup>
+
+</Project>

@@ -17,19 +17,19 @@ public partial class UpdateViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    private string _username;
-
-    [ObservableProperty] 
-    private string _password;
+    public partial string Username { get; set; }
 
     [ObservableProperty]
-    private string _ipAddress;
+    public partial string Password { get; set; }
 
     [ObservableProperty]
-    private bool _dontShowPassword = true;
+    public partial string IpAddress { get; set; }
 
     [ObservableProperty]
-    private Color _buttonColor = Gray;
+    public partial bool DontShowPassword { get; set; } = true;
+
+    [ObservableProperty]
+    public partial Color ButtonColor { get; set; } = Gray;
 
     [RelayCommand]
     private void ToggleShowPassword()
@@ -56,7 +56,7 @@ public partial class UpdateViewModel : BaseViewModel
 
         IsBusy = true;
 
-        bool answer = await Shell.Current.DisplayAlert(
+        bool answer = await Shell.Current.DisplayAlertAsync(
             "Update all drives?", "Updating all the drives is irreversible", YesLabel, NoLabel);
 
         if (answer)

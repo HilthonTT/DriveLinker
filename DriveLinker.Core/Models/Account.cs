@@ -5,5 +5,5 @@ public partial class Account : ObservableObject, IAccount
     public int Id { get; set; }
 
     [ObservableProperty]
-    private string _username;
+    public partial string Username { get; set; }
 }
