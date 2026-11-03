@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build:
+    name: Build & test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Install .NET MAUI workload
+        run: dotnet workload install maui-windows
+
+      - name: Restore
+        run: dotnet restore DriveLinker.slnx
+
+      - name: Build
+        run: dotnet build DriveLinker.slnx -c Release --no-restore
+
+      - name: Test
+        run: dotnet test --solution DriveLinker.slnx -c Release --no-build
+
+      # Proves the release packaging still works on every change.
+      - name: Publish portable build (smoke test)
+        run: >
+          dotnet publish DriveLinker/DriveLinker.csproj -c Release -r win-x64
+          -p:WindowsPackageType=None -o artifacts/portable
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: DriveLinker-portable-win-x64-${{ github.sha }}
+          path: artifacts/portable
+          retention-days: 7

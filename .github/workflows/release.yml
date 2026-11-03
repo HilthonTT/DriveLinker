@@ -1,0 +1,154 @@
+name: Release
+
+# Push a tag such as v2.0.0 (or v2.1.0-beta.1 for a pre-release) to build and publish a GitHub release:
+#   git tag v2.0.0 && git push origin v2.0.0
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the leading v (e.g. 2.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  PROJECT: DriveLinker/DriveLinker.csproj
+  # Secrets can't be referenced directly in `if:` conditions, so expose whether one is configured.
+  HAS_SIGNING_CERT: ${{ secrets.SIGNING_CERTIFICATE_BASE64 != '' }}
+
+jobs:
+  release:
+    name: Build, package & publish
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $raw = if ('${{ github.event_name }}' -eq 'workflow_dispatch') { '${{ inputs.version }}' } else { '${{ github.ref_name }}' }
+          $version = $raw.TrimStart('v')
+          if ($version -notmatch '^(\d+)\.(\d+)\.(\d+)(-[0-9A-Za-z.-]+)?$') {
+            throw "Version '$version' is not of the form MAJOR.MINOR.PATCH[-prerelease]."
+          }
+          $numeric = "$($Matches[1]).$($Matches[2]).$($Matches[3])"
+          "version=$version"            >> $env:GITHUB_OUTPUT
+          "numeric=$numeric"            >> $env:GITHUB_OUTPUT
+          "prerelease=$([bool]$Matches[4])".ToLower() >> $env:GITHUB_OUTPUT
+          "tag=v$version"               >> $env:GITHUB_OUTPUT
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Install .NET MAUI workload
+        run: dotnet workload install maui-windows
+
+      - name: Build & test
+        run: |
+          dotnet build DriveLinker.slnx -c Release
+          dotnet test --solution DriveLinker.slnx -c Release --no-build
+
+      # ---------------------------------------------------------------- portable (unpackaged) builds
+      - name: Publish portable builds
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts/release | Out-Null
+          foreach ($rid in 'win-x64', 'win-arm64') {
+            $out = "artifacts/portable/$rid"
+            dotnet publish $env:PROJECT -c Release -r $rid `
+              -p:WindowsPackageType=None `
+              -p:ApplicationDisplayVersion=${{ steps.version.outputs.numeric }} `
+              -p:ApplicationVersion=${{ github.run_number }} `
+              -o $out
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+            Compress-Archive -Path "$out/*" -DestinationPath "artifacts/release/DriveLinker-${{ steps.version.outputs.version }}-$rid-portable.zip"
+          }
+
+      # ---------------------------------------------------------------- signed MSIX (optional)
+      # Requires two repository secrets:
+      #   SIGNING_CERTIFICATE_BASE64   - the .pfx code-signing certificate, Base64-encoded
+      #   SIGNING_CERTIFICATE_PASSWORD - its password
+      # The certificate subject must equal the Publisher in Platforms/Windows/Package.appxmanifest.
+      - name: Build signed MSIX
+        if: env.HAS_SIGNING_CERT == 'true'
+        env:
+          SIGNING_CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE_BASE64 }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        shell: pwsh
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP 'signing.pfx'
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:SIGNING_CERTIFICATE_BASE64))
+
+          try {
+            $cert = [Security.Cryptography.X509Certificates.X509Certificate2]::new($pfx, $env:SIGNING_CERTIFICATE_PASSWORD)
+
+            # Stamp the package version and check the publisher matches the certificate.
+            $manifestPath = 'DriveLinker/Platforms/Windows/Package.appxmanifest'
+            [xml]$manifest = Get-Content $manifestPath
+            $publisher = $manifest.Package.Identity.Publisher
+            if ($publisher -ne $cert.Subject) {
+              throw "Manifest Publisher '$publisher' does not match certificate subject '$($cert.Subject)'."
+            }
+            $manifest.Package.Identity.Version = '${{ steps.version.outputs.numeric }}.0'
+            $manifest.Save((Resolve-Path $manifestPath).Path)
+
+            dotnet publish $env:PROJECT -c Release -r win-x64 `
+              -p:WindowsPackageType=MSIX `
+              -p:GenerateAppxPackageOnBuild=true `
+              -p:AppxPackageSigningEnabled=true `
+              -p:PackageCertificateKeyFile=$pfx `
+              -p:PackageCertificatePassword=$env:SIGNING_CERTIFICATE_PASSWORD `
+              -p:ApplicationDisplayVersion=${{ steps.version.outputs.numeric }} `
+              -p:ApplicationVersion=${{ github.run_number }} `
+              -p:AppxPackageDir="$PWD/artifacts/msix/"
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
+            Get-ChildItem artifacts/msix -Recurse -Filter 'DriveLinker_*.msix' |
+              Copy-Item -Destination artifacts/release/
+
+            # Public certificate so users can trust a self-signed package.
+            [IO.File]::WriteAllBytes("artifacts/release/DriveLinker.cer",
+              $cert.Export([Security.Cryptography.X509Certificates.X509ContentType]::Cert))
+          }
+          finally {
+            Remove-Item $pfx -Force -ErrorAction SilentlyContinue
+          }
+
+      - name: Skip MSIX (no signing certificate configured)
+        if: env.HAS_SIGNING_CERT != 'true'
+        run: echo "::notice::SIGNING_CERTIFICATE_BASE64 is not set - publishing portable builds only."
+
+      # ---------------------------------------------------------------- publish
+      - name: Checksums
+        shell: pwsh
+        run: |
+          Get-ChildItem artifacts/release -File |
+            Where-Object Name -ne 'SHA256SUMS.txt' |
+            ForEach-Object { "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name } |
+            Set-Content artifacts/release/SHA256SUMS.txt -Encoding utf8
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: DriveLinker-${{ steps.version.outputs.version }}
+          path: artifacts/release
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: DriveLinker ${{ steps.version.outputs.version }}
+          prerelease: ${{ steps.version.outputs.prerelease == 'true' }}
+          generate_release_notes: true
+          files: artifacts/release/*
+          fail_on_unmatched_files: true
