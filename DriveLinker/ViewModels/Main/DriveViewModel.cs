@@ -2,13 +2,9 @@
 public partial class DriveViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IDriveService _driveService;
-    private readonly IEncryption _encryption;
-    private readonly IMemoryCache _cache;
 
     public DriveViewModel(
         IDriveService driveService,
-        IEncryption encryption,
-        IMemoryCache cache, 
         ILanguageDictionary languageDictionary,
         IAuthentication auth,
         ITimerTracker timerTracker)
@@ -18,32 +14,15 @@ public partial class DriveViewModel : BaseViewModel, IQueryAttributable
             timerTracker)
     {
         _driveService = driveService;
-        _encryption = encryption;
-        _cache = cache;
     }
 
     [ObservableProperty]
     public partial Drive Drive { get; set; }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
+        // Drives handed over by the main page are already decrypted by DriveService.
         Drive = query["Drive"] as Drive;
-        await DecryptInformationAsync();
-    }
-
-    private async Task DecryptInformationAsync()
-    {
-        string key = $"IsDecrypted-{Drive.Id}";
-        bool? isDecrypted = _cache.Get<bool>(key);
-        if (isDecrypted is null)
-        {
-            Drive.Password = await _encryption.AesDecryptAsync(Drive.Password, Drive.Key, Drive.Iv);
-            Drive.UserName = await _encryption.AesDecryptAsync(Drive.UserName, Drive.Key, Drive.Iv);
-            Drive.IpAddress = await _encryption.AesDecryptAsync(Drive.IpAddress, Drive.Key, Drive.Iv);
-
-            isDecrypted = true;
-            _cache.Set(key, isDecrypted);
-        }
     }
 
     private static async Task<string> PromptUserAsync(string title, string message)

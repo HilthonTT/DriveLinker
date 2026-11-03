@@ -1,8 +1,14 @@
 ﻿namespace DriveLinker.Core.Encryption;
+
+/// <summary>
+/// Provides the SQLCipher database password. It is generated once with a CSPRNG, stored in
+/// <see cref="SecureStorage"/>, and reused for every database afterwards.
+/// </summary>
 public class PasswordGenerator : IPasswordGenerator
 {
     private const string Key = nameof(PasswordGenerator);
     private const string ValidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+    private const int PasswordLength = 15;
     private readonly IMemoryCache _cache;
 
     public PasswordGenerator(IMemoryCache cache)
@@ -18,34 +24,13 @@ public class PasswordGenerator : IPasswordGenerator
             output = await SecureStorage.GetAsync(Key);
             if (string.IsNullOrWhiteSpace(output))
             {
-                output = await GeneratePassword();
+                output = RandomNumberGenerator.GetString(ValidCharacters, PasswordLength);
+                await SecureStorage.SetAsync(Key, output);
             }
 
             _cache.Set(Key, output);
         }
 
         return output;
-    }
-
-    private static async Task<string> GeneratePassword()
-    {
-        int length = 15;
-
-        byte[] randomBytes = new byte[length];
-        char[] password = new char[length];
-
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            rng.GetBytes(randomBytes);
-        }
-
-        for (int i = 0; i < length; i++)
-        {
-            int index = randomBytes[i] % ValidCharacters.Length;
-            password[i] = ValidCharacters[index];
-        }
-
-        await SecureStorage.SetAsync(Key, new(password));
-        return new string(password);
     }
 }

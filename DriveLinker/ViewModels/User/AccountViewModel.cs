@@ -15,7 +15,19 @@ public partial class AccountViewModel : BaseViewModel
         Model.Id = _auth.GetAccount().Id;
         Model.Username = _auth.GetAccount().Username;
 
-        AccountButtonText = DeleteAccountLabel.TrimEnd('.');
+        AccountButtonText = DeleteAccountLabel?.TrimEnd('.');
+    }
+
+    // Labels load asynchronously, so DeleteAccountLabel is often still null in the
+    // constructor (which used to throw a NullReferenceException).
+    protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        if (e.PropertyName == nameof(DeleteAccountLabel))
+        {
+            AccountButtonText = DeleteAccountLabel?.TrimEnd('.');
+        }
     }
 
     [ObservableProperty]

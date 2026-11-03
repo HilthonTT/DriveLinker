@@ -49,21 +49,30 @@ public partial class CreateViewModel : BaseViewModel
         }
 
         IsBusy = true;
-        var newDrive = new Drive()
+        try
         {
-            Letter = Model.Letter,
-            IpAddress = Model.IpAddress,
-            DriveName = Model.DriveName,
-            Password = Model.Password,
-            UserName = Model.UserName,
-            AccountId = _auth.GetAccount().Id,
-        };
+            var newDrive = new Drive()
+            {
+                Letter = Model.Letter.ToUpperInvariant(),
+                IpAddress = Model.IpAddress,
+                DriveName = Model.DriveName,
+                Password = Model.Password,
+                UserName = Model.UserName,
+                AccountId = _auth.GetAccount().Id,
+            };
 
-        await _driveService.CreateDriveAsync(newDrive);
+            await _driveService.CreateDriveAsync(newDrive);
 
-        await FlushCreatePageAsync();
-
-        IsBusy = false;
+            await FlushCreatePageAsync();
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlertAsync(ErrorLabel, ex.Message, OkLabel);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
@@ -90,7 +99,16 @@ public partial class CreateViewModel : BaseViewModel
             if (result.FileName.EndsWith("json", StringComparison.OrdinalIgnoreCase))
             {
                 string jsonifiedDrives = await File.ReadAllTextAsync(result.FullPath);
-                var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives);
+                var drives = JsonSerializer.Deserialize<List<Drive>>(jsonifiedDrives) ?? [];
+
+                // Imported drives belong to the account doing the import, whichever account
+                // exported them.
+                int accountId = _auth.GetAccount().Id;
+                foreach (var drive in drives)
+                {
+                    drive.Id = 0;
+                    drive.AccountId = accountId;
+                }
 
                 bool answer = await Shell.Current.DisplayAlertAsync(
                     ImportFileLabel, ImportFileDescLabel, YesLabel, NoLabel);
@@ -172,7 +190,8 @@ public partial class CreateViewModel : BaseViewModel
         bool isLetterTaken = false;
         bool isDriveNameTaken = false;
 
-        var driveWithLetter = output.FirstOrDefault(d => d.Letter == Model.Letter);
+        var driveWithLetter = output.FirstOrDefault(d =>
+            string.Equals(d.Letter, Model.Letter, StringComparison.OrdinalIgnoreCase));
         if (driveWithLetter is not null)
         {
             Model.Letter = "";
@@ -215,7 +234,7 @@ public partial class CreateViewModel : BaseViewModel
             return true;
         }
 
-        if (Model.Letter.Length > 1)
+        if (Model.Letter.Length > 1 || char.IsAsciiLetter(Model.Letter[0]) is false)
         {
             await OpenSnackbarAsync(EnterALetterLabel);
             return true;

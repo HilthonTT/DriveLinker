@@ -50,8 +50,13 @@ public class AccountService : IAccountService
         var output = _cache.Get<Account>(key);
         if (output is null)
         {
-            output = await _db.FindAsync<Account>(key);
-            _cache.Set(key, output);
+            output = await _db.FindAsync<Account>(id);
+
+            // Never cache a miss: the account may be created moments later.
+            if (output is not null)
+            {
+                _cache.Set(key, output);
+            }
         }
 
         return output;
@@ -59,20 +64,30 @@ public class AccountService : IAccountService
 
     public async Task<Account> GetAccountByUsernameAsync(string username)
     {
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            return null;
+        }
+
         await InitializeDb();
 
-        string key = CacheNamePrefix + username;
+        string key = GetUsernameCacheKey(username);
 
         var output = _cache.Get<Account>(key);
         if (output is null)
         {
             var accounts = await _db.Table<Account>().ToListAsync();
 
-            output = accounts
-                .FirstOrDefault(a => a.Username
-                .Equals(username, StringComparison.InvariantCultureIgnoreCase));
+            output = accounts.FirstOrDefault(a =>
+                string.Equals(a.Username, username, StringComparison.OrdinalIgnoreCase));
 
-            _cache.Set(key, output);
+            // Never cache a miss. Registration and username changes look a name up *before*
+            // it exists; caching that null made the new account impossible to log into until
+            // the app was restarted.
+            if (output is not null)
+            {
+                _cache.Set(key, output);
+            }
         }
 
         return output;
@@ -93,13 +108,17 @@ public class AccountService : IAccountService
         await InitializeDb();
 
         await _db.InsertAsync(account);
+        InvalidateAccountCache(account.Username, account.Id);
 
         return account;
     }
 
-    public async Task<int> UpdateAccountAsync(Account account)
+    public async Task<int> UpdateAccountAsync(Account account, string previousUsername = null)
     {
         await InitializeDb();
+
+        InvalidateAccountCache(previousUsername, account.Id);
+        InvalidateAccountCache(account.Username, account.Id);
 
         return await _db.UpdateAsync(account);
     }
@@ -111,8 +130,12 @@ public class AccountService : IAccountService
         var settings = await _settingsService.GetAccountSettingsAsync(account.Id);
         await _settingsService.DeleteSettingsAsync(settings);
 
-        await DeleteAllAccountDrivesAsync();
+        foreach (var drive in await _driveService.GetAllAccountDrivesAsync(account.Id))
+        {
+            await _driveService.DeleteDriveAsync(drive);
+        }
 
+        InvalidateAccountCache(account.Username, account.Id);
         return await _db.DeleteAsync(account);
     }
 
@@ -146,6 +169,21 @@ public class AccountService : IAccountService
         }
 
         return await _driveService.UpdateAllDrivesAsync(updatedDrives);
+    }
+
+    private void InvalidateAccountCache(string username, int id)
+    {
+        if (string.IsNullOrWhiteSpace(username) is false)
+        {
+            _cache.Remove(GetUsernameCacheKey(username));
+        }
+
+        _cache.Remove(CacheNamePrefix + id);
+    }
+
+    private static string GetUsernameCacheKey(string username)
+    {
+        return $"{CacheNamePrefix}Username_{username.ToUpperInvariant()}";
     }
 
     private async Task<string> FetchPasswordAsync()

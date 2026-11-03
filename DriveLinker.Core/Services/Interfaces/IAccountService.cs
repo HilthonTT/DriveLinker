@@ -9,6 +9,6 @@ public interface IAccountService
     Task<Account> GetAccountByUsernameAsync(string username);
     Task<List<Drive>> GetAccountDrivesAsync();
     Task<Settings> GetAccountSettingsAsync();
-    Task<int> UpdateAccountAsync(Account account);
+    Task<int> UpdateAccountAsync(Account account, string previousUsername = null);
     Task<int> UpdateAllAccountDrivesAsync(string username, string password, string ipAddress);
 }

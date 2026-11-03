@@ -7,6 +7,8 @@ public partial class BaseViewModel : LanguageViewModel
     private const bool Animate = true;
     private readonly IAuthentication _auth;
 
+    protected IAuthentication Auth => _auth;
+
     public BaseViewModel(
         ILanguageDictionary languageDictionary,
         IAuthentication auth,

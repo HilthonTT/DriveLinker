@@ -1,7 +1,10 @@
 ﻿namespace DriveLinker.Core.Encryption;
+
+/// <summary>
+/// Generates and stores the per-account recovery keys used to reset a forgotten login password.
+/// </summary>
 public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 {
-    private static readonly Random _random = new();
     private readonly IMemoryCache _cache;
     private const string KeyPrefix = $"{nameof(RecoveryKeyGenerator)}_";
     private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -15,17 +18,19 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
     public async Task<List<string>> GenerateRecoveryKeysAsync(Account account, int keyLength = 12)
     {
         var recoveryKeys = new List<string>();
-        
+
         for (int i = 0; i < MaxKeyCount; i++)
         {
-            string recoveryKey = new(Enumerable.Repeat(Characters, keyLength)
-                .Select(s => s[_random.Next(s.Length)]).ToArray());
-
+            // Cryptographically secure, unbiased selection.
+            string recoveryKey = RandomNumberGenerator.GetString(Characters, keyLength);
             recoveryKeys.Add(recoveryKey);
 
-            await SaveRecoveryKey(account, recoveryKey, i);
+            await SecureStorage.SetAsync(GetRecoveryCacheName(account, i), recoveryKey);
         }
-        
+
+        // Without this, GetRecoveryKeysAsync kept returning the previous (cached) set.
+        _cache.Set(GetAccountCacheName(account), recoveryKeys);
+
         return recoveryKeys;
     }
 
@@ -42,8 +47,7 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
         output = new();
         for (int i = 0; i < MaxKeyCount; i++)
         {
-            string key = GetRecoveryCacheName(account, i);
-            string recoveryKey = await SecureStorage.GetAsync(key);
+            string recoveryKey = await SecureStorage.GetAsync(GetRecoveryCacheName(account, i));
 
             if (recoveryKey is not null)
             {
@@ -52,14 +56,18 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
         }
 
         _cache.Set(accountKey, output);
-        
+
         return output;
     }
 
-    private static async Task SaveRecoveryKey(Account account, string recoveryKey, int number)
+    public void DeleteRecoveryKeys(Account account)
     {
-        string key = GetRecoveryCacheName(account, number);
-        await SecureStorage.SetAsync(key, recoveryKey);
+        for (int i = 0; i < MaxKeyCount; i++)
+        {
+            SecureStorage.Remove(GetRecoveryCacheName(account, i));
+        }
+
+        _cache.Remove(GetAccountCacheName(account));
     }
 
     private static string GetRecoveryCacheName(Account account, int number)

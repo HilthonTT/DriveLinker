@@ -1,96 +1,84 @@
 ﻿namespace DriveLinker.Core.Encryption;
+
+/// <summary>
+/// AES-CBC encryption for drive credentials and SHA-512 hashing for the login password.
+/// </summary>
+/// <remarks>
+/// The class is stateless: every call builds its own <see cref="Aes"/> instance from the key and IV
+/// it is given, so it is safe to use concurrently. Keys and IVs are passed around as Base64 strings
+/// because that is how they are persisted on each <see cref="Drive"/> row.
+/// </remarks>
 public class Encryption : IEncryption
 {
-    private readonly Aes _aes;
-
-    public Encryption()
+    public (string Key, string Iv) GenerateKeyAndIv()
     {
-        _aes = Aes.Create();
-        _aes.GenerateKey();
-        _aes.GenerateIV();
+        using var aes = Aes.Create();
+        aes.GenerateKey();
+        aes.GenerateIV();
+
+        return (Convert.ToBase64String(aes.Key), Convert.ToBase64String(aes.IV));
     }
 
-    public async Task<string> AesEncryptAsync(string plainText)
+    public async Task<string> AesEncryptAsync(string plainText, string key, string iv)
     {
-        byte[] encrypted;
-
-        using (ICryptoTransform encryptor = _aes.CreateEncryptor())
+        if (plainText is null)
         {
-            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-
-            using var msEncrypt = new MemoryStream();
-            using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-            {
-                await csEncrypt.WriteAsync(plainBytes);
-                await csEncrypt.FlushFinalBlockAsync();
-            }
-
-            encrypted = msEncrypt.ToArray();
+            return null;
         }
 
-        return Convert.ToBase64String(encrypted);
+        using var aes = CreateAes(key, iv);
+        using ICryptoTransform encryptor = aes.CreateEncryptor();
+
+        byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+
+        using var msEncrypt = new MemoryStream();
+        await using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+        {
+            await csEncrypt.WriteAsync(plainBytes);
+            await csEncrypt.FlushFinalBlockAsync();
+        }
+
+        return Convert.ToBase64String(msEncrypt.ToArray());
     }
 
-    public async Task<string> AesDecryptAsync(string cipherText, string key = default, string iv = default)
+    public async Task<string> AesDecryptAsync(string cipherText, string key, string iv)
     {
-        if (key is not null)
+        if (string.IsNullOrEmpty(cipherText))
         {
-            _aes.Key = Convert.FromBase64String(key);
+            return cipherText;
         }
 
-        if (iv is not null)
-        {
-            _aes.IV = Convert.FromBase64String(iv);
-        }
+        using var aes = CreateAes(key, iv);
+        using ICryptoTransform decryptor = aes.CreateDecryptor();
 
         byte[] cipherBytes = Convert.FromBase64String(cipherText);
 
-        using ICryptoTransform decryptor = _aes.CreateDecryptor();
-        byte[] decryptedBytes;
+        using var msDecrypt = new MemoryStream(cipherBytes);
+        await using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+        using var output = new MemoryStream();
 
-        using (var msDecrypt = new MemoryStream(cipherBytes))
-        {
-            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-            using var ms = new MemoryStream();
+        await csDecrypt.CopyToAsync(output);
 
-            await csDecrypt.CopyToAsync(ms);
-            decryptedBytes = ms.ToArray();
-        }
-
-        string decrytedText = Encoding.UTF8.GetString(decryptedBytes).TrimEnd('\0');
-
-        return decrytedText;
+        return Encoding.UTF8.GetString(output.ToArray()).TrimEnd('\0');
     }
 
-    public async Task<string> ComputeSha512Hash(string plainText)
+    public Task<string> ComputeSha512Hash(string plainText)
     {
-        using SHA512 sha512 = SHA512.Create();
-        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] hashedBytes;
+        byte[] hashedBytes = SHA512.HashData(Encoding.UTF8.GetBytes(plainText));
 
-        using (var inputStream = new MemoryStream(plainTextBytes))
-        {
-            hashedBytes = await sha512.ComputeHashAsync(inputStream);
-        }
-
-        var sb = new StringBuilder();
-        foreach (byte b in hashedBytes)
-        {
-            sb.Append(b.ToString("x2"));
-        }
-
-        return sb.ToString();
+        // Lower-case hex, matching the format of hashes stored by earlier versions.
+        return Task.FromResult(Convert.ToHexStringLower(hashedBytes));
     }
 
-    public string GetKey()
+    private static Aes CreateAes(string key, string iv)
     {
-        string convertedArray = Convert.ToBase64String(_aes.Key);
-        return convertedArray;
-    }
+        ArgumentException.ThrowIfNullOrEmpty(key);
+        ArgumentException.ThrowIfNullOrEmpty(iv);
 
-    public string GetIV()
-    {
-        string convertedArray = Convert.ToBase64String(_aes.IV);
-        return convertedArray;
+        var aes = Aes.Create();
+        aes.Key = Convert.FromBase64String(key);
+        aes.IV = Convert.FromBase64String(iv);
+
+        return aes;
     }
 }

@@ -140,7 +140,7 @@ public partial class UsernameResetViewModel : BaseViewModel
         var account = await _accountService.GetAccountByUsernameAsync(NewUsername);
         if (account is not null)
         {
-            await Shell.Current.DisplayAlertAsync(ErrorCountLabel, UsernameTakenLabel, OkLabel);
+            await Shell.Current.DisplayAlertAsync(ErrorLabel, UsernameTakenLabel, OkLabel);
             return true;
         }
 

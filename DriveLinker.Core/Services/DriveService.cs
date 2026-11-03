@@ -1,8 +1,14 @@
 ﻿namespace DriveLinker.Core.Services;
+
+/// <summary>
+/// Stores drives in the SQLCipher <c>Drive.db4</c> database. The password, IP address and username of
+/// every drive are additionally AES-encrypted at rest; callers always receive decrypted copies.
+/// </summary>
 public class DriveService : IDriveService
 {
     private const string CacheName = nameof(DriveService);
     private const string CacheNamePrefix = $"{CacheName}_";
+    private const string DriveCacheNamePrefix = $"{CacheName}_Drive_";
     private const string DbName = "Drive.db4";
     private readonly IMemoryCache _cache;
     private readonly IEncryption _encryption;
@@ -43,10 +49,10 @@ public class DriveService : IDriveService
         var output = _cache.Get<List<Drive>>(key);
         if (output is null)
         {
-            output = await _db.Table<Drive>().Where(d => d.AccountId == accountId).ToListAsync();
-            var decryptedDrives = await output.SelectAsync(DecryptDrive);
+            var drives = await _db.Table<Drive>().Where(d => d.AccountId == accountId).ToListAsync();
+            output = (await drives.SelectAsync(DecryptDrive)).ToList();
 
-            _cache.Set(key, decryptedDrives.ToList());
+            _cache.Set(key, output);
         }
 
         return output;
@@ -56,13 +62,18 @@ public class DriveService : IDriveService
     {
         await InitializeDb();
 
-        var output = _cache.Get<Drive>(id);
+        string key = DriveCacheNamePrefix + id;
+        var output = _cache.Get<Drive>(key);
         if (output is null)
         {
             var drive = await _db.FindAsync<Drive>(id);
-            output = await DecryptDrive(drive);
+            if (drive is null)
+            {
+                return null;
+            }
 
-            _cache.Set(id, output);
+            output = await DecryptDrive(drive);
+            _cache.Set(key, output);
         }
 
         return output;
@@ -72,24 +83,29 @@ public class DriveService : IDriveService
     {
         await InitializeDb();
 
-        RemoveCache(drive.AccountId);
+        RemoveCache(drive);
 
-        drive = await EncryptDrive(drive);
+        var encryptedDrive = await EncryptDrive(drive);
+        int rows = await _db.InsertAsync(encryptedDrive);
 
-        return await _db.InsertAsync(drive);
+        drive.Id = encryptedDrive.Id;
+        return rows;
     }
 
     public async Task<int> CreateAllDrivesAsync(List<Drive> drives)
     {
+        if (drives is null || drives.Count == 0)
+        {
+            return 0;
+        }
+
         await InitializeDb();
 
         var encryptedDrives = new List<Drive>();
-        RemoveCache(drives[0].AccountId);
-
         foreach (var drive in drives)
         {
-            var encryptedDrive = await EncryptDrive(drive);
-            encryptedDrives.Add(encryptedDrive);
+            RemoveCache(drive);
+            encryptedDrives.Add(await EncryptDrive(drive));
         }
 
         return await _db.InsertAllAsync(encryptedDrives, true);
@@ -98,22 +114,27 @@ public class DriveService : IDriveService
     public async Task<int> UpdateDriveAsync(Drive drive)
     {
         await InitializeDb();
-        RemoveCache(drive.AccountId);
 
-        drive = await EncryptDrive(drive);
-        return await _db.UpdateAsync(drive);
+        RemoveCache(drive);
+
+        var encryptedDrive = await EncryptDrive(drive);
+        return await _db.UpdateAsync(encryptedDrive);
     }
 
     public async Task<int> UpdateAllDrivesAsync(List<Drive> drives)
     {
-        await InitializeDb();
-        RemoveCache(drives[0].AccountId);
-        var encryptedDrives = new List<Drive>();
+        if (drives is null || drives.Count == 0)
+        {
+            return 0;
+        }
 
+        await InitializeDb();
+
+        var encryptedDrives = new List<Drive>();
         foreach (var drive in drives)
         {
-            var encryptedDrive = await EncryptDrive(drive);
-            encryptedDrives.Add(encryptedDrive);
+            RemoveCache(drive);
+            encryptedDrives.Add(await EncryptDrive(drive));
         }
 
         return await _db.UpdateAllAsync(encryptedDrives, true);
@@ -123,20 +144,36 @@ public class DriveService : IDriveService
     {
         await InitializeDb();
 
-        RemoveCache(drive.AccountId);
+        RemoveCache(drive);
         return await _db.DeleteAsync(drive);
     }
 
+    /// <summary>
+    /// Returns an encrypted <b>copy</b> of <paramref name="drive"/> with a fresh key and IV.
+    /// The original instance is left untouched because it is usually bound to the UI and used
+    /// to run <c>net use</c>; encrypting it in place would replace the visible credentials
+    /// with ciphertext.
+    /// </summary>
     private async Task<Drive> EncryptDrive(Drive drive)
     {
-        drive.Key = _encryption.GetKey();
-        drive.Iv = _encryption.GetIV();
+        var (key, iv) = _encryption.GenerateKeyAndIv();
 
-        drive.Password = await _encryption.AesEncryptAsync(drive.Password);
-        drive.IpAddress = await _encryption.AesEncryptAsync(drive.IpAddress);
-        drive.UserName = await _encryption.AesEncryptAsync(drive.UserName);
-
-        return drive;
+        return new Drive
+        {
+            Id = drive.Id,
+            AccountId = drive.AccountId,
+            Letter = drive.Letter,
+            DriveName = drive.DriveName,
+            ButtonColor = drive.ButtonColor,
+            DriveType = drive.DriveType,
+            DriveFormat = drive.DriveFormat,
+            DateCreated = drive.DateCreated,
+            Key = key,
+            Iv = iv,
+            Password = await _encryption.AesEncryptAsync(drive.Password, key, iv),
+            IpAddress = await _encryption.AesEncryptAsync(drive.IpAddress, key, iv),
+            UserName = await _encryption.AesEncryptAsync(drive.UserName, key, iv),
+        };
     }
 
     private async Task<Drive> DecryptDrive(Drive drive)
@@ -153,8 +190,7 @@ public class DriveService : IDriveService
 
     private async Task<string> FetchPasswordAsync()
     {
-        var password = await _passwordGenerator.FetchPasswordAsync();
-        return password;
+        return await _passwordGenerator.FetchPasswordAsync();
     }
 
     private static string GetDbPath()
@@ -164,9 +200,9 @@ public class DriveService : IDriveService
                 Environment.SpecialFolder.LocalApplicationData), DbName);
     }
 
-    private void RemoveCache(int accountId)
+    private void RemoveCache(Drive drive)
     {
-        string key = CacheNamePrefix + accountId;
-        _cache.Remove(key);
+        _cache.Remove(CacheNamePrefix + drive.AccountId);
+        _cache.Remove(DriveCacheNamePrefix + drive.Id);
     }
 }

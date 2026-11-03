@@ -60,8 +60,8 @@ public partial class MainViewModel : BaseViewModel
     {
         var connectedDrives = Drives.Where(d => d.Connected).ToList();
 
-        float connectedDrivesCount = connectedDrives.Count;
-        Progress = connectedDrivesCount / Drives.Count;
+        // Avoid NaN ("NaN%" in the UI) when the account has no drives.
+        Progress = Drives.Count == 0 ? 0 : (double)connectedDrives.Count / Drives.Count;
     }
 
     private static void CheckDriveType(Drive drive, List<DriveInfo> driveInfos)
@@ -71,17 +71,32 @@ public partial class MainViewModel : BaseViewModel
         {
             var driveInfo = GetDriveInfo(drive, driveInfos);
             drive.DriveType = driveInfo?.DriveType.ToString() ?? "N/A";
-            drive.DriveFormat = driveInfo?.DriveFormat ?? "N/A";
+            try
+            {
+                drive.DriveFormat = driveInfo?.DriveFormat ?? "N/A";
+            }
+            catch (IOException)
+            {
+                drive.DriveFormat = "N/A";
+            }
         }
     }
 
     private static DriveInfo GetDriveInfo(Drive drive, List<DriveInfo> driveInfos)
     {
-        var driveInfo = driveInfos.FirstOrDefault(d => d.VolumeLabel
-            .Contains(drive.DriveName, StringComparison.InvariantCultureIgnoreCase) &&
-            d.RootDirectory.Name.Contains(drive.Letter, StringComparison.InvariantCultureIgnoreCase));
+        // Only inspect the drive with the matching letter: reading VolumeLabel on every drive
+        // throws for drives that are not ready (empty card readers, dropped shares, ...).
+        var driveInfo = driveInfos.FirstOrDefault(d =>
+            d.Name.StartsWith(drive.Letter + ":", StringComparison.OrdinalIgnoreCase));
 
-        return driveInfo;
+        try
+        {
+            return driveInfo?.IsReady is true ? driveInfo : null;
+        }
+        catch (IOException)
+        {
+            return null;
+        }
     }
 
     private void CheckDriveStatus(Drive drive, List<DriveInfo> driveInfos)
@@ -214,16 +229,23 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task ExportDrivesAsync()
     {
-        var drives = await _accountService.GetAccountDrivesAsync();
-
-        string jsonifiedDrives = JsonSerializer.Serialize(drives);
-
-        var result = await FolderPicker.Default.PickAsync(new());
-        if (result.IsSuccessful)
+        try
         {
-            string filePath = Path.Combine(result.Folder.Path, "import_drives_file.json");
+            var drives = await _accountService.GetAccountDrivesAsync();
 
-            await File.WriteAllTextAsync(filePath, jsonifiedDrives);
+            string jsonifiedDrives = JsonSerializer.Serialize(drives);
+
+            var result = await FolderPicker.Default.PickAsync(CancellationToken.None);
+            if (result.IsSuccessful)
+            {
+                string filePath = Path.Combine(result.Folder.Path, "import_drives_file.json");
+
+                await File.WriteAllTextAsync(filePath, jsonifiedDrives);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayErrorAsync(ex.Message);
         }
     }
 
@@ -235,10 +257,10 @@ public partial class MainViewModel : BaseViewModel
 
         if (answer)
         {
-            Drives.Clear();
-            Drives = new();
-
             await _accountService.DeleteAllAccountDrivesAsync();
+
+            Drives = new();
+            RecalculateProgress();
         }
     }
 
@@ -259,6 +281,11 @@ public partial class MainViewModel : BaseViewModel
 
     private static int CountOccurrences(string source, string query, StringComparison comparison)
     {
+        if (string.IsNullOrEmpty(source))
+        {
+            return 0;
+        }
+
         int count = 0;
         int i = 0;
         while ((i = source.IndexOf(query, i, comparison)) != -1)
@@ -271,14 +298,19 @@ public partial class MainViewModel : BaseViewModel
 
     private void HandleCountdownFinished()
     {
-        _windowsHelper.MinimizeWindow();
-        TimerTracker.IsCountdownVisible = false;
+        // System.Timers.Timer raises its events on a thread-pool thread.
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            _windowsHelper.MinimizeWindow();
+            TimerTracker.IsCountdownVisible = false;
+        });
     }
 
     [RelayCommand]
     private async Task SetUpTimerAsync()
     {
-        string key = "IsFirstTime";
+        // Once per account per app session (previously once per session for *any* account).
+        string key = $"AutoMinimizeStarted_{Auth.GetAccount().Id}";
 
         string output = _cache.Get<string>(key);
 
@@ -298,9 +330,10 @@ public partial class MainViewModel : BaseViewModel
 
             TimerTracker.Timer = new(settings.TimerCount);
             TimerTracker.SecondsRemaining = settings.TimerCount;
-            TimerTracker.Timer.Start();
-            TimerTracker.Timer.CountdownTick += (e, s) => TimerTracker.SecondsRemaining = s;
+            TimerTracker.Timer.CountdownTick += (e, s) =>
+                MainThread.BeginInvokeOnMainThread(() => TimerTracker.SecondsRemaining = s);
             TimerTracker.Timer.CountdownFinished += (s, e) => HandleCountdownFinished();
+            TimerTracker.Timer.Start();
         }
         else
         {

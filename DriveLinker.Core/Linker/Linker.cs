@@ -1,4 +1,8 @@
 ﻿namespace DriveLinker.Core.Linker;
+
+/// <summary>
+/// Maps and unmaps network drives with the Windows <c>net use</c> command.
+/// </summary>
 public class Linker : ILinker
 {
     private const string Green = "#00FF00";
@@ -12,159 +16,89 @@ public class Linker : ILinker
 
     public async Task ConnectDriveAsync(Drive drive)
     {
-        string arguments = GetConnectArguments(drive);
-        string fileName = GetFileName();
+        // net use X: "\\host\share" <password> /user:<user> /persistent:no
+        var (exitCode, error) = await RunNetUseAsync(
+            $"{drive.Letter}:",
+            $@"\\{drive.IpAddress}\{drive.DriveName}",
+            drive.Password,
+            $"/user:{drive.UserName}",
+            "/persistent:no");
 
-        var process = GetProcess(fileName, arguments);
-        process.Start();
+        IsDriveConnected(drive);
 
-        await process.WaitForExitAsync();
-
-        if (IsDriveConnected(drive))
-        {
-            drive.ButtonColor = Green;
-        }
-        else
-        {
-            drive.ButtonColor = Red;
-        }
-
-        await GetErrorAsync(process, drive);
+        await ReportErrorAsync(exitCode, error, drive);
     }
 
     public async Task DisconnectDriveAsync(Drive drive)
     {
-        drive.Connected = false;
-        drive.ButtonColor = Red;
+        var (exitCode, error) = await RunNetUseAsync($"{drive.Letter}:", "/delete", "/yes");
 
-        string arguments = GetDeleteArguments(drive);
-        string fileName = GetFileName();
+        IsDriveConnected(drive);
 
-        var process = GetProcess(fileName, arguments);
-        process.Start();
-
-        await process.WaitForExitAsync();
-        await GetErrorAsync(process, drive);
+        await ReportErrorAsync(exitCode, error, drive);
     }
 
     public bool IsDriveConnected(Drive drive)
     {
-        string directory = drive.Letter + ':';
-        bool directoryExists = Directory.Exists(directory);
+        bool directoryExists = Directory.Exists($"{drive.Letter}:\\");
 
-        if (directoryExists)
-        {
-            drive.Connected = true;
-            drive.ButtonColor = Green;
-        }
-        else
-        {
-            drive.Connected = false;
-            drive.ButtonColor = Red;
-        }
+        drive.Connected = directoryExists;
+        drive.ButtonColor = directoryExists ? Green : Red;
 
         return directoryExists;
     }
 
-    private async Task GetErrorAsync(Process process, Drive drive)
+    private static async Task<(int ExitCode, string Error)> RunNetUseAsync(params string[] arguments)
     {
-        string message = await process.StandardError.ReadToEndAsync();
+        var startInfo = new ProcessStartInfo("net")
+        {
+            CreateNoWindow = true,
+            UseShellExecute = false,
+            RedirectStandardError = true,
+            RedirectStandardOutput = true,
+        };
 
-        if (process.ExitCode is 0)
+        // ArgumentList quotes each value individually, so passwords and share names containing
+        // spaces or quotes are passed through intact.
+        startInfo.ArgumentList.Add("use");
+        foreach (string argument in arguments)
+        {
+            startInfo.ArgumentList.Add(argument);
+        }
+
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("Could not start 'net use'.");
+
+        // Drain both streams while waiting so a full pipe buffer can never block the process.
+        var errorTask = process.StandardError.ReadToEndAsync();
+        var outputTask = process.StandardOutput.ReadToEndAsync();
+
+        await process.WaitForExitAsync();
+
+        string error = await errorTask;
+        await outputTask;
+
+        return (process.ExitCode, error.Trim());
+    }
+
+    private async Task ReportErrorAsync(int exitCode, string message, Drive drive)
+    {
+        if (exitCode is 0)
         {
             return;
         }
 
-        if (message.Contains("local device is already in use"))
+        if (string.IsNullOrWhiteSpace(message))
         {
-            await Shell.Current
-                .DisplaySnackbar($"Drive {drive.Letter} is already in use.");
-        }
-        else
-        {
-            await Shell.Current
-                .DisplaySnackbar(message);
+            message = $"'net use' failed for drive {drive.Letter}: (exit code {exitCode}).";
         }
 
         _stackTrace.ErrorMessages.Add(message);
-    }
 
-    private static Process GetProcess(string fileName, string arguments)
-    {
-        var startInfo = new ProcessStartInfo()
-        {
-            FileName = fileName,
-            Arguments = arguments,
-            CreateNoWindow = true,
-            RedirectStandardError = true,
-        };
+        string snackbarText = message.Contains("local device is already in use", StringComparison.OrdinalIgnoreCase)
+            ? $"Drive {drive.Letter} is already in use."
+            : message;
 
-        return new Process { StartInfo = startInfo };
-    }
-
-    private static string GetConnectArguments(Drive drive)
-    {
-        if (IsWindows())
-        {
-            return $"use {drive.Letter}: " +
-                $"\"\\\\{drive.IpAddress}\\{drive.DriveName}\" " +
-                $"{drive.Password} " +
-                $"/user:{drive.UserName} " +
-                $"/persistent:no";
-        }
-        else if (IsMacOS())
-        {
-            return $"mount_smbfs //{drive.UserName}:" +
-                $"{drive.Password}" +
-                $"@{drive.IpAddress}" +
-                $"/{drive.DriveName}" +
-                $" /Volumes/{drive.Letter}";
-        }
-        else
-        {
-            return "";
-        }
-    }
-
-    private static string GetDeleteArguments(Drive drive)
-    {
-        if (IsWindows())
-        {
-            return $"use {drive.Letter}: /del";
-        }
-        else if (IsMacOS())
-        {
-            return $"umount {drive.Letter}";
-        }
-        else
-        {
-            return "";
-        }
-    }
-
-    private static string GetFileName()
-    {
-        if (OperatingSystem.IsWindows())
-        {
-            return "net";
-        }
-        else if (IsMacOS())
-        {
-            return "mount";
-        }
-        else
-        {
-            return "";
-        }
-    }
-
-    private static bool IsWindows()
-    {
-        return OperatingSystem.IsWindows();
-    }
-
-    private static bool IsMacOS()
-    {
-        return OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst();
+        await MainThread.InvokeOnMainThreadAsync(() => Shell.Current.DisplaySnackbar(snackbarText));
     }
 }
