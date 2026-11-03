@@ -31,8 +31,10 @@ jobs:
       - name: Install .NET MAUI workload
         run: dotnet workload install maui-windows
 
+      # Restore must use the same Configuration as the build: MAUI turns on PublishReadyToRun for
+      # Release, which needs the win-x64 runtime pack in the assets file (NETSDK1112 otherwise).
       - name: Restore
-        run: dotnet restore DriveLinker.slnx
+        run: dotnet restore DriveLinker.slnx -p:Configuration=Release
 
       - name: Build
         run: dotnet build DriveLinker.slnx -c Release --no-restore
